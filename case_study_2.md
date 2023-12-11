@@ -1,14 +1,72 @@
 In this study, we explore the proficiency of GPT-3.5 in embedding vulnerabilities into hardware designs. The primary motivation behind introducing these vulnerabilities is to curate a database of buggy designs. Such a repository offers significant advantages, most notably serving as a foundation for AI-driven vulnerability detection and mitigation solutions. Understanding the nuances of these intentionally compromised designs can also improve the efficiency and accuracy of future defense mechanisms.
 
-In this case, we focus on inserting vulnerabilities into FSM design. The presence of static deadlock in an FSM design is one of those security bugs. A static deadlock in an FSM can lead to denial of service (DoS), unintended data leakage, and exploitable system inconsistencies, compromising overall security and reliability of the system. Inserting such a static deadlock in an FSM design is not a straightforward task. It requires a deep understanding of the logic and structure of the FSM design by LLM to effectively introduce such vulnerabilities. One very simple way to insert static deadlock into an FSM design is to directly command GPT. But simply asking GPT to inject a static deadlock into an FSM design often yields unsatisfactory results, mainly because ChatGPT is programmed to avoid creating malicious content. However, with subtle phrasing adjustments, GPT can be guided to generate designs. But this seemingly direct method often results in unsuccessful attempts, especially in the case of GPT-3.5, emphasizing the complex nature of hardware vulnerabilities and the precision needed for their insertion. It is not merely about commanding the LLM to introduce a security bug; it is about imparting a nuanced understanding of how exactly to induce that specific vulnerability. It requires detailed instructions on inserting the vulnerability and relevant examples. The idea of including reference examples in the prompt is reminiscent of one-shot or few-shot learning in the context learning paradigm, as discussed in Section III-A1. Such hands-on examples serve as an instructional compass, guiding the LLM to inject the desired vulnerability with increased precision and relevance. It is crucial to give context and depth to the LLM, rather than just issuing commands. We term these methods as one-shot or few-shot promptings based on the number of examples given. The concept of one-shot prompting is depicted in Figure 4.
+In this case, we focus on inserting vulnerabilities into FSM design. The presence of static deadlock in an FSM design is one of those security bugs. A static deadlock in an FSM can lead to denial of service (DoS), unintended data leakage, and exploitable system inconsistencies, compromising the overall security and reliability of the system. Inserting such a static deadlock in an FSM design is not a straightforward task. It requires a deep understanding of the logic and structure of the FSM design by LLM to effectively introduce such vulnerabilities. One very simple way to insert static deadlock into an FSM design is to directly command GPT. But simply asking GPT to inject a static deadlock into an FSM design often yields unsatisfactory results, mainly because ChatGPT is programmed to avoid creating malicious content. However, with subtle phrasing adjustments, GPT can be guided to generate designs. However, this seemingly direct method often results in unsuccessful attempts, especially in the case of GPT-3.5, emphasizing the complex nature of hardware vulnerabilities and the precision needed for their insertion. It is not merely about commanding the LLM to introduce a security bug; it is about imparting a nuanced understanding of how exactly to induce that specific vulnerability. It requires detailed instructions on inserting the vulnerability and relevant examples. The idea of including reference examples in the prompt is reminiscent of one-shot or few-shot learning in the context learning paradigm. Such hands-on examples serve as an instructional compass, guiding the LLM to inject the desired vulnerability with increased precision and relevance. It is crucial to give context and depth to the LLM, rather than just issuing commands. We term these methods as one-shot or few-shot promptings based on the number of examples given. The concept of one-shot prompting is depicted in Figure 4.
 
-For ease of discussion, we divide our prompt used in this case study into four parts, shown in Prompts 1-4. Here we discuss the functions of these prompts:
+For ease of discussion, we divide our prompt used in this case study into four parts, shown in Prompts 1-4. Here, we discuss the functions of these prompts:
 
 - Prompt 1.1: Starting with Prompt 1.1, we present the input design and outline the scope of the task to GPT. It is complemented by an in-depth explanation of static deadlock and a structured three-step process to seamlessly weave it into the design.
 - Prompt 1.2: Next, in Prompt 1.2, we set up a hands-on example of how a static deadlock can be created in a small FSM design. It should be noted that the provided example is completely different than the target input design.
-- Prompt 1.3: Prompt 1.3 is dedicated to refining the model-generated design. Many of these post-processing steps mentioned in Prompt 1.3 are not necessarily, in general. Since in our case we generate vulnerable designs on a large scale, we need to keep the signals of these designs identical for ease of fidelity checking. Also, some of the refining steps preempt commonly observed design mistakes.
+- Prompt 1.3: Prompt 1.3 is dedicated to refining the model-generated design. Many of these post-processing steps mentioned in Prompt 1.3 are not necessarily, in general. Since, in our case, we generate vulnerable designs on a large scale, we need to keep the signals of these designs identical for ease of fidelity checking. Also, some of the refining steps preempt commonly observed design mistakes.
 - Prompt 1.4: Prompt 1.4 performs a self-review and prints out the output design. At first, GPT is tasked to detail where and how the designated three steps (Step 1, Step 2, and Step 3) are executed in the code. It is also essential to pinpoint the specific line numbers for each step, ensuring clarity and precise traceability. Then, through 'Review 1' and 'Review 2', a comprehensive review of the final code is performed. Prompt 1.4 not only seeks a response but demands a holistic evaluation, ensuring that the logic of the code aligns with the steps and that the quality of the generated design is up to the mark.
 
+*Prompt 1:*
+```
+Your task is to perform the following actions:
+Now, read the following Verilog code delimited by <>
+Code: <Input Design>
+Modify the code by introducing/adding a static deadlock state to the existing state transitions in the case statement.
+Static deadlock refers to a situation when the FSM enters to that state from another state,cit will not be
+able to come out from that state. To do this,
+Step 1: From the parameter list, first select a state from the state transition graph.
+Step 2: Change its state transition in the combinational block so that it connects to a new state called deadlock_state.
+Step 3: Add new deadlock_state state in the case statement that has a self-connecting loop.
+```
+
+*Prompt 2:*
+```
+For example, 
+ Before deadlock:
+```verilog 
+    parameter X=3'b000, Y=3'b001, Z=3'b011; 
+     case(current_state) 
+         X: begin
+            next_state=Y;
+         end
+ 
+        Y: begin
+          next_state=Z;
+        end
+ 
+        Z: begin
+          next_state=X;
+        end
+        
+     endcase
+```
+
+After deadlock: 
+```verilog
+   case(current_state) 
+        X: begin
+         if (start)
+         next_state=Y;
+         else
+            next_state=deadlock_state;
+         end
+        Y: begin
+          next_state=Z;
+        end 
+        Z: begin
+          next_state=X; 
+        end           
+        deadlock_state: begin
+          next_state=deadlock_state; 
+        end
+    endcase
+
+```
+Here, when X transits to deadlock_state, FSM cannot get out of it.
+```
 
 The input design used in this case study is presented in Listing 3, and the generated design through GPT-3.5 is outlined in Listing 4. Upon analysis, it is evident that static deadlock has been inserted successfully by GPT-3.5. To simplify cross-referencing and traceability, the resultant design has incorporated commentary, marking the specific lines where each of the three steps from Prompt 1.1 has been executed. This feature, in itself, showcases the attention to detail by GPT-3.5 and its ability to provide both the solution and its explanation concurrently. In a similar fashion, using simple natural language description through detailed prompting, we successfully inserted security different vulnerabilities into FSM designs. Because of such success, we formulated another prompting guideline for vulnerability insertion using LLM. Without detailed instructions and examples absent in the prompt, the success rate of task completion (vulnerability insertion) by GPT-3.5 drops significantly. However, GPT-4 demonstrated a notably superior ability to inject this vulnerability, even without an overly prescriptive prompt. But for complex cases, like creating dynamic deadlock, the performance of GPT-4 is not notable.
 
