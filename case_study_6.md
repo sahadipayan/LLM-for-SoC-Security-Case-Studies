@@ -64,7 +64,9 @@ module testbench;
 
 endmodule
 ```
-Turning to the CWE570 (expression is always false) scenario, where an always-false expression was examined, the testbench printed message shows that the final state was never reached, but the conditions to reach that state were not satisfied. As it is shown in Figure 8, the reset is constantly active, making it impossible to transition to the next state. Therefore, the printed message that shows that the state was never reached is not a counterexample.
+Turning to the CWE570 (expression is always false) scenario, where an always-false expression was examined, the testbench printed message shows that the final state was never reached, but the conditions to reach that state were not satisfied. As it is shown in the following figure, the reset is constantly active, making it impossible to transition to the next state. Therefore, the printed message that shows that the state was never reached is not a counterexample.
+![image](https://github.com/sahadipayan/LLM-for-SoC-Security-Case-Studies/assets/89291347/5dc0f675-6240-45bd-b5b8-aaa512232b55)
+
 
 There are indeed several advantages to employing ChatGPT for the automated generation of testbenches, particularly when compared to the manual authoring of these testbenches. LLM-generated testbenches offer notable advantages, especially in scenarios involving large and intricate designs. They are tailored specifically to a given design, enhancing efficiency. Furthermore, they exhibit versatility in language translation, with the ability to seamlessly transition between languages such as Verilog, SystemVerilog, and iVerilog, facilitated by straightforward prompts. Additionally, this approach accommodates design and verification engineers who may not possess expertise in a particular language, empowering them to craft testbenches in that language.
 
