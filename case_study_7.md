@@ -5,19 +5,9 @@ The importance of security properties in formal verification is of utmost import
 *Prompt 5.1:*
 ```systemverilog
 property p1;
-@(posedge clk)RSA binary.F SM ==
-RSA binary.IDLE && rose(start)
-| => (RSA binary.F SM == RSA binary.IN IT )
-##1(RSA binary.F SM == RSA binary.LOAD1)
-##1(RSA binary.F SM == RSA binary.LOAD2)
-##1(RSA binary.F SM == RSA binary.M U LT )
-##1(RSA binary.F SM == RSA binary.SQR)
-##1(RSA binary.F SM == RSA binary.M U LT )
-##1(RSA binary.F SM == RSA binary.SQR)
-##1(RSA binary.F SM == RSA binary.M U LT )
-##1(RSA binary.F SM == RSA binary.SQR)
-##1(RSA binary.F SM ==
-RSA binary.RESU LT );
+@(posedge clk)RSA binary.FSM == RSA binary.IDLE && rose(start) | => (RSA binary.FSM == RSA binary.INIT) ##1(RSA binary.FSM == RSA binary.LOAD1) ##1(RSA binary.F SM == RSA binary.LOAD2) ##1(RSA binary.F SM == RSA binary.MULT) ##1(RSA binary.FSM == RSA binary.SQR) ##1(RSA binary.FSM == RSA binary.MULT) ##1(RSA binary.FSM == RSA binary.SQR) ##1(RSA binary.FSM == RSA binary.MULT) ##1(RSA binary.FSM == RSA binary.SQR)
+##1(RSA binary.FSM ==
+RSA binary.RESULT);
 endproperty
 ```
 *Response to Prompt 5.1:*
