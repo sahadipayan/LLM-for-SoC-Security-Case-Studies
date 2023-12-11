@@ -65,6 +65,7 @@ module testbench;
 endmodule
 ```
 Turning to the CWE570 (expression is always false) scenario, where an always-false expression was examined, the testbench printed message shows that the final state was never reached, but the conditions to reach that state were not satisfied. As it is shown in the following figure, the reset is constantly active, making it impossible to transition to the next state. Therefore, the printed message that shows that the state was never reached is not a counterexample.
+
 ![image](https://github.com/sahadipayan/LLM-for-SoC-Security-Case-Studies/assets/89291347/5dc0f675-6240-45bd-b5b8-aaa512232b55)
 
 
