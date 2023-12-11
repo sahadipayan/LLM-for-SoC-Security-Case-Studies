@@ -1,5 +1,20 @@
 In this exploration, we aim to assess how adept GPT-4 is at identifying and fixing vulnerabilities in FSM designs. We provided GPT-4 with an FSM design that had clear breaches of two important security rules related to state transitions and the use of default statements. Our approach in querying GPT-4 was strategic: we briefed the model about these security rules and the security assessment, where we mentioned how the rules are violated in the provided design. Subsequently, we tasked GPT-4 with amending the design to ensure compliance with these rules. Additionally, we asked GPT-4 to review its own revised design, drawing from our approach in Case Study I. This method not only checks GPT-4’s skill in addressing problems but also its ability to double-check its work, ensuring that corrections are both safe and aligned with recommended practices. Importantly, we refrained from providing GPT-4 with any specific mitigation strategies, requiring the model to derive solutions autonomously. A sample of the prompt is outlined in Prompt 4.1.
 
+*Prompt 4.1:*
+```
+<Input Design>
+In this case, assume WAIT KEY is the protected state, and other states are unprotected.
+There are two security rules:
+1. All unused states of a control FSM should be handled through the ‘default’ statement in the RTL description
+2. When state transition takes place between two consecutive unprotected states, the hamming distance between the states should be 1.
+Security Assessment:
+These two rules are violated in this design in the following way:
+1. The is no ‘default’ statement through which unused states ’101’, ’110’, and ’111’ are handled.
+2. There are following two state transitions between unprotected states where the hamming distance is not 1.
+WAIT DATA - INDIAL ROUND : 001 - 010 : HD=2 DO ROUND - FINAL ROUND: 011 - 100: HD=3
+Violation Mitigation Instructions:
+Modify the FSM design so that the rules are followed. While modification the STG graph remains the same. For the modified design, check if is there any rule violation in the provided design. If yes, continue modifying until two rules are followed in the modified design.
+```
 Listing 7 shows the input design used in this case study. Here, ‘WAIT KEY’ is considered the protected state. From careful observation, it becomes evident that the input design has two violations of security rules. At first, there is no default statement to handle the unspecified states. This can lead to unpredictable behavior when the system encounters an unspecified state. This unpredictability can be exploited by attackers. Secondly, the hamming distance between unprotected states becomes greater than 1 in the following transitions: like ‘WAIT DATA’ to ‘INITIAL ROUND’ and ‘DO ROUND’ to ‘FINAL ROUND’. 
 
 *Listing 7:*
