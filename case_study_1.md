@@ -62,7 +62,3 @@ module MooreFSM(
         state_out <= 0; // Set output to 0 in S0
       end
 ``` 
-
-**Prompt Guideline 1:** *Incorporate a self-scrutiny step at the end of the prompt to ensure rigorous revision and rectification of potential design or coding issues.*
-
-Following this guideline serves a dual purpose. Firstly, such a self-regulatory mechanism streamlines the output, making it more aligned with standard coding practices. Secondly, it instills an added layer of confidence in the generated result.
