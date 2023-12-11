@@ -1,3 +1,5 @@
+**Case Study 1: Design Generation**
+
 We start the discussion with a very simple example of small design generation in Verilog through LLM. We directed a simple prompt at GPT-3.5, seeking the Verilog representation of a Moore FSM consisting of three states. A portion of the outcome, showcased in the **Listing 1**, exhibits a syntax error. We can notice that in the design, the 'state_out' output signal has conflicting definitions as both wire and reg. Although syntax error is an unusual event in GPT-3.5-generated Verilog designs, a closer look at large-scale outputs reveals occasional syntax issues. For example, sometimes GPT-3.5 generated design contains syntactical problems. Usage of obsolete constructs, missing parenthesis for multiple statements, or the insertion of inappropriate or extraneous punctuations are some of them.
 
 *Listing 1:*
