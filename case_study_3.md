@@ -48,4 +48,20 @@ The DMI JTAG module described in your code seems to implement a kind of password
 ```
 Our investigation persisted by employing a similar debug module, albeit with a distinct implementation utilized in the CVA6 SoC. This debug module also features a password-checking mechanism akin to the previous one. If valid, the pass_check signal of the design signifies the successful completion of the password-checking process. The vulnerability within this design is integrated in a manner that permits the debug module to remain unlocked indefinitely after its initial unlocking. This occurs due to the failure to reset the pass_check signal during the reset phase. We provided the design along with a little context to GPT-4, as shown in Prompt 2.3. The response depicted in Response to Prompt 2.3 initiates an intriguing discussion. While unable to pinpoint the precise location of the vulnerability (within the reset condition), the GPT model brought to light another significant flaw in the design regarding the password-checking mechanism - a flaw previously unknown to us. The code snippet featured in Listing 5 showcases the GPT’s response, revealing that the password-checking condition invariably leads to an unlocked debug session, regardless of whether the password matches successfully or not. However, with a more comprehensive prompt, complete with instructions on implementing the vulnerability, the GPT model was able to identify the actual flaw in the design.
 
+*Listing 5:*
+```verilog
+PassChkValid: begin
+    if(hashValid) begin 
+        if(hash == pass_hash) begin 
+            pass_check = 1'b1;
+        end else begin
+            pass_check = 1'b0;
+        end
+        state_d = Idle;
+    end else begin
+       state_d = PassChkValid;
+    end  
+end
+```
+
 Both investigations emphasize the efficacy of a detailed examination of an SoC, demonstrating that microscopical scrutiny yields a more accurate security assessment of the SoC design. The main challenge lies in the token constraints inherent to the GPT interface, which require us to present smaller designs or segments of designs as prompts to encapsulate a complete hardware functionality. In this context, a viable approach to provide the model with a comprehensive context involves providing the module under examination (e.g., debug module). Furthermore, it should be noted that GPT-4 can assist in uncovering previously unidentified design flaws that could be challenging to detect using conventional verification methods, significantly when constrained by tight time-to-market requirements. Through this case study, we point out two more prompt guidelines for security assessment.
