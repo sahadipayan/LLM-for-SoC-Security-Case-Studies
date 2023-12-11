@@ -44,7 +44,7 @@ Check if this policy is violated in the module. If violated, why, and where?
 ```
 *Response to Prompt 2.3:*
 ```
-The DMI JTAG module described in your code seems to implement a kind of password checking via the PassChk and PassChkValid states and the HMAC module, but there may be a potential violation of policy 1 - “ the password checking
+The DMI JTAG module described in your code seems to implement a kind of password checking via the PassChk and PassChkValid states and the HMAC module, but there may be a potential violation of policy 1 - the password checking
 logic in the debug unit should be correct. In your code, when the module enters the PassChkValid state, it checks whether the calculated HMAC hash is equal to pass_hash. If they are equal, it sets pass_check to 1 (true), else it sets it to 0 (false). This procedure is secure in itself. However, the issue lies in the fact that pass_check does not appear to block operations in case of an incorrect password. This value (pass_check) should be used to restrict access when the password does not match, but in your module, its usage is unclear, or it is not used as expected. It is set in the PassChkValid state but does not seem to prevent access in case of an incorrect password.
 ```
 
