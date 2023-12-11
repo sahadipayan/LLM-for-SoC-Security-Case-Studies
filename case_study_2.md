@@ -23,10 +23,10 @@ Step 3: Add new deadlock_state state in the case statement that has a self-conne
 ```
 
 *Prompt 2:*
-```
-For example, 
- Before deadlock:
-```verilog 
+```verilog
+//For example, 
+// Before deadlock:
+
     parameter X=3'b000, Y=3'b001, Z=3'b011; 
      case(current_state) 
          X: begin
@@ -43,9 +43,9 @@ For example,
         
      endcase
 ```
-
-After deadlock: 
 ```verilog
+//After deadlock: 
+
    case(current_state) 
         X: begin
          if (start)
@@ -64,10 +64,8 @@ After deadlock:
         end
     endcase
 
+//Here, when X transits to deadlock_state, FSM cannot get out of it.
 ```
-Here, when X transits to deadlock_state, FSM cannot get out of it.
-```
-
 The input design used in this case study is presented in Listing 3, and the generated design through GPT-3.5 is outlined in Listing 4. Upon analysis, it is evident that static deadlock has been inserted successfully by GPT-3.5. To simplify cross-referencing and traceability, the resultant design has incorporated commentary, marking the specific lines where each of the three steps from Prompt 1.1 has been executed. This feature, in itself, showcases the attention to detail by GPT-3.5 and its ability to provide both the solution and its explanation concurrently. In a similar fashion, using simple natural language description through detailed prompting, we successfully inserted security different vulnerabilities into FSM designs. Because of such success, we formulated another prompting guideline for vulnerability insertion using LLM. Without detailed instructions and examples absent in the prompt, the success rate of task completion (vulnerability insertion) by GPT-3.5 drops significantly. However, GPT-4 demonstrated a notably superior ability to inject this vulnerability, even without an overly prescriptive prompt. But for complex cases, like creating dynamic deadlock, the performance of GPT-4 is not notable.
 
 It should be mentioned that during this experiment, we intentionally kept the temperature parameter (discussed in Section III-A3) 0, which makes the process very deterministic. While detailed prompts often simplify the vulnerability insertion process and increase the precision of the task to a great extent, there is a noticeable scope of the output becoming merely a replication of the provided example, rather than a genuine incorporation of the desired vulnerability. Furthermore, there is a significant challenge in guaranteeing the fidelity of the generated design. In other words, post-generation, we are faced with the task of verifying whether the intended vulnerability has indeed been seamlessly and accurately integrated into the design. This introduces an additional layer of complexity and reinforces the need for rigorous validation mechanisms.
