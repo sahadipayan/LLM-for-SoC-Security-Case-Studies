@@ -78,7 +78,7 @@ Now implement the deadlock in the provided code. Always implement a deadlock sta
 6) Mark the clock signal as “clk” and reset the signal as “rst”
 7) Make the module name “fsm_module”
 ```
-*Prompt 4:*
+*Prompt 1.4:*
 ```
 When giving a response, only write in the following
 format delimited by [ ]. Make sure that all three steps are followed.
@@ -92,6 +92,154 @@ Review 2: Is there any issue regarding syntax, coding style, and synthesis? If s
 
 The input design used in this case study is presented in Listing 3, and the generated design through GPT-3.5 is outlined in Listing 4. Upon analysis, it is evident that static deadlock has been inserted successfully by GPT-3.5. To simplify cross-referencing and traceability, the resultant design has incorporated commentary, marking the specific lines where each of the three steps from Prompt 1.1 has been executed. This feature, in itself, showcases the attention to detail by GPT-3.5 and its ability to provide both the solution and its explanation concurrently. In a similar fashion, using simple natural language description through detailed prompting, we successfully inserted security different vulnerabilities into FSM designs. Because of such success, we formulated another prompting guideline for vulnerability insertion using LLM. Without detailed instructions and examples absent in the prompt, the success rate of task completion (vulnerability insertion) by GPT-3.5 drops significantly. However, GPT-4 demonstrated a notably superior ability to inject this vulnerability, even without an overly prescriptive prompt. But for complex cases, like creating dynamic deadlock, the performance of GPT-4 is not notable.
 
+*Listing 3:*
+```verilog
+module fsm_module (
+  input clk,
+  input reset,
+  input coin,
+  input productSelected,
+  output reg dispenseItem
+);
+
+  parameter IDLE = 3'b000;
+  parameter ACCEPTING_COINS = 3'b001;
+  parameter PRODUCT_SELECTED = 3'b010;
+  parameter DISPENSING_ITEM = 3'b011;
+
+  reg [2:0] current_state;
+  reg [2:0] next_state;
+
+  always @(posedge clk or posedge reset) begin
+    if (reset) begin
+      current_state <= IDLE;
+    end else begin
+      current_state <= next_state;
+    end
+  end
+
+  always @(*) begin
+    case (current_state)
+      IDLE:
+        begin
+          dispenseItem  = 0;
+          next_state     = ACCEPTING_COINS;
+          if (productSelected) begin
+            next_state = PRODUCT_SELECTED;
+          end
+        end
+      ACCEPTING_COINS:
+        begin
+          dispenseItem  = 0;
+          next_state     = ACCEPTING_COINS;
+          if (coin) begin
+            next_state = PRODUCT_SELECTED;
+          end
+          if (productSelected) begin
+            next_state = PRODUCT_SELECTED;
+          end
+        end
+      PRODUCT_SELECTED:
+        begin
+          dispenseItem  = 0;
+          next_state     = DISPENSING_ITEM;
+          if (!productSelected) begin
+            next_state = ACCEPTING_COINS;
+          end
+        end
+      DISPENSING_ITEM:
+        begin
+          dispenseItem  = 1;
+          next_state     = IDLE;
+        end
+      default:
+        begin
+          dispenseItem  = 0;
+          next_state     = IDLE;
+        end
+    endcase
+  end
+endmodule
+```
+*Listing 4:*
+```verilog
+module fsm_module (
+  input clk,
+  input reset,
+  input coin,
+  input productSelected,
+  output reg dispenseItem
+);
+
+  parameter IDLE = 3'b000;
+  parameter ACCEPTING_COINS = 3'b001;
+  parameter PRODUCT_SELECTED = 3'b010;
+  parameter DISPENSING_ITEM = 3'b011;
+  parameter DEADLOCK_STATE = 3'b100; 
+  //adding new state
+
+  reg [2:0] current_state;
+  reg [2:0] next_state;
+
+  always @(posedge clk or posedge reset) begin
+    if (reset) begin
+      current_state <= IDLE;
+    end else begin
+      current_state <= next_state;
+    end
+  end
+
+  always @(current_state) begin
+    case (current_state)
+      IDLE:
+        begin
+          dispenseItem  = 0;
+          if (productSelected) begin
+            next_state = PRODUCT_SELECTED;
+          end
+          else begin
+            next_state = DEADLOCK_STATE; 
+            //step 2: connecting IDLE to deadlock_state
+          end
+        end
+      ACCEPTING_COINS:
+        begin
+          dispenseItem  = 0;
+          next_state     = ACCEPTING_COINS;
+          if (coin) begin
+            next_state = PRODUCT_SELECTED;
+          end
+          if (productSelected) begin
+            next_state = PRODUCT_SELECTED;
+          end
+        end
+      PRODUCT_SELECTED:
+        begin
+          dispenseItem  = 0;
+          next_state     = DISPENSING_ITEM;
+          if (!productSelected) begin
+            next_state = ACCEPTING_COINS;
+          end
+        end
+      DISPENSING_ITEM:
+        begin
+          dispenseItem  = 1;
+          next_state     = IDLE;
+        end
+      DEADLOCK_STATE: //step 3: adding deadlock state
+        begin
+          dispenseItem = 0;
+          next_state = DEADLOCK_STATE;
+        end
+      default:
+        begin
+          dispenseItem  = 0;
+          next_state     = IDLE;
+        end
+    endcase
+  end
+endmodule
+```
 It should be mentioned that during this experiment, we intentionally kept the temperature parameter (discussed in Section III-A3) 0, which makes the process very deterministic. While detailed prompts often simplify the vulnerability insertion process and increase the precision of the task to a great extent, there is a noticeable scope of the output becoming merely a replication of the provided example, rather than a genuine incorporation of the desired vulnerability. Furthermore, there is a significant challenge in guaranteeing the fidelity of the generated design. In other words, post-generation, we are faced with the task of verifying whether the intended vulnerability has indeed been seamlessly and accurately integrated into the design. This introduces an additional layer of complexity and reinforces the need for rigorous validation mechanisms.
 
 As we mentioned before, the objective of this task is to form a vulnerable design dataset, which can be helpful for developing future AI solutions for vulnerability detection and mitigation. Formation of such a dataset manually can be very tiresome and time-consuming. But such quality of GPT can become a double-edged sword. With this capability, a malicious entity would not require profound knowledge about intricate hardware design nuances, breaking a fundamental assumption in many security threat models. Instead, they can utilize LLMs to simplify the complexity of embedding harmful vulnerabilities. This democratization of vulnerability insertion could drastically shift the landscape of SoC security, making it imperative for stakeholders to establish stringent ethical guidelines and prevent the LLM tools from generating malicious designs.
