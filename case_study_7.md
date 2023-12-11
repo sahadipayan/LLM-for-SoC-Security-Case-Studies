@@ -14,4 +14,8 @@ endproperty
 In conclusion, this property verifies the sequence of states that the FSM should allow upon the rising edge of the start signal. This can be useful to ensure that the FSM is progressing through its states as expected, and it can help detect any issues with the state transitions.
 ```
 
-As an example, Prompt 5.1 showcases one of the SVA-based security properties given to GPT-3.5 for a design of the controller of RSA shown in Figure 9. GPT-3.5 was asked what this property actually checks. “Response to Prompt 5.1” displays the final portion of the reply by GPT-3.5. From the response, it becomes evident that GPT-3.5 not only recognizes the structural components of the property but also grasps the semantic implications of the assertion. The response of the model accurately captures the essence of the property, highlighting its role in verifying the correct sequence of state transitions in the FSM. This shows the potential of GPT-3.5 as a tool for understanding and possibly helping design and verification of complex digital systems.
+As an example, Prompt 5.1 showcases one of the SVA-based security properties given to GPT-3.5 for a design of the controller of RSA shown in the following figure. GPT-3.5 was asked what this property actually checks. “Response to Prompt 5.1” displays the final portion of the reply by GPT-3.5. From the response, it becomes evident that GPT-3.5 not only recognizes the structural components of the property but also grasps the semantic implications of the assertion. The response of the model accurately captures the essence of the property, highlighting its role in verifying the correct sequence of state transitions in the FSM. This shows the potential of GPT-3.5 as a tool for understanding and possibly helping design and verification of complex digital systems.
+
+![image](https://github.com/sahadipayan/LLM-for-SoC-Security-Case-Studies/assets/89291347/989d7058-8b29-45ce-9ef8-c3e3286c6f6b)
+
+
