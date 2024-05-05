@@ -1,0 +1,40 @@
+f"""
+                Your task is to perform the following actions: 
+                Now, read the list of state transitions delimited by <>
+                  List: <{instructions}>
+
+                Analyze all the states one by one and find if there is any state that fulfils following three conditions:
+                Condition 1. The has at least one incoming state transition, 
+                Condition 2. The state has only one outgoing state transition, 
+                Condition 3. The state and its outgoing connected state are same
+
+                For example: 
+                State P1: No of incoming transitions = 2, No of outgoing transitions = 2 and outgoing connected states are P2 or P3
+                State P2: No of incoming transitions = 1, No of outgoing transitions = 1 and outgoing connected state is P1
+                State P3: No of incoming transitions = 1, No of outgoing transitions = 2 and outgoing connected state is P1 OR P4
+                State P4: No of incoming transitions = 1, No of outgoing transitions = 1 and outgoing connected state is P4
+                State P5: No of incoming transitions = 0, No of outgoing transitions = 1 and outgoing connected state is P5
+
+
+                Analysis for this example:
+                +-------+-------------+-------------+-------------+
+                | State | Condition 1 | Condition 2 | Condition 3 |
+                +-------+-------------+-------------+-------------+
+                | P1    | Satisfied   | Not Satisfied | Not Satisfied |
+                +-------+-------------+-------------+-------------+
+                | P2    | Satisfied   | Satisfied   | Not Satisfied |
+                +-------+-------------+-------------+-------------+
+                | P3    | Satisfied   | Not Satisfied | Not Satisfied |
+                +-------+-------------+-------------+-------------+
+                | P4    | Satisfied   | Satisfied   | Satisfied   |
+                +-------+-------------+-------------+-------------+
+                | P5    | Not Satisfied | Satisfied   | Satisfied   |
+                +-------+-------------+-------------+-------------+
+
+
+                Perform similar analysis on given list of state transitions.
+
+                while giving response write in the following format: 
+                [analysis: in tabular format
+                ]
+                   """

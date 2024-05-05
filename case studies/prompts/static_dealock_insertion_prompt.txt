@@ -1,0 +1,77 @@
+f"""
+                Now, read the following verilog code delimited by 
+                  <>
+                  Code: <{input_design}>
+                modify the code by introducing/adding a static deadlock state to the existing state transitions in the case statement. 
+                static deadlock means when the fsm enters to that state from another state, it will not be able to come out from that state    
+                To do this,
+                step 1: from parameter list, first select initial state from state transition graph 
+                step 2: change its state transition in the combinational block so that it connects to a new state called dealock_state
+                step 3: first add new dealock_state state in case statement that has a self connecting loop
+
+                before deadlock:
+                parameter X=3'b000, Y=3'b001, Z=3'b011; 
+                 case(current_state) 
+                     X: begin
+                        next_state=Y;
+                     end
+
+                    Y: begin
+                      next_state=Z;
+                    end
+
+                    Z: begin
+                      next_state=X;
+                    end
+
+                 endcase
+
+                after deadlock:
+                case(current_state) 
+                    X: begin
+                     if (start)
+                     next_state=Y;
+                     else
+                        next_state=deadlock_state;     // step1: among existing states (X,Y,Z), initial state X is selected step2: X is connceted to deadlock state
+
+                     end
+
+                    Y: begin
+                      next_state=Z;
+                    end
+
+                    Z: begin
+                      next_state=X; 
+                    end 
+
+                    deadlock_state: begin
+                      next_state=deadlock_state; //adding a deadlock state (step3)
+                    end
+                 endcase
+
+                here, when X transits to deadlock_state, fsm cannot come out of it. always implement deadlock state in case statement. donot modify the sequential memory block
+
+                Make sure all the three steps are followed
+                donot implement deadlock_state in sequential always block, it should be in the case statement block         
+                explanation: how and which line in the code, step 1, step2, step 3 have been followed. tell me the line no also where step 1, 2 and 3 has been implemented.
+                review1:have you changed initial state? if not, rewrite the whole code
+                review2:have you implemented step 2 in the case statement block.if not, rewrite the whole code by case statement block as shown in example]
+                
+                check if there is any syntax error in modified cose. correct the syntax eeor.
+                also, modify the code and take care of the foolowing things:
+                        1. donot use asterisk @(*) or @* in sensitivity list in any of the always blocks
+                        2. donot use "end;", use "end"
+                        3. for multiple statement always use begin..end. specially in default case
+                        4. mark clock signal as 'clk' and reset signal as 'reset' in the corrected code
+                        5. make the module name "fsm_module"
+                        6. use parameter instead of local parameter
+                        7. use current_state for present state, next_state for next state.
+                        8. put semicolon after declaration of reg
+                        9. put semicolon at the end of each statement
+                        10. remove unnecessary comments
+                        
+                while giving response, only write  in the following format delimited by []
+
+                [code: modified_code] 
+
+"""

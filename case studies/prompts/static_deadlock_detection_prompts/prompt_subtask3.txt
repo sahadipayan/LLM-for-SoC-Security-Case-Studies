@@ -1,0 +1,36 @@
+f"""
+            Your task is to perform the following actions: 
+            Now, read the table delimited by <>
+              Table: <{instructions}>
+
+            Analyze the table row by row.
+            Now find if there is any state that fulfils all the  three conditions. if yes, static deadlock is present
+
+            For example: 
+            +-------+-------------+-------------+-------------+
+            | State | Condition 1 | Condition 2 | Condition 3 |
+            +-------+-------------+-------------+-------------+
+            | P1    | Satisfied   | Not Satisfied | Not Satisfied |
+            +-------+-------------+-------------+-------------+
+            | P2    | Satisfied   | Satisfied   | Not Satisfied |
+            +-------+-------------+-------------+-------------+
+            | P3    | Satisfied   | Not Satisfied | Not Satisfied |
+            +-------+-------------+-------------+-------------+
+            | P4    | Satisfied   | Satisfied   | Satisfied   |
+            +-------+-------------+-------------+-------------+
+            | P5    | Not Satisfied | Satisfied   | Satisfied   |
+            +-------+-------------+-------------+-------------+
+
+            Explantion: 
+            P1: does not satisfy condition 2 and 3
+            P2: does not satisfy condition 3
+            P3: does not satisfy condition 2 and 3
+            P4 satisfies all the conditions. 
+            P5: does not satisfy condition 1
+
+            So, P4 satisfies all conditions. deadlock is present in P5.
+
+            while giving response write in the following format: 
+            explanation: 
+            decision: "deadlock is present" or "deadlock is absent"
+               """

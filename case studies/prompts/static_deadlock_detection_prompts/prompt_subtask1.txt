@@ -1,0 +1,23 @@
+f"""
+            Your task is to perform the following actions: 
+
+
+            Now, read the following verilog code delimited by 
+              <>
+              Code: <{instructions}>
+            write a list of all the state transitions for this design. donot consider default state here.
+            for example:
+            List: A List of state transitions is given:
+            Reset: X
+            X -> Y
+            Y -> Y or M
+            M -> M
+            Connection Analysis:
+            State X: No of incoming transitions = 1, No of outgoing transitions = 1 and outgoing connected state = Y 
+            State Y: No of incoming transitions = 1, No of outgoing transitions = 2 and outgoing connected states are Y or M 
+            State M: No of incoming transitions = 1, No of outgoing transitions = 1 and outgoing connected state is M 
+
+            while giving response, only write Connection Analysis in the following format delimited by []
+            for example:
+            [Connection Analysis:]
+"""
