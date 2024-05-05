@@ -1,0 +1,15 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+1. The AES block: AES is a symmetric encryption standard widely used across the globe. It uses a secret key to encrypt the data. If the key is unknown, AES is considered as one of the safest encryption methods for data. However, the presence of the Trojan can leak the secret key making AES vulnerable. In this case, the key may be leaked via power consumption or through covert channels including AM radio transmission and over the power rail of the system.
+
+2. Key expansion block: The key schedule in AES is an important component that calculates the round keys from the initial key. If not secured properly, this can be used as a site for inserting a Trojan that can leak the round keys, resulting in the leakage of the initial key.
+
+3. AES rounds: Proper operation of the rounds is crucial for AES to ensure the confidentiality of data. Any malicious activity inside these rounds can break the encryption. The Trojan here may flip the least significant bit of the output when certain conditions are met, resulting in incorrect encryption outputs which can be used to gather information.
+
+4. The Trojan: In the given code, the Trojan operation is defined within module1. It outputs a '1' when specified conditions within the AES algorithm are met. This output is then XOR'd with the least significant bit of AES output. 
+
+Explanation:
+
+The Trojan in this design operates by monitoring the input at different stages of the AES algorithm and activates when specific conditions are met. The Trojan watches for changes in signals from different parts of the AES-128 block, specifically signals 's2[89]' and 's5[121]'. When both of these signals become high, the Trojan circuit produces an output of '1'. This output is XOR'd with the least significant bit of the AES output, effectively flipping the least significant bit of the cipher text when the specified conditions are met. This change in output value can then be detected to reveal the timing of the condition being met, which can provide enough information to deduce parts, or even the entirety, of the secret key.

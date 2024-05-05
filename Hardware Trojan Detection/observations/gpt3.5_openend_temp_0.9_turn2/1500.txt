@@ -1,0 +1,17 @@
+Hardware Trojan: No
+
+Security Analysis:
+
+1. aes_128 module:
+   - The aes_128 module implements the main AES encryption algorithm.
+   - It takes the input state and key, and produces the output state and round keys.
+   - The round keys are derived using the expand_key_128 module, which generates the necessary round keys for each round of AES.
+   - The module performs XOR operations between the state and key using the always @ (posedge clk) block, which is triggered on every positive clock edge.
+   - The generated round keys are assigned to individual wires, rk1 to rk8.
+   - There is no security vulnerability or suspicious behavior identified in this module.
+
+2. expand_key_128 module:
+   - The expand_key_128 module generates the round keys for AES encryption.
+   - It takes the input key and generates 10 round keys using a key expansion algorithm.
+   - The key expansion algorithm is implemented using a series of XOR operations and bit manipulations.
+   - The key expansion process is

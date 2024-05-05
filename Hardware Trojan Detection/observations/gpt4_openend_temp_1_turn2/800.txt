@@ -1,0 +1,14 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+1. module top: The design main module is secure due to the absence of trojans or backdoors. It contains three sub-modules named AES, opt1, and opt2. The AES module handles the AES-128 encryption process.
+2. module aes_128: This module in the design serves as an AES-128 encryption block. It is free from any trojans or vulnerabilities and is secure.
+3. module expand_key_128: This module is designed for the key expansion in the AES algorithm and is secure as no trojan or backdoor found.
+4. module lfsr_counter: It is a counter based on Linear Feedback Shift Register (LFSR). It seems free of any malicious activity.
+5. module one_round & final_round: These modules operate to conduct one round and the final round of the AES operation. Both these modules are secure.
+6. module module1 & module2: There are potential security threats or a possible hardware trojan in these modules. Module1 sets a trigger based on a sequence of specific inputs while module2 uses the trigger to change the value of the 'load', which is an output.
+
+Explanation:
+The possible hardware trojan exists in two modules: module1 and module2. If specific data (pre-defined sequence) pass through the 'state' input, module1 generates a wired output 'w1'. When 'w1' becomes high, it makes module2 active. In module2, a unique sequence, based on LFSR counter, is XORed with the 'key' bits and then is used to overwrite 'load' output.
+
+Potentially, if an attacker is aware of this specific sequence, they can activate this Trojan to manipulate the key bits, thus compromising the security of the AES encryption process. So, this Trojan acts as a keyed trigger-based payload and operates in a semi-passive manner.

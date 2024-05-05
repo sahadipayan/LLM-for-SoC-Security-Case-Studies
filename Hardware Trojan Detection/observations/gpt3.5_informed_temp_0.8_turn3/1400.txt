@@ -1,0 +1,8 @@
+Hardware Trojan: No
+Security Analysis: 
+- aes_128 module: This module implements the AES-128 encryption algorithm. It takes in a 128-bit state and key, and produces a 128-bit output. The module consists of multiple rounds, each performing a specific operation on the state and key. The module also includes an expansion key module and a final round module.
+- expand_key_128 module: This module is responsible for expanding the input key into multiple round keys. It takes in the original key and produces 10 round keys. The module includes a shift register and XOR operations to generate the round keys.
+- one_round module: This module performs one round of the AES algorithm. It takes in a state and a round key, and produces the state for the next round. The module includes various operations such as byte substitution, row shifting, column mixing, and XORing with the round key.
+- final_round module: This module performs the final round of the AES algorithm. It takes in a state and the last round key, and produces the final encrypted output. The module includes byte substitution, row shifting, and XORing with the last round key.
+
+Explanation: There is no hardware trojan in the design.

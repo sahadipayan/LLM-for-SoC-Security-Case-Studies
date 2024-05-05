@@ -1,0 +1,12 @@
+Hardware Trojan: Yes
+Security Analysis:
+- aes_128 module: This module implements the AES-128 encryption algorithm. It takes in a clock signal, state, and key as inputs and produces the encrypted output and round keys as outputs. From a security perspective, this module is vulnerable to side-channel attacks, such as power analysis and current-based attacks, as it leaks information about the key through various signals.
+
+- expand_key_128 module: This module is responsible for expanding the original key into multiple round keys used in the AES algorithm. It takes in the clock signal, input key, and round constant as inputs and produces two sets of round keys as outputs. From a security perspective, this module does not have any vulnerabilities.
+
+- module1: This module checks the state input and sets a signal w1 to 1 if the state matches a specific value. From a security perspective, this module does not have any vulnerabilities.
+
+- module2: This module includes multiple shift registers and enables based on the state and round keys. It performs bitwise operations between the state and round keys to determine the enable signals for the shift registers. From a security perspective, this module is vulnerable to trojan attacks as it can be used to introduce malicious behavior based on specific plaintext inputs.
+
+Explanation:
+The design contains a hardware trojan that operates through module2. The enable signals for the shift registers are determined by the bitwise operations between the state and round keys. This allows an attacker to introduce additional signals into the enable signals based on specific plaintext inputs. These additional signals can be used to leak information about the key or perform malicious actions during the encryption process, compromising the security of the AES algorithm.

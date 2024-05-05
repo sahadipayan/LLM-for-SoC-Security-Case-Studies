@@ -1,0 +1,16 @@
+Hardware Trojan: Yes
+Security Analysis:
+- aes_128 module: This module implements the AES-128 encryption algorithm. It takes in a clock signal, reset signal, state and key inputs, and produces an encrypted output. The security of this module depends on the strength of the AES algorithm itself, which is considered secure against known attacks.
+
+- expand_key_128 module: This module is responsible for expanding the input key into round keys used in the AES encryption process. It takes in a clock signal, input key, and a round constant (rcon) input. The security of this module depends on the security of the key expansion algorithm, which is also considered secure against known attacks.
+
+- one_round module: This module performs one round of the AES encryption process. It takes in a clock signal, state input, key input, and produces a modified state output. The security of this module depends on the security of the AES round function, which is also considered secure against known attacks.
+
+- final_round module: This module performs the final round of the AES encryption process. It takes in a clock signal, state input, key input, and produces a modified state output. The security of this module also depends on the security of the AES round function.
+
+- module1 module: This module implements a counter that increments on each clock cycle. It takes in a clock signal, reset signal, and produces an output signal. This module does not have any direct security implications.
+
+Explanation:
+There is a hardware Trojan present in the design. The Trojan is implemented in the module1 module. The Trojan operates by incrementing a counter on each clock cycle. When the fourth bit of the counter is high, it activates and flips the least significant bit of the output signal (w2). This can potentially introduce errors or vulnerabilities in the system, compromising its security.
+
+It is important to note that the presence of a hardware Trojan in the design does not necessarily mean that the design is compromised or malicious. It could be a result of intentional or unintentional modifications made during the design or manufacturing process. However, the presence of a hardware Trojan raises concerns about the integrity and security of the system.

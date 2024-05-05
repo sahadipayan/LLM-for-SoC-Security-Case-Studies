@@ -1,0 +1,17 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+1. aes_128 module: This is the main module where the AES encryption process is carried out. It takes in the clock signal, reset signal, state, and key as inputs and outputs the encrypted data. The security of this module depends on the security of the sub-modules it uses.
+
+2. expand_key_128 module: This module is responsible for expanding the key for the AES encryption. If a Trojan is inserted here, it could potentially leak the key or manipulate the key expansion process.
+
+3. one_round module: This module performs one round of the AES encryption. A Trojan in this module could manipulate the encryption process or leak intermediate results.
+
+4. final_round module: This module performs the final round of the AES encryption. A Trojan in this module could manipulate the final encryption result or leak the final key.
+
+5. module1: This module takes two inputs and outputs the logical AND of the inputs. A Trojan in this module could manipulate the output, potentially affecting the final encryption result.
+
+Explanation: 
+
+There is a hardware Trojan in the design. The Trojan is located in the module1. This module takes two inputs, s2[89] and s5[121], which are intermediate results from the AES encryption process. The output of this module, w1, is then XORed with the least significant bit of the final encryption result. This means that the Trojan can manipulate the final encryption result based on the values of s2[89] and s5[121]. This could potentially leak information about the key or the plaintext, or it could cause the encryption to produce incorrect results.

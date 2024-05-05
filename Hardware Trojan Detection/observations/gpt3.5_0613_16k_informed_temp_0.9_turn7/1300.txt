@@ -1,0 +1,15 @@
+Security Analysis:
+- aes_128 module: This module implements the AES-128 block cipher algorithm. It takes the clock signal, input state, and key as inputs and produces the encrypted output and round keys as outputs. The encryption process involves a series of rounds with key expansion at each round. The module uses various combinational and sequential logic to perform the encryption process.
+
+- expand_key_128 module: This module is responsible for expanding the original key into multiple round keys used in the AES algorithm. It takes the clock signal, input key, and round constant as inputs and generates two sets of round keys as outputs. The module uses key expansion logic to generate the round keys. The key expansion process involves XORing the input key with previous round key values and applying S-box transformations.
+
+- one_round module: This module implements a single round of the AES algorithm. It takes the clock signal, input state, and round key as inputs and produces the intermediate state for the next round. The module uses various combinational logic, such as SubBytes, ShiftRows, MixColumns, and AddRoundKey, to transform the state according to the AES algorithm.
+
+- final_round module: This module implements the final round of the AES algorithm. It takes the clock signal, input state, and round key as inputs and produces the encrypted output. The module uses the SubBytes, ShiftRows, and AddRoundKey transformations to perform the final encryption step.
+
+- module1 module: This module is a control module that determines the value of a signal w1 based on the input state and a reset signal. If the input state matches a predefined value, w1 is set to 1; otherwise, it is set to 0. This module is used to trigger the hardware trojan.
+
+- module2 module: This module is another control module that generates the enable signals for shift registers used by the hardware trojan. It takes the clock signal, reset signal, w1 signal, input state, and round keys as inputs. Based on the value of w1 and certain conditions involving the input state and round keys, the enable signals for the shift registers are generated.
+
+Hardware Trojan: Yes
+Explanation: The hardware trojan is inserted in the module2 module. The trojan operates by generating enable signals for shift registers based on the value of w1 and certain conditions involving the input state and round keys. When the trojan is activated (w1 is 1 and the conditions are met), the enable signals enable the shift registers to rotate, causing a change in the power consumption of the design. This change in power consumption can potentially disrupt the normal operation of the design or leak sensitive information.

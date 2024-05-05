@@ -1,0 +1,11 @@
+Hardware Trojan: No
+Security Analysis:
+- module top: No security vulnerabilities detected
+- module aes_128: No security vulnerabilities detected
+- module expand_key_128: No security vulnerabilities detected
+- module one_round: No security vulnerabilities detected
+- module final_round: No security vulnerabilities detected
+- module lfsr_counter: No security vulnerabilities detected
+- module module1: No security vulnerabilities detected
+
+Explanation: There are no hardware trojans detected in the given AES design. Every module in the design has been analyzed and found to be free from security vulnerabilities.

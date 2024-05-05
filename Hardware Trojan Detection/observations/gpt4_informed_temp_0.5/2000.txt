@@ -1,0 +1,15 @@
+Security Analysis: 
+
+1. aes_128 Module: This is the main AES encryption block. It takes in the state and key as inputs and produces the encrypted output. This block is secure as long as the key is kept secret and is not leaked through side channels.
+
+2. expand_key_128 Module: This module is responsible for key expansion in AES. It generates round keys from the initial key. This block is secure if the initial key and the round keys are kept secret.
+
+3. one_round Module: This module performs one round of AES encryption. It is secure as long as the round keys and intermediate states are kept secret.
+
+4. final_round Module: This module performs the final round of AES encryption. It is secure as long as the round key and intermediate state are kept secret.
+
+5. module1 and module2: These modules are suspicious. module1 seems to be looking for a specific sequence of input plaintexts to trigger a flag (w1). module2 seems to be leaking the key bit by bit when triggered by w1. 
+
+Hardware Trojan: Yes
+
+Explanation: The Hardware Trojan in this design is implemented in module1 and module2. module1 is a trigger mechanism that gets activated when a specific sequence of plaintext input is observed. Once this trigger is activated, it sets the flag w1. module2 is the payload of the Trojan. It uses the flag w1 to start leaking the secret key bit by bit. The secret key is shifted right every time the most significant bit of a counter (which increments every clock cycle) is 1, effectively leaking the key one bit at a time. The leaked bit is then inverted multiple times to create a power consumption pattern that can be detected externally. This is a type of side-channel attack, where information is leaked through physical characteristics (power consumption, in this case) of the device.

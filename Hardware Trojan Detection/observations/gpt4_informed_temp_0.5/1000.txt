@@ -1,0 +1,17 @@
+Security Analysis: 
+
+1. The top module: This module is the main module that connects all the other modules. It takes the clock, reset signal, state, and key as inputs and gives the output. It also has an output for a capacitance signal. There is no obvious security risk in this module. 
+
+2. aes_128 module: This is the main AES encryption module. It takes clock, state, and key as inputs and gives the output. It uses expand_key_128 and one_round modules for key expansion and encryption rounds. The final_round module is used for the final round of encryption. This module is also free of any obvious security risks.
+
+3. expand_key_128 module: This module is used for key expansion in the AES encryption process. It takes clock, input key, and round constant as inputs and gives two outputs. There is no obvious security risk in this module.
+
+4. lfsr_counter module: This module uses a Linear Feedback Shift Register (LFSR) to generate a pseudo-random sequence. It takes reset, clock, and data as inputs and gives an LFSR output. The LFSR sequence is XORed with the key in module1. This could potentially be a security risk if the LFSR sequence is predictable or known to an attacker.
+
+5. module2: This module takes reset and state as inputs and gives a single output. The output of this module is used to control the LFSR in the lfsr_counter module. If the state matches a certain value, the output of this module is set to 1. This could be a potential security risk if the state value is known to an attacker.
+
+6. module1: This module takes reset, clock, output of module2, key, and data as inputs and gives a load output. The output of this module is the XOR of the key and the LFSR sequence. This could be a potential security risk if the LFSR sequence is predictable or known to an attacker.
+
+Hardware Torjan: Yes
+
+Explanation: The hardware Trojan in this design is implemented in the lfsr_counter, module2, and module1. The Trojan is activated when the state matches a certain value in module2. This causes the output of module2 to be set to 1, which in turn activates the LFSR in the lfsr_counter module. The output of the lfsr_counter is then XORed with the key in module1. This could potentially leak the key if the LFSR sequence is known or predictable. The Trojan increases the power consumption and hence decreases the expected lifetime of the battery.

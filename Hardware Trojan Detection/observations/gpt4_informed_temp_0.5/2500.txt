@@ -1,0 +1,27 @@
+Security Analysis: 
+
+The given AES-128 design is divided into multiple modules, each of which will be analyzed from a security perspective:
+
+1. aes_128: This is the main module that takes in the clock signal, reset signal, initial state, and key as inputs. It outputs the encrypted data. The module uses different stages of AES encryption such as key expansion, one round, and final round. 
+
+2. expand_key_128: This module is responsible for the key expansion phase of the AES algorithm. It takes the initial key and performs operations to generate round keys. If the key is compromised, the whole encryption process is at risk.
+
+3. one_round: This module performs one round of the AES encryption. Multiple rounds of encryption increase the security of the AES algorithm.
+
+4. final_round: This module performs the final round of the AES encryption. This is the last step of the encryption process where the final cipher text is generated.
+
+5. module1: This module is a 4-bit counter that increments after each clock cycle. The output of this module is used to flip the least significant bit of the encrypted output.
+
+Hardware Trojan: Yes
+
+Explanation: 
+
+The Hardware Trojan in the design is present in the form of the 'module1' which is a counter. The counter increments after each clock cycle and its output is used to flip the least significant bit of the encrypted output. This is a type of fault injection attack where the output of the encryption process is altered. 
+
+The Trojan is triggered when the counter reaches a certain value (when the fourth bit of the counter is high). Once triggered, the Trojan starts flipping the least significant bit of the encrypted output. This can change the encrypted data and potentially lead to incorrect decryption at the receiver end. 
+
+The Trojan is subtle and can be hard to detect as it does not directly interfere with the encryption process. Instead, it alters the final output after the encryption process is completed. The Trojan can be used to introduce errors in the encrypted data or it can be used as a backdoor to leak information about the encrypted data. 
+
+The Trojan can be detected by monitoring the output of the encryption process for unexpected changes. Also, the power consumption of the device can be monitored as the Trojan may cause an increase in power consumption when it is active. 
+
+In conclusion, the presence of the Hardware Trojan in the design can compromise the security of the AES encryption process and measures should be taken to detect and remove the Trojan.

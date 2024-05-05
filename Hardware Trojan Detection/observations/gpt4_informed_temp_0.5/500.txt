@@ -1,0 +1,17 @@
+Security Analysis: 
+
+1. Module top: The top module is the main module that connects the AES_128 and module1. There is no security concern in this module as it only connects the other modules.
+
+2. Module aes_128: This module is the core AES encryption engine. It consists of multiple rounds of encryption with key expansion. The main security concern in this module is that if the keys or the intermediate states are leaked, it can compromise the whole encryption process.
+
+3. Module expand_key_128: This module is responsible for expanding the key for each round of AES encryption. The security concern here is that if the expanded keys are leaked, it can lead to a complete breakdown of the AES encryption.
+
+4. Module one_round: This module performs one round of AES encryption. The security concern here is similar to aes_128. If the intermediate states or the keys are leaked, it can compromise the encryption.
+
+5. Module final_round: This module performs the final round of AES encryption. The security concern here is similar to aes_128 and one_round. If the intermediate states or the keys are leaked, it can compromise the encryption.
+
+6. Module module1: This module appears to be a shift register that rotates based on specific input states. The security concern here is that if the states that trigger the rotation are known, it can be used to drain the battery or leak information.
+
+Hardware Trojan: Yes
+
+Explanation: The hardware trojan is present in the module1. The trojan is triggered when it observes a specific sequence of input states. Once triggered, the trojan activates a shift register which continuously rotates. This increases power consumption and can drain the battery of the device.

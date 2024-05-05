@@ -1,0 +1,21 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+1. Module Top: This is the top module which includes all the sub-modules. No security issues are apparent in this module.
+
+2. Module aes_128: This is the main AES encryption module. It takes the input state and key, performs the operations, and outputs the encrypted data. This module seems secure as it does not involve any suspicious operations that might indicate a hardware trojan.
+
+3. Module expand_key_128: This module is involved in the key expansion process of the AES algorithm. It seems secure as it does not involve any suspicious operations that might indicate a hardware trojan.
+
+4. Module one_round and final_round: These modules are involved in the main round and final round of the AES algorithm respectively. They seem secure as they do not involve any suspicious operations that might indicate a hardware trojan.
+
+5. Module module1: This module appears to be a state machine. It seems to be secure as it does not involve any suspicious operations that might indicate a hardware trojan.
+
+6. Module module2: This module appears to be a counter and key shifting operation. It is here that the potential hardware trojan is detected.
+
+Explanation: 
+
+The hardware trojan is suspected in module2. The trojan operates by shifting the secret key to the right by one bit every time the counter reaches its maximum value (when COUNTER[127] is 1) and w1 is 1. This operation effectively leaks the secret key bit by bit. The leaked bit is inverted 11 times through a series of inverters (INV1_out to INV11_out). 
+
+This operation does not affect the normal operation of the AES encryption process, making it harder to detect. However, an attacker could potentially monitor the output of these inverters to gradually reconstruct the secret key, thus breaking the encryption. This is a type of side-channel attack known as a timing attack, as the timing of the counter reaching its maximum value is used to leak information.

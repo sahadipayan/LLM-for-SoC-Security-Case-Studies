@@ -1,0 +1,20 @@
+Hardware Torjan: Yes
+Security Analysis: Following is the security analysis block by block:
+
+- The first block or top module integrates the AES_128 module and another module namely module1. At first glance, the top module seems secure as all the necessary inputs and outputs are present. 
+
+- aes_128: It includes 'expand_key_128' for key scheduling, 'one_round' for the main rounds of the 128-bit AES algorithm, and the 'final_round' for final transformation. It doesn't show signs of any residual hardware Trojan or malicious code and appears secure. 
+
+- expand_key_128: It takes in input, rcon, and out in multiple instances. The logic is fairly standard for AES key expansion and this block does not pose any security threats. 
+
+- one_round and final_round: Standard AES transformations are performed. No signs of security threats or Trojans.
+
+- module1:  This module seems suspicious and acts like a trojan. It has State conditions and in particular, looks like it is programmed to do something when the state matches certain fixed numerical sequences. 
+
+Explanation: Yes, there is a Trojan present in the design in 'module1'. It continuously rotates relevant bits in a 128-bit register, depending on specific input sequences or state changes.
+
+Specifically, this module waits for a sequence of predefined inputs given by "state". When these conditions are met, the least significant bit of the 128-bit register w2 is shifted towards the left, practically creating an infinite loop if the input sequence stays the same. This increases the device's power consumption, acting similar to a Battery Drain Trojan, and is designed to drain the battery of the device. 
+
+In particular, this hardware Trojan would be very harmful in the context of battery-dependent devices such as biomedical implants or mobile devices where an unexpected battery drain could have catastrophic results. 
+
+The sequence of state inputs ('3243f6a8_885a308d_313198a2_e0370734', '00112233_44556677_8899aabb_ccddeeff', '0', and '1') it waits for could be a code known only to the attacker, making this Hardware Trojan hard to detect without knowledge of said coding sequence.

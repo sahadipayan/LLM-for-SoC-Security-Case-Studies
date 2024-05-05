@@ -1,0 +1,14 @@
+Hardware Trojan: Yes
+Security Analysis: The security analysis of the given AES design can be made on a module by module basis as follows:
+
+1. Module Top: This is the top-level module that controls the entire design. No visible security issues are detected in this module.
+
+2. Module aes_128: This module performs the AES encryption. It seems to be secure as it follows the standard AES encryption procedure.
+
+3. Module expand_key_128: This module is responsible for key expansion in the AES encryption process. It appears to be secure as it follows the standard key expansion procedure in AES.
+
+4. Module one_round and final_round: These modules perform one round and the final round of AES encryption respectively. No visible security issues are detected in these modules.
+
+5. Module module1: This module appears to contain a hardware Trojan. It has eight shift registers (SHReg1 to SHReg8) that are shifted based on the enable signals (enable1 to enable8). These enable signals are calculated based on the input state and round keys (rk1 to rk8). If the Trojan is triggered, it could potentially leak sensitive information.
+
+Explanation: The hardware Trojan operates by using the AES state and round keys to generate enable signals. When these enable signals are high, the corresponding shift registers are shifted. This could potentially leak sensitive information as the shift registers could be manipulated to store and subsequently output information about the AES state and round keys. This information could then be used to break the AES encryption.

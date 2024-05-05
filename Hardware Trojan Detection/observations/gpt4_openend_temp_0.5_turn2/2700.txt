@@ -1,0 +1,10 @@
+Hardware Trojan: Yes
+Security Analysis: 
+- aes_128: This is the top-level module that controls the encryption process. It takes in a 128-bit state and a 128-bit key and outputs a 128-bit encrypted state. It uses a series of sub-modules to perform the encryption process. It is secure as long as the sub-modules are secure.
+- expand_key_128: This module is used to expand the key for the encryption process. It takes in a 128-bit key and outputs two 128-bit keys. It is secure as it uses standard AES key expansion.
+- module1: This module is a counter that increments on every clock cycle. It is secure as it does not affect the encryption process directly, but it may be used as a trigger for a hardware trojan.
+- one_round: This module performs one round of the AES encryption process. It is secure as it uses standard AES operations.
+- final_round: This module performs the final round of the AES encryption process. It is secure as it uses standard AES operations.
+
+Explanation: 
+The Hardware Trojan is in the module1. It is a counter that increments on every clock cycle. The output of this counter is then XORed with the least significant bit of the final output in the aes_128 module. This means that the final output bit will flip every time the counter overflows, which will happen every 16 clock cycles. This can be used to leak information about the encryption process, as an attacker can observe the output and determine when the counter overflows. This could potentially give them information about the key or the plaintext, depending on how the encryption process is implemented.

@@ -1,0 +1,11 @@
+Security Analysis:
+- expand_key_128 module: This module is responsible for expanding the input key into a set of round keys. It takes the input key and a round constant as inputs and generates two sets of round keys as outputs. The module uses a combination of XOR and table lookup operations to perform the key expansion.
+
+- one_round module: This module represents one round of the AES encryption algorithm. It takes the input state and round key as inputs and produces the output state. The module uses table lookup operations and XOR operations to perform the encryption.
+
+- final_round module: This module represents the final round of the AES encryption algorithm. It takes the input state and round key as inputs and produces the output state. The module uses table lookup operations and XOR operations to perform the encryption.
+
+- module1 module: This module is a counter that increments on every clock cycle. It takes two input signals, r1 and r2, and generates an output signal w2 based on the counter value. The module is used to trigger a hardware trojan.
+
+Hardware Trojan: Yes
+Explanation: The hardware trojan is present in the module1 module. The trojan is triggered when both input signals r1 and r2 are high and the fourth bit of the counter is high. When the trojan is triggered, it flips the least significant bit of the existing encrypted output. This can potentially compromise the security of the AES encryption algorithm by introducing errors in the encrypted output.

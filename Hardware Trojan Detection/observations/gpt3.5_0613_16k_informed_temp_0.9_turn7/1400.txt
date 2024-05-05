@@ -1,0 +1,17 @@
+Security Analysis: 
+
+expand_key_128 module:
+- This module takes in the input key and produces multiple intermediate keys for each round of AES encryption. It uses a round constant (rcon) and bitwise XOR operations to generate these keys.
+- Security: The module appears to be secure as it follows the standard AES key expansion algorithm and there are no obvious vulnerabilities or potential exploits.
+
+one_round module:
+- This module performs one round of AES encryption by taking in the current state and the corresponding round key. It applies the SubBytes, ShiftRows, MixColumns, and AddRoundKey operations to the state to produce the next state.
+- Security: The module implements the AES encryption process correctly and does not exhibit any security vulnerabilities.
+
+final_round module:
+- This module performs the final round of AES encryption by applying the SubBytes, ShiftRows, and AddRoundKey operations to the state using the final round key.
+- Security: The module follows the standard AES encryption process and does not have any apparent security issues.
+
+Hardware Trojan: No
+
+Explanation: There is no hardware trojan present in the design. All the modules perform their intended encryption operations without any suspicious or malicious behavior. The design appears to be secure and free from any hidden functionalities that could compromise the security of the AES algorithm.

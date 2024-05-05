@@ -1,0 +1,15 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+- Module AES_128: This module is an implementation of the AES 128-bit encryption algorithm. From the security perspective, this module seems to be secure because it goes through the AES encryption process by expanding the key and performing each round of the AES algorithm. 
+
+- Module one_round and final_round: They perform the major role of AES algorithm. They follow AES encryption correctly from a security perspective.
+
+- Module expand_key_128: This module is responsible for expanding the encryption key. It appears to follow the AES key expansion process correctly and securly.
+
+- Module module1 and module2: Here comes the potential security issue. Module1 and module2 themselves may not have apparent security issues initially, but their relationship and interaction cause a problem. Module1 is counting the number of output blocks and once it reaches to a certain limit, it triggers module2. In turn, module2 performs an operation on the round keys (rk1-rk8), which could potentially be a hardware Trojan. 
+
+Explanation: The potential hardware Trojan operates by triggering an operation within module2 after a certain number of AES output blocks have been processed. This operation may perform an unexpected and potentially harmful action that manipulates the round keys (rk1-rk8). This could potentially change the encryption/decryption process in an undesirable way and thus compromise the cryptography system using this AES module. 
+
+Recommendation: We need to investigate the purpose and behavior of module2 in depth. If this operation in module2 is unnecessary or not intended, it should likely be removed to prevent potential security risks.

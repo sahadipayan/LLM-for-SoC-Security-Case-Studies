@@ -1,0 +1,12 @@
+Hardware Trojan: No
+
+Security Analysis:
+- aes_128 module: This module implements the AES-128 encryption algorithm. It takes the state and key as inputs and produces the encrypted output. It also generates round keys rk1 to rk8. From a security perspective, the AES algorithm is considered secure against known attacks.
+
+- expand_key_128 module: This module is responsible for expanding the input key into round keys. It uses a key expansion algorithm to generate the round keys rk1 to rk8. The algorithm is based on bitwise operations and XOR operations. From a security perspective, the key expansion algorithm is considered secure.
+
+- module1: This module checks the state value and sets the w1 signal accordingly. If the state matches a specific value, w1 is set to 1, otherwise it is set to 0. This module does not have any security implications.
+
+- module2: This module implements a shift register for each round key. The shift register is updated based on the enable signals and the values of the state and round keys. This module does not have any security implications.
+
+Explanation: There is no hardware Trojan in the design. The design implements the AES-128 encryption algorithm and its key expansion algorithm, which are considered secure. The other modules in the design do not have any security implications.

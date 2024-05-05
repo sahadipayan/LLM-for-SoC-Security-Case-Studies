@@ -1,0 +1,21 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+1. Top Module: The top module connects the AES encryption module with two other modules, operation1 and operation2. It doesn't seem to have any security issues on its own.
+
+2. AES_128 Module: This is the main AES encryption module. It doesn't seem to have any security issues on its own. However, its security depends on the integrity of the key expansion and round modules it uses.
+
+3. Expand_key_128 Module: This module is responsible for key expansion in AES. It doesn't seem to have any security issues on its own.
+
+4. LFSR_counter Module: This module generates a pseudo-random number sequence. It doesn't seem to have any security issues on its own.
+
+5. Module1: This module seems to be a trigger module. It activates when a specific sequence of plaintext is input. This could be a potential security issue as it could be used to activate a hardware Trojan.
+
+6. Module2: This module seems to be the main Trojan module. It uses the output from the trigger module (module1) and the pseudo-random number sequence from the LFSR_counter to modify the AES key. This is a major security issue as it could allow an attacker to predict or control the AES key.
+
+Explanation: 
+
+The hardware Trojan in this design is activated by a specific sequence of plaintext inputs. When this sequence is detected by module1, it activates module2. Module2 then uses a pseudo-random number sequence from the LFSR_counter to modify the AES key. This could allow an attacker to predict or control the AES key, effectively breaking the encryption. 
+
+The Trojan operates in a very stealthy manner. It only activates on a specific sequence of inputs, making it hard to detect during normal operation. Furthermore, it uses a pseudo-random number sequence to modify the key, making the modifications hard to predict or detect.

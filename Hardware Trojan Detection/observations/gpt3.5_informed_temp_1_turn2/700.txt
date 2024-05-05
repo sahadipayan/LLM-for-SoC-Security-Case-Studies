@@ -1,0 +1,7 @@
+Hardware Torjan: Yes
+Security Analysis:
+- aes_128 module: This module implements the AES-128 encryption algorithm. It takes in a clock signal, state and key inputs, and outputs the encrypted data. The security of this module depends on the strength of the AES algorithm itself and the security of the key.
+
+- expand_key_128 module: This module expands the input key into a set of round keys used in the AES algorithm. It takes in a clock signal, the input key, and an 8-bit round constant. The security of this module depends on the security of the key generation process and the number of rounds used in the AES algorithm.
+
+- one_round module: This module performs one round of AES encryption. It takes in a clock signal, the input state, key, and outputs the updated state after one round. The security of this module depends on the security

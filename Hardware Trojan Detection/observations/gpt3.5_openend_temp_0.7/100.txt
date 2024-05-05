@@ -1,0 +1,37 @@
+Hardware Trojan: No
+
+Security Analysis:
+1. aes_128 module: 
+   - The module takes in the clock signal, reset signal, state, key, and produces the output "out" and "Capacitance".
+   - The module implements the AES-128 encryption algorithm.
+   - The state and key inputs are XORed and stored in registers s0 and k0 respectively on every positive edge of the clock.
+   - The expand_key_128 module is instantiated to generate the round keys.
+   - The one_round module is instantiated for each round of AES encryption.
+   - The final_round module is instantiated for the final round of AES encryption.
+   - The output of the final_round module is the final encrypted output "out".
+   - The module also has an output "Capacitance" which is not directly related to security.
+
+2. expand_key_128 module:
+   - The module takes in the clock signal, input key, rcon, and produces two outputs out_1 and out_2.
+   - The module expands the input key into multiple round keys using the AES key expansion algorithm.
+   - The module performs XOR operations on the input key and rcon to generate intermediate values v0, v1, v2, and v3.
+   - The values v0, v1, v2, and v3 are stored in registers k0a, k1a, k2a, and k3a respectively on every positive edge of the clock.
+   - The S4 module is instantiated to generate k4a.
+   - The round keys k0a, k1a, k2a, k3a, and k4a are XORed with each other to generate the output keys k0b, k1b, k2b, k3b, and k4b.
+   - The output keys are stored in registers k0b, k1b, k2b, k3b on every positive edge of the clock.
+   - The output keys are then assigned to out_1 and out_2 respectively.
+
+3. one_round module:
+   - The module takes in the clock signal, input state, key, and produces the output state_out.
+   - The module performs one round of AES encryption.
+   - The input state and key are split into four 32-bit values s0, s1, s2, and s3, and k0, k1, k2, and k3 respectively.
+   - The S-Box table is looked up for each of the four 32-bit values to produce p00, p01, p02, p03, p10, p11, p12, p13, p20, p21, p22, p23, p30, p31, p32, p33.
+   - The values p00, p11, p22, p33 are XORed with the corresponding key values k0, k1, k2, k3 to produce z0, z1, z2, z3.
+   - The output state_out is formed by concatenating z0, z1, z2, z3.
+
+4. final_round module:
+   - The module takes in the clock signal, input state, input key_in, and produces the output state_out.
+   - The module performs the final round of AES encryption.
+   - The input state and key_in are split into four 32-bit values s0, s1, s2, and s3, and k0, k1, k2, and k3 respectively.
+   - The S4 module is instantiated to generate p00, p01, p02, p03, p10, p11, p12, p13, p20, p21, p22, p23, p30, p31, p32, p33.
+   - The values p00, p11, p22, p33 are XOR

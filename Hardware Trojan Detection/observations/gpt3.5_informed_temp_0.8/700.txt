@@ -1,0 +1,8 @@
+Hardware Trojan: Yes
+Security Analysis:
+1. aes_128 module: 
+   - The aes_128 module is responsible for encrypting the input state using the provided key.
+   - It consists of expand_key_128, one_round, and final_round sub-modules.
+   - The security analysis of these sub-modules is as follows:
+     - expand_key_128: This module takes the input key and generates round keys for each round of the AES algorithm. It uses a shift register and bitwise operations to manipulate the key bits. From a security perspective, this module is vulnerable to trojan insertion.
+     - one_round: This module performs one round of the AES algorithm using the input state and round key. It uses table lookups and bitwise operations to manipulate the state. From a security perspective, this module is

@@ -1,0 +1,10 @@
+Hardware Trojan: No
+
+Security Analysis:
+- aes_128 module: This module implements the AES encryption algorithm. It takes the input state and key, performs key expansion using the expand_key_128 module, and then performs multiple rounds of encryption using the one_round module. Finally, it performs the final round of encryption using the final_round module. The module does not have any security vulnerabilities or weaknesses.
+
+- expand_key_128 module: This module is responsible for expanding the input key into multiple round keys. It uses the S4 module for key expansion. The module does not have any security vulnerabilities or weaknesses.
+
+- one_round module: This module performs one round of AES encryption. It takes the input state and key, performs table lookups using the table_lookup module, and then performs XOR operations with the round key. The module does not have any security vulnerabilities or weaknesses.
+
+- final_round module: This module performs the final round of AES encryption. It takes the input state and key, performs table lookups using the S4 module, and

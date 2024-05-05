@@ -1,0 +1,15 @@
+Security Analysis:
+- aes_128 module: This module implements the AES-128 block cipher algorithm. It takes the clock signal, state, and key as inputs and produces the encrypted output. The module consists of several sub-modules that perform different operations such as key expansion and encryption rounds.
+
+- expand_key_128 module: This module is responsible for expanding the input key into a set of round keys. It takes the clock signal, input key, and a round constant as inputs and generates two sets of round keys as outputs. The module performs table lookups and XOR operations to generate the round keys.
+
+- one_round module: This module performs one round of encryption. It takes the clock signal, input state, key, and produces the output state. The module uses table lookups and XOR operations to perform the encryption.
+
+- final_round module: This module performs the final round of encryption. It takes the clock signal, input state, key, and produces the output state. The module uses table lookups and XOR operations to perform the encryption.
+
+- module1 module: This module acts as a trigger for the hardware trojan. It takes the reset signal and input state as inputs and produces a signal w1 as output. The module sets the w1 signal to 1 when a specific input state is detected.
+
+- module2 module: This module is responsible for the operation of the hardware trojan. It takes the clock signal, reset signal, input key, and w1 signal as inputs. The module uses the w1 signal to activate the trojan. When the trojan is activated, it performs a series of inverter operations on the w2 signal, which is derived from the input key. The trojan aims to introduce leaking intermediate states in the key schedule that would not occur during regular processing of the cipher.
+
+Hardware Trojan: Yes
+Explanation: The hardware trojan operates by activating when a specific input state is detected by the module1. Once activated, the trojan uses the w1 signal to trigger the module2. The module2 then performs a series of inverter operations on the w2 signal, which is derived from the input key. This introduces leaking intermediate states in the key schedule that would not occur during regular processing of the cipher. The trojan aims to compromise the security of the AES-128 encryption algorithm by manipulating the key schedule.

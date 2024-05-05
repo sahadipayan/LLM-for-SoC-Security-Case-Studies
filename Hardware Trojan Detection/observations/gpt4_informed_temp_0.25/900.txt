@@ -1,0 +1,19 @@
+Hardware Trojan: Yes
+Security Analysis: 
+1. Top Module: The top module connects the AES encryption with two other modules. The security of this module depends on the security of the modules it connects. 
+
+2. AES_128 Module: This module implements the AES encryption algorithm. It is secure as long as the key is kept secret and the implementation is correct.
+
+3. Expand_key_128 Module: This module is used for key expansion in AES. It is secure as long as the key is kept secret.
+
+4. One_round Module: This module performs one round of AES encryption. It is secure as long as the key and state are kept secret.
+
+5. Final_round Module: This module performs the final round of AES encryption. It is secure as long as the key and state are kept secret.
+
+6. LFSR_counter Module: This module generates a pseudo-random sequence. It is secure as long as the initial state is kept secret.
+
+7. Module1: This module increments a counter with each encryption and activates a signal when the counter reaches a certain value. This could potentially be used as a trigger for a hardware Trojan.
+
+8. Module2: This module XORs the key with a counter value and stores the result in a register. This could potentially leak information about the key.
+
+Explanation: The hardware Trojan is located in module1 and module2. In module1, a counter is incremented with each encryption and when the counter reaches a certain value, a signal (w1) is activated. This signal is used as a trigger for the Trojan in module2. In module2, the key is XORed with a counter value and the result is stored in a register. This register value is then outputted, potentially leaking information about the key. The Trojan is activated when a specific sequence of plaintext is inputted, causing the counter in module1 to reach the trigger value.

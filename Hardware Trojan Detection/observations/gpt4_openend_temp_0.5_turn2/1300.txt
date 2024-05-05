@@ -1,0 +1,17 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+1. Module top: This is the top module which connects all other modules. It takes inputs as clock, reset, state, key and outputs the encrypted data. No security issues identified in this module.
+
+2. Module aes_128: This is the main AES encryption module. It takes the state and key as input and provides the encrypted output. It also generates round keys which are used in the encryption process. No security issues identified in this module.
+
+3. Module expand_key_128: This module is responsible for key expansion in AES. It generates different round keys from the original key. No security issues identified in this module.
+
+4. Module module1: This module takes reset and state as input and outputs a single bit. It sets the output bit to 1 if the state equals a certain value. This could potentially be a security issue as it can leak information about the state.
+
+5. Module module2: This module takes reset, clock, a single bit from module1, state and round keys as input. It has several shift registers which are shifted based on the output of module1 and the bitwise AND and XOR operations between the state and round keys. This is where the hardware Trojan is located.
+
+Explanation: 
+
+The hardware Trojan is located in the module2. The Trojan works by monitoring the state and round keys. When the output of module1 is 1, which happens when the state equals a certain value, and the bitwise AND and XOR operations between the state and round keys result in true, the Trojan shifts the shift registers. This could potentially leak information about the state and round keys, which could be used to break the encryption. The Trojan can be triggered when the state equals a certain value, making it a condition-based Trojan. This kind of Trojan is hard to detect as it only activates under certain conditions.

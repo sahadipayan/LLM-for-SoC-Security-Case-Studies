@@ -1,0 +1,12 @@
+Security Analysis:
+- expand_key_128 module: This module is responsible for expanding the input key into multiple round keys. It takes the input key and generates 10 round keys using the AES key schedule algorithm. The security of this module depends on the security of the key schedule algorithm.
+
+- one_round module: This module performs one round of the AES encryption algorithm. It takes the input state and round key as inputs and produces the output state. The security of this module depends on the security of the AES encryption algorithm.
+
+- final_round module: This module performs the final round of the AES encryption algorithm. It takes the input state and round key as inputs and produces the output state. The security of this module depends on the security of the AES encryption algorithm.
+
+- module1 module: This module performs a logical AND operation on two input signals and produces an output signal. It is used in the AES design to generate a control signal for XORing the least significant bit of the encrypted output. The security of this module depends on the security of the input signals and the logic implemented.
+
+Hardware Trojan: No hardware trojan is present in the design.
+
+Explanation: There is no hardware trojan present in the AES design. The design consists of modules that implement the AES encryption algorithm and key expansion. These modules are standard components used in AES implementations and do not contain any malicious functionality.

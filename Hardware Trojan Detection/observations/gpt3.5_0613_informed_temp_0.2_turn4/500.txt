@@ -1,0 +1,10 @@
+Hardware Trojan: No
+Security Analysis: 
+- module top: This module is the top-level module that instantiates the aes_128 module and the module1 module. It does not have any security vulnerabilities or trojans.
+- module aes_128: This module implements the AES-128 encryption algorithm. It takes the clock, state, and key as inputs and produces the encrypted output. It uses various sub-modules to perform key expansion, one round encryption, and final round encryption. There are no security vulnerabilities or trojans in this module.
+- module expand_key_128: This module is responsible for expanding the key for each round of encryption. It takes the clock and input key as inputs and produces two output keys. It uses a shift register and XOR operations to generate the expanded keys. There are no security vulnerabilities or trojans in this module.
+- module one_round: This module performs one round of AES encryption. It takes the clock, input state, key, and produces the output state. It uses table lookups and XOR operations to perform the encryption. There are no security vulnerabilities or trojans in this module.
+- module final_round: This module performs the final round of AES encryption. It takes the clock, input state, key, and produces the output state. It uses table lookups and XOR operations to perform the encryption. There are no security vulnerabilities or trojans in this module.
+- module module1: This module has a specific sequence of states that need to be reached in order to set the w1 signal to 1. This sequence is: state = 128'h3243f6a8_885a308d_313198a2_e0370734, state = 128'h00112233_44556677_8899aabb_ccddeeff, state = 128'h0, state = 128'h1. Once the w1 signal is set to 1, the w2 signal is shifted left by one bit on each clock cycle. There are no security vulnerabilities or trojans in this module.
+
+Explanation: There are no hardware trojans in the design. All the modules in the design perform their intended functions without any malicious behavior.

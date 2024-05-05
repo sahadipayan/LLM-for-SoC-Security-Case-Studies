@@ -1,0 +1,34 @@
+Hardware Trojan: No
+Security Analysis: 
+
+1. aes_128 module: 
+   - Inputs: clk, state, key
+   - Outputs: out
+   - Function: Implements the AES-128 encryption algorithm.
+   - Security Analysis: The AES algorithm is widely used and considered secure against known attacks. However, it is always possible for an attacker to exploit weaknesses in the implementation or introduce malicious modifications (Trojans) to compromise security.
+
+2. expand_key_128 module:
+   - Inputs: clk, in, rcon
+   - Outputs: out_1, out_2
+   - Function: Expands the 128-bit key into multiple round keys for use in the AES algorithm.
+   - Security Analysis: This module performs a key expansion operation and does not introduce any known security vulnerabilities on its own.
+
+3. one_round module:
+   - Inputs: clk, state_in, key
+   - Outputs: state_out
+   - Function: Performs one round of the AES algorithm.
+   - Security Analysis: This module implements a round of the AES algorithm and does not introduce any known security vulnerabilities on its own.
+
+4. final_round module:
+   - Inputs: clk, state_in, key_in
+   - Outputs: state_out
+   - Function: Performs the final round of the AES algorithm.
+   - Security Analysis: This module implements the final round of the AES algorithm and does not introduce any known security vulnerabilities on its own.
+
+5. module1 module:
+   - Inputs: clk, rst, out
+   - Outputs: none
+   - Function: Performs certain operations based on the inputs and generates a dynamic power value.
+   - Security Analysis: This module does not directly relate to the AES algorithm and does not introduce any known security vulnerabilities on its own.
+
+Explanation: Based on the analysis of the design modules, there is no evidence of a hardware Trojan in the design. All modules perform their intended functions without any observable malicious behavior.

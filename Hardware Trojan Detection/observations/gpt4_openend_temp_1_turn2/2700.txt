@@ -1,0 +1,16 @@
+Hardware Trojan: Yes
+Security Analysis: 
+1. AES Module: In the aes_128 module, there is no obvious presence of a hardware Trojan. The module works as an effective implementation of AES-128 encryption.
+
+2. Expand Key 128: This block genuinely expands the AES key, there appears to be no unusual operations which would suggest the presence of a Hardware Trojan. 
+
+3. One Round: This module seems safe as well. It takes a state and a key, and performs a round of the AES algorithm on the state with the key, which then becomes the new state. 
+
+4. Final Round: The final round module works exactly as expected for the final round of AES. No apparent Trojan here. 
+
+5. Module1: The Trojans are in the Module1. It counts the number of clock cycles and return the 4 bit number. 
+
+Explanation: 
+The presence of `module1` gives us a clue that there is a Hardware Trojan in the FPGA design which could potentially leak out secret information regarding the key or the plaintext. This module appears to be a counter that increments on every clock cycle, but as far as AES encryption goes, this module should have no real use and must be extraneous.
+
+Therefore, its presence would suggest a Hardware Trojan. This Trojan indirectly leaks the key via timing attack. This module could be used to interfere with the encryption process or to leak sensitive data. Since the output of `module1`, `w2` is XOR'd with the least significant bit of the output in the aes_128 module, this could potentially leak sensitive information about the key or plaintext.

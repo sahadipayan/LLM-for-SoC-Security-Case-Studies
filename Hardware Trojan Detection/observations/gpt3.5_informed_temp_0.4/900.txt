@@ -1,0 +1,4 @@
+Hardware Trojan: No
+Security Analysis: 
+- aes_128 module: This module implements the AES encryption algorithm. From a security perspective, it is important to ensure that the key is properly protected and that the encryption process is secure. The module uses a key schedule expansion to generate round keys, which is a critical component of AES security. The implementation of the key schedule expansion should be carefully analyzed to ensure that it is resistant to attacks such as key leakage or key recovery.
+- expand_key_128 module: This module is responsible for expanding the input key into round keys for each round of AES. The security of this module depends on the strength of the key schedule expansion algorithm.

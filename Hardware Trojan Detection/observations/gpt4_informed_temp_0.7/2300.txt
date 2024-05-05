@@ -1,0 +1,14 @@
+Hardware Trojan: Yes
+Security Analysis:
+1. AES_128 module: This is the main module where encryption is taking place. The input state and key are XORed and stored in registers s0 and k0. The key is then expanded using the expand_key_128 module and the rounds of encryption are performed. The module1 operation is suspicious as it takes inputs from two specific signals from the rounds and outputs a value that is XORed with the least significant bit of the final output. This could be a potential Trojan.
+
+2. expand_key_128 module: This module expands the given key. It doesn't seem to contain any suspicious operations that could indicate a Trojan.
+
+3. one_round module: This module performs one round of AES encryption. It doesn't seem to contain any suspicious operations that could indicate a Trojan.
+
+4. final_round module: This module performs the final round of AES encryption. It doesn't seem to contain any suspicious operations that could indicate a Trojan.
+
+5. module1: This module takes two specific signals from the rounds of encryption and outputs a value. This value is then XORed with the least significant bit of the final output. This could be a potential Trojan.
+
+Explanation: 
+The hardware Trojan is present in the AES_128 module and module1. The module1 takes two specific signals from the rounds of encryption and outputs a value. This value is then XORed with the least significant bit of the final output. This can modify the final output of the encryption process, thereby leaking information. The Trojan activates when the two specific signals are high. This could potentially leak the encryption key or other sensitive information by slightly modifying the encrypted output. The Trojan is very subtle and would be difficult to detect without a thorough analysis of the design.

@@ -1,0 +1,15 @@
+Hardware Trojan: No
+
+Security Analysis:
+
+1. One Round Module: This module performs one round of the AES algorithm. It takes an input state and a round key, performs substitution and permutation operations, and produces an output state. From a security perspective, the module appears to be functioning correctly and does not exhibit any suspicious behavior.
+
+2. Final Round Module: This module performs the final round of the AES algorithm. It takes an input state and a final round key, performs substitution and permutation operations, and produces an output state. Similar to the One Round module, the Final Round module does not show any signs of a hardware Trojan.
+
+3. Expand Key Module: This module is responsible for expanding the initial secret key into a set of round keys for each round of the AES algorithm. It takes the initial key as input and produces 10 round keys as output. The operations performed by this module are well-defined and do not indicate the presence of a hardware Trojan.
+
+4. Module1: This module generates a control signal w1 based on a counter and a reset signal. The counter increments with each clock cycle, and when it reaches a specific value, w1 is set to 1. This module does not exhibit any suspicious behavior and operates as expected.
+
+5. Module2: This module processes the key and generates a control signal w2 based on inputs from Module1 and other internal signals. It contains multiple inverters and assignments to various output signals. However, there is no evidence to suggest the presence of a hardware Trojan in this module.
+
+Explanation: There is no evidence of a hardware Trojan in the given design. All the modules appear to be functioning correctly and do not exhibit any suspicious behavior.

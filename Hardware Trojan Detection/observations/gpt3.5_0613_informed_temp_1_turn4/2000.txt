@@ -1,0 +1,13 @@
+Hardware Trojan: Yes
+Security Analysis:
+- aes_128 module: The aes_128 module implements the AES encryption algorithm. From a security perspective, it is important to ensure that the AES implementation is correct and follows the standard specifications to resist attacks. The module includes submodules such as expand_key_128, one_round, and final_round, which are responsible for key expansion and encryption rounds. These submodules need to be thoroughly tested and verified to ensure their correctness and resistance against potential attacks.
+- expand_key_128 module: The expand_key_128 module is responsible for expanding the initial key into round keys for each round of AES. From a security perspective, it is crucial that the key expansion process is performed correctly to ensure the security of the encryption algorithm. Any vulnerabilities or weaknesses in the key expansion process can potentially lead to the compromise of the encryption.
+- one_round module: The one_round module performs a single encryption round of AES. From a security standpoint, it is important to ensure the correctness and security of the round function. Any weaknesses or vulnerabilities in this module can potentially be exploited to compromise the overall security of the encryption algorithm.
+- final_round module: The final_round module performs the last round of AES encryption. Similar to the one_round module, it is important to ensure the correctness and security of this module to maintain the overall security of the encryption algorithm.
+
+Explanation:
+Yes, there is a hardware Trojan present in the design. The Trojan is present in the module2 module. The Trojan operates by manipulating the SECRETKey based on the w1 signal and COUNTER value. When the w1 signal is asserted (high) and the most significant bit (MSB) of the COUNTER is high, the SECRETKey is set to the input key value. However, when the w1 signal is deasserted (low) or the MSB of the COUNTER is low, the SECRETKey is right-shifted by one bit.
+
+The purpose of this Trojan is not explicitly stated in the design, but based on its behavior, it could potentially leak information about the AES key depending on the values of w1 and the timing of the MSB of the COUNTER. This Trojan may act as a covert channel to transmit the key or manipulate the key in a way that compromises the security of the AES encryption.
+
+It is important to note that the design does not provide any explanation or justification for the presence of this Trojan, and its existence raises significant security concerns. Any Trojan, especially in a cryptographic design like AES, can severely compromise the security and confidentiality of sensitive information.

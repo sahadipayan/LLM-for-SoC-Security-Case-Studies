@@ -1,0 +1,3 @@
+Hardware Trojan: Yes
+Security Analysis:
+- aes_128 module: This module implements the AES encryption algorithm. It takes in a state and a key as inputs and produces an encrypted output. From a security perspective, the AES algorithm itself is considered secure and

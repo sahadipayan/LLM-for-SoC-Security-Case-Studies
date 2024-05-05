@@ -1,0 +1,25 @@
+Security Analysis: 
+
+1. aes_128: This is the main AES-128 block cipher module. It takes a 128-bit state and key as inputs and produces a 128-bit output. This module is secure as long as the key and state are not leaked and the cryptographic operations are implemented correctly.
+
+2. expand_key_128: This module is responsible for key expansion in AES-128. It takes a 128-bit key and a round constant as inputs and produces two 128-bit outputs. The security of this module depends on the secrecy of the key and the correctness of the key expansion algorithm.
+
+3. module2: This module takes a 128-bit key, a clock signal, and a reset signal as inputs and produces a single output. It includes a counter and a secret key register. The security of this module depends on the secrecy of the secret key and the integrity of the counter.
+
+4. module1: This module takes a 128-bit output and a reset signal as inputs and produces a single output. It includes a counter. The security of this module depends on the integrity of the counter.
+
+5. one_round: This module implements one round of the AES-128 block cipher. It takes a 128-bit state and key as inputs and produces a 128-bit output. The security of this module depends on the correctness of the cryptographic operations and the secrecy of the key and state.
+
+6. final_round: This module implements the final round of the AES-128 block cipher. It takes a 128-bit state and key as inputs and produces a 128-bit output. The security of this module depends on the correctness of the cryptographic operations and the secrecy of the key and state.
+
+Hardware Trojan: Yes
+
+Explanation: 
+
+The hardware trojan is present in the module2. The trojan is triggered when a specific plaintext input is observed by the module1 which is then passed to module2 as 'w1'. When 'w1' is high, the secret key is latched into the SECRETKey register in module2. After this, the secret key is continuously right-shifted at every clock cycle, and the least significant bit is inverted multiple times and fed back into the system. 
+
+This creates a power side-channel as the power consumption of the system changes depending on the value of the least significant bit of the secret key. An attacker can potentially measure the power consumption of the system and use this information to deduce the secret key. 
+
+Furthermore, the trojan also includes a counter that increments at every clock cycle. This could potentially be used to trigger the trojan after a certain number of clock cycles, making the trojan activation more difficult to predict and detect. 
+
+The trojan is stealthy as it only changes the internal state of the system and does not affect the outputs of the AES-128 encryption. This makes it difficult to detect the presence of the trojan through functional testing. The trojan is also small in size, making it difficult to detect through visual inspection of the hardware.

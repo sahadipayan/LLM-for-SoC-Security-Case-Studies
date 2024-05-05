@@ -1,0 +1,13 @@
+Hardware Trojan: No
+Security Analysis: 
+1. aes_128 module: This module is responsible for performing the AES encryption algorithm. The key and state are XORed together in the always block, and the result is stored in registers s0 and k0. It then calls the expand_key_128 module to expand the key for each round of encryption. After that, it calls the one_round module 9 times to perform the encryption for each round. Finally, it calls the final_round module to perform the final round of encryption. The output of the final round is stored in the out signal.
+
+2. expand_key_128 module: This module takes the input key and expands it using the Rijndael key schedule. It generates 10 round keys and stores them in registers k0a, k1a, k2a, k3a. It also generates a temporary round key k4a using the S4 module. The expanded keys k0b, k1b, k2b, k3b are then XORed with the corresponding round keys k0a, k1a, k2a, k3a and stored in registers out_1 and out_2.
+
+3. one_round module: This module performs one round of AES encryption. It takes the input state and key, performs table lookups using the S-Box and generates the output state using the MixColumns operation. The intermediate state values and round keys are stored in registers and wires.
+
+4. final_round module: This module performs the final round of AES encryption. It takes the input state and key, performs table lookups using the S-Box and generates the output state using the MixColumns operation. The intermediate state values and round keys are stored in registers and wires.
+
+5. module1 module: This module implements a counter and a dynamic power register. The counter increments on every clock cycle, and when it reaches its maximum value, the w1 signal is set to 1. This signal is used to update the dynamic power register by shifting its bits one position to the right.
+
+Explanation: There is no hardware Trojan in the design. The design implements the AES encryption algorithm correctly and securely. Each module performs its intended functionality without any malicious behavior.

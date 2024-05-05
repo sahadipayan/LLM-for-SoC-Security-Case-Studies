@@ -1,0 +1,21 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+Module Top: This is the main module that instantiates all other modules, including the AES encryption module aes_128, module1, and module2. This is also where the secret key is input into the system.
+
+Module aes_128: This is the main AES encryption module that performs all the necessary encryption steps. It is secure unless its inputs are compromised.
+
+Module expand_key_128: This module is used to generate the round keys for each AES round. It looks secure, but the security of this module also depends on the security of its inputs.
+
+Module module2: This module is suspicious. It takes the key as an input and shifts it right by one bit whenever 'w1' is not equal to 1, effectively leaking a bit of the key. The bits are then inverted multiple times, which could be used to obfuscate the leakage.
+
+Module module1: This module is also suspicious. It increments a counter with each encryption and sets 'w1' to 1 when the counter reaches a certain value. This could be part of the trigger condition for the Trojan in module2.
+
+Module one_round: This module performs one round of AES encryption. It is secure provided its inputs are secure.
+
+Module final_round: This module performs the final round of AES encryption. It is also secure provided its inputs are secure.
+
+Explanation: 
+
+The Trojan operates by secretly leaking bits of the secret key. It is triggered when module1's counter reaches a certain value, at which point 'w1' is set to 1. When 'w1' is not equal to 1, module2 begins shifting the secret key to the right by one bit, effectively leaking a bit of the key. This leakage is then obfuscated by a series of inverters. The Trojan could be detected by a sudden change in power consumption when 'w1' is set to 1.

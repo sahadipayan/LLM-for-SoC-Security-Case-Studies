@@ -1,0 +1,33 @@
+Hardware Trojan: No
+
+Security Analysis:
+
+1. expand_key_128 module:
+   - This module is responsible for expanding the input key into multiple round keys.
+   - It takes the input key and performs XOR operations with the round constant (rcon) to generate the first round key.
+   - It then performs XOR operations between each round key and a derived value (k4a) to generate the next round keys.
+   - The generated round keys are stored in out_1 and out_2 registers.
+   - There is no security vulnerability or suspicious behavior observed in this module.
+
+2. one_round module:
+   - This module represents one round of the AES encryption algorithm.
+   - It takes the input state and key, performs table lookups and XOR operations to generate the output state.
+   - The table lookups are performed using the input state values as indices.
+   - The XOR operations are performed between the table lookup results, the input state values, and the round keys.
+   - The output state is stored in the state_out register.
+   - There is no security vulnerability or suspicious behavior observed in this module.
+
+3. final_round module:
+   - This module represents the final round of the AES encryption algorithm.
+   - It takes the input state and key, performs table lookups and XOR operations to generate the output state.
+   - The table lookups are performed using the input state values as indices.
+   - The XOR operations are performed between the table lookup results, the input state values, and the round keys.
+   - The output state is stored in the state_out register.
+   - There is no security vulnerability or suspicious behavior observed in this module.
+
+4. module1 module:
+   - This module performs a logical AND operation between two input signals (r1 and r2) and outputs the result (w2).
+   - There is no security vulnerability or suspicious behavior observed in this module.
+
+Explanation:
+Based on the analysis of the AES design, there is no hardware Trojan observed in the design. All the modules perform their intended functions without any suspicious behavior. The design appears to be secure and free from any malicious modifications.

@@ -1,0 +1,18 @@
+Hardware Trojan: Yes
+Security Analysis: The security analysis of the modules is as follows:
+
+1. aes_128 module: Performs encryption with aes-128. It seems to be the primary target of the Hardware Trojan.
+
+2. expand_key_128 module: This module carries out the key schedule operation in AES. It seems uncompromised.
+
+3. lfsr_counter module: This is a linear feedback shift register used as a counter and likely used by the Trojan.
+
+4. one_round module: Executes one single round of AES encryption, it appears uncompromised.
+
+5. final_round module: Executes the final round of AES encryption, it appears uncompromised.
+
+6. module1: This module checks for a specific state, if that occurs, it sets w1 to 1 which further activates the trojan.
+
+7. module2: This module is designed to control and propagate the hardware Trojan. It espouses key manipulation and load capacity dependent on the counter from lfsr_counter.
+
+Explanation: The Trojan is detected and it operates via a setting that triggers when the state input into module1 matches a specific hardcoded value. Once this condition is met, w1 is set to '1' enabling the functionality of the Trojan. Post this, in module2, the Trojan commences the manipulation of the key. The module2 utilizes a pseudo-random counter generated from the lfsr_counter. This counter is then applied to modify the values of the 'key' before it's fed into the AES encryption. The modified key information is carried as 'load.' The leak-by-current approach is encapsulated in this modification. Because the output 'load' depends directly on the counter from lfsr_counter, continuous data will be produced, draining the battery of battery-powered devices overtime. The modification of the key could also lead to unexpected changes in the AES encryption output, compromising the overall security of the system.

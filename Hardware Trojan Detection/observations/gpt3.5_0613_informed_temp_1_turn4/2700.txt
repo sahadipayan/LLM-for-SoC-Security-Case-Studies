@@ -1,0 +1,7 @@
+Hardware Trojan: Yes
+Security Analysis:
+- Module expand_key_128: This module is responsible for expanding the given AES key into 10 round keys. The security analysis of this module shows that it is vulnerable to a potential hardware Trojan. The Trojan operates by leaking key information through the output signals. In this case, the output signal "out_2" is directly connected to the output of the round key expansion. If a Trojan is present in this module, it could modify the values of the output signals, thereby leaking sensitive key information.
+- Module one_round: This module performs one round of the AES encryption algorithm. The security analysis of this module shows that it is not vulnerable to any hardware Trojan. The inputs and outputs of this module are direct, and there are no opportunities for a Trojan to manipulate the data or leak sensitive information.
+- Module final_round: This module performs the final round of the AES encryption algorithm. Similar to the one_round module, the security analysis shows that it is not vulnerable to any hardware Trojan. The inputs and outputs are direct, without any opportunities for a Trojan to manipulate or leak sensitive information.
+Explanation:
+The hardware Trojan in this design is present in the expand_key_128 module. The Trojan operates by modifying the values of the output signals, specifically the "out_2" signal. By manipulating these values, the Trojan can leak sensitive key information, compromising the security of the AES encryption algorithm.

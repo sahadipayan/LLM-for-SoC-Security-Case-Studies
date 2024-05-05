@@ -1,0 +1,11 @@
+Hardware Trojan: Yes
+Security Analysis:
+- aes_128 module: This module implements the AES algorithm. From a security perspective, the AES algorithm itself is considered secure.
+- expand_key_128 module: This module is responsible for generating the round keys used in the AES algorithm. It takes the input key and generates multiple round keys. The security of this module depends on the integrity of the input key and the correctness of the key expansion process.
+- one_round module: This module performs one round of the AES algorithm. It takes the input state and the round key and produces the output state. The security of this module depends on the correctness of the AES algorithm implementation.
+- final_round module: This module performs the final round of the AES algorithm. It is similar to the one_round module, but with some differences in the operations performed. The security of this module depends on the correctness of the AES algorithm implementation.
+- module1: This module modifies the behavior of the system by introducing a two-clock cycle delay. It sets the signal w1 to high for two clock cycles when the state input is all ones (FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF). This module does not introduce any security vulnerabilities by itself.
+- module2: This module modifies the behavior of the system by transmitting key bits through an AM radio. It uses a shift register to store the key and shifts it right by one bit on each clock cycle. When a specific condition is met (beep1 or beep2), it activates the output signal o. This module introduces a hardware trojan that can leak the key through an external channel.
+
+Explanation:
+The hardware trojan in the design is implemented in module2. It operates by leaking key bits through an AM radio signal. The key is stored in a shift register and is shifted right by one bit on each clock cycle. When specific conditions (beep1 or beep2) are met, the output signal o is activated. This trojan can potentially leak the key to an external receiver that can detect and decode the AM radio signal.

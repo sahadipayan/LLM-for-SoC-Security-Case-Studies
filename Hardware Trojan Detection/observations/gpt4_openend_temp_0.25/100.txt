@@ -1,0 +1,15 @@
+Security Analysis: 
+
+1. Top Module: The top module is the main module that connects all the other modules. It takes in the clock, reset, state, key, and outputs the encrypted data and capacitance. It instantiates the AES and module1. There is no apparent security issue in this module.
+
+2. AES_128 Module: This module is the main AES encryption module. It takes in the clock, state, key, and outputs the encrypted data. It uses the expand_key_128 module to expand the key and the one_round module to perform the encryption rounds. The final_round module is used for the final encryption round. The security of this module depends on the security of the expand_key_128, one_round, and final_round modules.
+
+3. Expand_key_128 Module: This module is used to expand the key for the AES encryption. It uses a linear feedback shift register (LFSR) to generate the expanded key. The security of this module depends on the randomness of the LFSR. If the LFSR is not random, it could be possible to predict the expanded key.
+
+4. One_round and Final_round Modules: These modules perform the encryption rounds for the AES encryption. They use the table_lookup and S4 modules to perform the encryption. The security of these modules depends on the security of the table_lookup and S4 modules.
+
+5. LFSR_counter and Module1: These modules generate a pseudo-random sequence and perform some operations with the key. The security of these modules depends on the randomness of the LFSR_counter and the operations performed in module1.
+
+Hardware Trojan: No
+
+Explanation: There is no apparent hardware trojan in the design. A hardware trojan would be a malicious modification to the design that could allow an attacker to bypass the encryption or gain unauthorized access to the system. In this design, all the modules appear to perform standard operations for AES encryption and there are no suspicious or unnecessary modules or operations. However, a thorough security analysis would require a detailed examination of the design and testing of the system.

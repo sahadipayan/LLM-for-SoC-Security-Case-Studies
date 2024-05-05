@@ -1,0 +1,16 @@
+Hardware Torjan: Yes
+Security Analysis: The design encompasses various security measures but also contains numerous hardware trojans that could lead to data leakage and hamper the overall security. 
+
+Module top: This is the main module that encompasses other components of the design. It receives clock, reset, AES key, and state inputs, then delivers the final encrypted output and leakage via the Capacitance output. It connects an AES module, operation1 module, and operation2 module together but does not seem to contain malicious behavior.
+
+Module aes_128: This module implements the AES encryption algorithm. It uses the expand_key_128 module to generate the round keys, and the one_round and final_round modules to perform the encryption rounds. Compiler optimization could potentially expose side channels in this design and leak information about the secret key, but on its own, this module does not seem to contain explicit hardware trojans within it.
+
+Module expand_key_128: This module is responsible for generating the round keys for the AES cipher. While it doesn't show any explicit trojan activity, any vulnerability or malicious modification in this part can lead to catastrophic consequences to the security as keys are a critical part of encryption process.
+
+Module lfsr_counter: This module implements a Linear-Feedback Shift Register (LFSR) counter. This component is often used in actual hardware trojans; however, in this design, it is controlled through the module1 operation and only activates when the w1 output achieves a certain condition, which is when the counter hits a particular count.
+
+Module1: The module tracks specific conditions (e.g., a counter hitting a certain value) and changes the output accordingly. This can trigger malicious activities under certain conditions.
+
+Module2: This module seems to embed a trojan. It incorporates the LFSR counter output and some bits from the input data and key to generate a 'load' output which will leak data when the w1 condition matches. It can leak pertinent key information through the 'load' output under specific conditions.
+
+Explanation: The hardware trojan is implanted inside the module2. It is a type of conditional hardware trojan, which is triggered when a certain state (i.e., a unique incoming data pattern) is reached. The trojan in module2 is stealthy and leaks data. It takes a few bits from the input key and data, XORs them with the counter output, and assigns the result to the "load" output. The trojan only activates when w1 is at a particular condition, which means it remains dormant and undetectable under normal situations, and therefore is a serious security threat.

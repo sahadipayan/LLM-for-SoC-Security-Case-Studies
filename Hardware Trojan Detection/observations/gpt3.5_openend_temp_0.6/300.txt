@@ -1,0 +1,14 @@
+Hardware Trojan: No
+
+Security Analysis:
+- aes_128 module: This module implements the AES encryption algorithm. It takes the clock signal, state, key as inputs and produces the encrypted output. It also generates round keys rk1 to rk8 which are used in the encryption process. From a security perspective, the AES algorithm is considered secure and widely used in various applications.
+
+- expand_key_128 module: This module is responsible for expanding the original key into multiple round keys used in the AES encryption algorithm. It takes the clock signal, input key, and rcon (round constant) as inputs and generates two sets of round keys, out_1 and out_2. The module performs simple bitwise operations and table lookups to generate the round keys. From a security perspective, the module is secure as it follows the standard AES key expansion process.
+
+- one_round module: This module represents one round of the AES encryption algorithm. It takes the clock signal, input state, and round key as inputs and produces the output state. The module performs table lookups and bitwise operations to transform the state. From a security perspective, the module is secure as it follows the standard AES encryption process.
+
+- final_round module: This module represents the final round of the AES encryption algorithm. It takes the clock signal, input state, and round key as inputs and produces the output state. Similar to the one_round module, it performs table lookups and bitwise operations. From a security perspective, the module is secure as it follows the standard AES encryption process.
+
+- module1 module: This module implements a shift register that operates based on the enable signals derived from the state and round keys. The shift register receives the clock signal and has a reset signal to initialize its value. It performs simple shift operations on its internal register based on the enable signals. From a security perspective, the module does not introduce any security vulnerabilities.
+
+Explanation: There is no hardware Trojan in the design. The design follows the standard AES encryption algorithm and its components are implemented correctly. Each module performs its intended function without any malicious behavior. Therefore

@@ -1,0 +1,10 @@
+Security Analysis:
+- expand_key_128 module: This module is responsible for expanding the 128-bit key into 11 round keys. It uses a round constant (rcon) to generate the expanded keys. From a security perspective, this module is vulnerable to side-channel attacks as the round constant is derived from the key and can potentially leak information about the key.
+
+- one_round module: This module performs one round of the AES encryption algorithm. It uses a key and the input state to generate the output state. From a security perspective, this module is vulnerable to differential power analysis (DPA) attacks as the key is used in the XOR operation with the state.
+
+- final_round module: This module performs the final round of the AES encryption algorithm. It is similar to the one_round module but with a different key schedule. From a security perspective, this module is also vulnerable to DPA attacks.
+
+Hardware Trojan: No
+
+Explanation: There is no hardware trojan in the design.

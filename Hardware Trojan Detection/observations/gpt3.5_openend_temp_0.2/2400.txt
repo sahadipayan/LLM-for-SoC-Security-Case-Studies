@@ -1,0 +1,14 @@
+Hardware Trojan: No
+
+Security Analysis:
+- aes_128 module: This module implements the AES encryption algorithm. It takes in a 128-bit state and key as inputs and produces a 128-bit output. The state and key are XORed together in the always block, and the result is passed through the expand_key_128 module to generate the round keys. The state then goes through multiple rounds of encryption using the one_round module, and finally the final_round module is used for the last round of encryption. The output is stored in the out2 wire and then assigned to the out output.
+
+- expand_key_128 module: This module is responsible for expanding the input key into multiple round keys. It takes in the input key and a round constant as inputs and produces two outputs: out_1 and out_2. The input key is split into four 32-bit words, and each word is XORed with the round constant. The result is then passed through the S4 module to generate a 32-bit value k4a. The input key is XORed with k4a to generate the round keys k0b, k1b, k2b, and k3b. The out_1 output is updated on every positive edge of the clock.
+
+- one_round module: This module performs one round of AES encryption. It takes in a 128-bit state and key as inputs and produces a 128-bit output. The state and key are split into four 32-bit words. Each word of the state is passed through the table_lookup module to generate four 8-bit values p00, p01, p02, and p03. The p-values are XORed with the corresponding key words and the result is stored in z0, z1, z2, and z3. The state_out is updated on every positive edge of the clock.
+
+- final_round module: This module performs the final round of AES encryption. It takes in a 128-bit state and key as inputs and produces a 128-bit output. The state and key are split into four 32-bit words. Each word of the state is passed through the S4 module to generate four 8-bit values p00, p01, p02, and p03. The p-values are XORed with the corresponding key words and the result is stored in z0, z1, z2, and z3. The state_out is updated on every positive edge of the clock.
+
+- module1 module: This module takes in two inputs r1 and r2 and produces an output w2. The output w2 is the logical AND of r1 and r2.
+
+Explanation: There is no hardware Trojan in the design. The design implements the AES encryption algorithm and consists of multiple modules that perform different operations required for encryption. Each module operates based on the inputs it receives and produces the desired outputs. There is no malicious behavior or hidden functionality observed in the design.

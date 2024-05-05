@@ -1,0 +1,17 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+1. Top Module: This module is the top-level module that integrates other sub-modules. It does not seem to contain any security vulnerabilities. 
+
+2. AES Module: This is the core AES encryption module. It seems secure since it follows the standard AES encryption process.
+
+3. Expand Key Module: This module is responsible for expanding the AES key. It follows the standard AES key expansion process and does not appear to have any security vulnerabilities.
+
+4. One Round and Final Round Modules: These are AES encryption round modules. They follow the standard AES encryption process and do not appear to have any security vulnerabilities.
+
+5. Module 1: This module is suspicious. It uses a condition to set the value of w1 high for two clock cycles when the state is a specific value. This could be used as a trigger for a hardware Trojan.
+
+6. Module 2: This module is highly suspicious and seems to be a hardware Trojan. It shifts the secret key bit by bit, effectively leaking it. The leaking happens when w1 is high and the counter's least significant bit is high. It also contains several inverters, which could be used in a power analysis side-channel attack to determine the value of the secret key.
+
+Explanation: The Trojan operates by leaking the AES secret key bit by bit. It uses a counter and a specific state condition to control the leaking process. When the counter's least significant bit is '1' and the state matches a specific value (making w1 high), the Trojan shifts the secret key to the right, effectively leaking one bit of the key. This process continues until the entire key is leaked. The inverters could be used to increase the power consumption when the key bit is '0', making it possible to determine the key value through a power analysis side-channel attack.

@@ -1,0 +1,15 @@
+Hardware Trojan: No
+Security Analysis: 
+1. module top: This module is the top-level module that instantiates the aes_128 module and the module1 module. It does not have any security vulnerabilities on its own.
+
+2. module aes_128: This module implements the AES-128 encryption algorithm. It consists of several sub-modules such as expand_key_128, one_round, and final_round. These sub-modules perform specific functions of the AES algorithm and do not have any security vulnerabilities on their own.
+
+3. module expand_key_128: This module is responsible for expanding the initial encryption key into multiple round keys. It performs key expansion using a combination of XOR and table lookup operations. There are no security vulnerabilities in this module.
+
+4. module one_round: This module represents one round of the AES encryption algorithm. It performs operations such as table lookup and XOR using the round key. There are no security vulnerabilities in this module.
+
+5. module final_round: This module represents the final round of the AES encryption algorithm. It performs similar operations as the one_round module but with a different key. There are no security vulnerabilities in this module.
+
+6. module module1: This module has no direct relation to the AES encryption algorithm and does not have any security vulnerabilities on its own.
+
+Explanation: There is no hardware trojan in the design. All modules in the design are implemented to perform their intended functions of AES encryption without any malicious intent.

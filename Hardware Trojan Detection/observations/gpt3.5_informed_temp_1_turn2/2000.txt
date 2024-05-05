@@ -1,0 +1,7 @@
+Hardware Trojan: No
+Security Analysis: 
+- module1: This module does not involve any sensitive operations or key manipulation. It simply sets certain states based on specific input conditions.
+- module2: This module involves key manipulation, but there is no suspicious or malicious behavior observed in the code. It performs shifting of the SECRETKey based on the value of the w1 signal (which is controlled by module1), and generates INV1_out to INV11_out based on the inversion of w2. However, there is no evidence of any unauthorized data leakage or manipulation.
+- aes_128: This is the main AES encryption module. It takes in the state and key as inputs, and performs AES encryption operation. There is no suspicious or malicious behavior observed in this module.
+
+Explanation: Based on the analysis of the AES design block by block, there is no evidence of any hardware trojan present in the design. All modules are performing their intended operations without any unauthorized or suspicious behavior.

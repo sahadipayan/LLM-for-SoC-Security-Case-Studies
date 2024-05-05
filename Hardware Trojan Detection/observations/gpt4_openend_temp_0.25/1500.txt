@@ -1,0 +1,19 @@
+Security Analysis: 
+
+1. Module top: This is the top-level module of the design. It receives inputs such as clock, reset, state, and key. It also outputs the encrypted state. The security of this module depends on the security of the sub-modules it calls.
+
+2. Module aes_128: This module implements the AES-128 encryption algorithm. It takes in the state and key as inputs and outputs the encrypted state. It also generates round keys for the encryption process. The security of this module is crucial as it performs the main encryption process.
+
+3. Module expand_key_128: This module is used to generate round keys for the AES encryption process. The security of this module is important as the round keys are used in the encryption process.
+
+4. Module one_round: This module performs one round of the AES encryption process. It takes in the state and key as inputs and outputs the encrypted state. The security of this module is important as it performs a part of the encryption process.
+
+5. Module final_round: This module performs the final round of the AES encryption process. It takes in the state and key as inputs and outputs the encrypted state. The security of this module is important as it completes the encryption process.
+
+6. Module module1: This module seems to be a counter that enables a wire (w1) when a certain condition is met. The security of this module is important as it controls when certain operations are performed.
+
+7. Module module2: This module performs some operations based on the state and round keys. It seems to be shifting some registers based on certain conditions. The security of this module is important as it performs operations on sensitive data.
+
+Hardware Trojan: Yes
+
+Explanation: The hardware trojan seems to be in module2. This module performs operations based on the state and round keys. It seems to be shifting some registers based on certain conditions. If the condition is met, the shift register is shifted, which could potentially leak sensitive information. The condition is based on the state and round keys, which are sensitive data. Therefore, this could be a potential hardware trojan that leaks sensitive information.

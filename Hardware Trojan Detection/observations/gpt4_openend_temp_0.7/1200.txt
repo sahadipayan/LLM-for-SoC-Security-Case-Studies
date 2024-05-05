@@ -1,0 +1,15 @@
+Security Analysis: 
+
+1. Module top: The top module takes in a clock signal, reset signal, a 128-bit state and key as input and produces a 128-bit output and a 64-bit output named Capacitance. It instantiates the aes_128, module1, and module2 modules. From a security perspective, the inputs and outputs are well defined. It is important that the key input is kept secure as it is crucial for the AES encryption process.
+
+2. Module aes_128: This module represents the main AES encryption process. It takes in a clock signal, a 128-bit state and key, and produces a 128-bit output. It uses an expand_key_128 module and a one_round module for the encryption process. The security of this module is very much dependent on the security of the key and the implementation of the encryption process. It also uses a final_round module for the final step of the encryption process. 
+
+3. Module expand_key_128: This module takes in a clock signal, a 128-bit input, and a 8-bit rcon and produces two 128-bit outputs. This module seems to be used for the key expansion process in the AES encryption. The security of this module is crucial as it generates the expanded keys used in the encryption process.
+
+4. Module lfsr_counter: This module implements a Linear Feedback Shift Register (LFSR) counter. If the output of this module is used in any security-critical operations, it is important that the counter is implemented correctly and does not have any predictable patterns.
+
+5. Module module1 and module2: These modules are not part of the standard AES design. Module1 seems to be a counter which generates a wire w1 when the counter reaches a certain value. Module2 uses the output from module1 and a LFSR counter to perform some operations on the key and produces a 64-bit output. The purpose and operation of these modules are not clear and they could potentially introduce security vulnerabilities.
+
+Hardware Trojan: Yes
+
+Explanation: The hardware Trojan seems to be the module1 and module2. Module1 waits for the counter to reach a certain value and then sets the wire w1 to 1. This event triggers module2 to start operation. Module2 uses the key input and the output from a LFSR counter to generate a 64-bit output named load. This output is a function of the key and therefore, it can potentially leak key information. This is a very serious security vulnerability as it can lead to the compromise of the encryption process. Additionally, the use of a LFSR counter in module2 can also lead to predictable patterns which can be exploited.

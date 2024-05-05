@@ -1,0 +1,51 @@
+Hardware Trojan: No
+
+Security Analysis:
+
+1. aes_128:
+   - The AES module takes a clock input and has state and key inputs of width 128 bits, along with an output of width 128 bits.
+   - It contains a register s0 and k0, which are updated on each positive edge of the clock.
+   - Inside the always block, the xor operation is performed on state and key, and the result is stored in s0.
+   - The key is also stored in k0.
+   - The expand_key_128, one_round, and final_round modules are instantiated within aes_128.
+
+2. expand_key_128:
+   - The expand_key_128 module takes a clock input, an input vector of size 128 bits (in), a constant vector of size 8 bits (rcon), and has two outputs of size 128 bits (out_1 and out_2).
+   - It uses wire and reg variables to perform the key expansion process.
+   - The input is split into four 32-bit words (k0, k1, k2, k3) using assign statements.
+   - The expanded key generation process is performed using XOR and shift operations.
+   - The result is stored in out_1 and out_2 variables.
+   - There is no security vulnerability or hardware trojan in this module.
+
+3. one_round:
+   - The one_round module takes a clock input, two input vectors of size 128 bits (state_in and key), and has an output vector of size 128 bits (state_out).
+   - It uses wire and reg variables to perform the AES encryption process for one round.
+   - The state and key inputs are split into four 32-bit words (s0, s1, s2, s3 and k0, k1, k2, k3) using assign statements.
+   - The table_lookup module is instantiated to perform table lookups for S-box substitution.
+   - The XOR and S-box substitution operations are performed to generate the output state (state_out).
+   - There is no security vulnerability or hardware trojan in this module.
+
+4. final_round:
+   - The final_round module takes a clock input, two input vectors of size 128 bits (state_in and key_in), and has an output vector of size 128 bits (state_out).
+   - It uses wire and reg variables to perform the final round of AES encryption.
+   - The state and key inputs are split into four 32-bit words (s0, s1, s2, s3 and k0, k1, k2, k3) using assign statements.
+   - The S4 modules are instantiated to perform S-box substitution for each state word.
+   - The XOR operation is performed between the state and key words followed by column-wise XOR operations to generate the output state (state_out).
+   - There is no security vulnerability or hardware trojan in this module.
+
+5. module2:
+   - The module2 module takes a clock input, a reset input, a key input of size 128 bits, and an input signal w1.
+   - It contains registers (SECRETKey and COUNTER) and wires (INV1_out to INV11_out) to perform certain operations.
+   - On each positive edge of w1 and COUNTER[127], the SECRETKey is either updated with the key input or right-shifted by 1 bit.
+   - INV1_out to INV11_out are assigned the inverted value of w2 (the least significant bit of SECRETKey) using assign statements.
+   - There is no security vulnerability or hardware trojan in this module.
+
+6. module1:
+   - The module1 module takes a reset input, an output vector of size 128 bits (out), and has an output signal w1.
+   - It contains a register Counter and a wire w1 to perform certain operations.
+   - On each positive edge of reset and Counter, the Counter is either reset to 0 or incremented by 1.
+   - Based on the values of reset and Counter, w1 is assigned either 0 or 1 using an if-else statement.
+   - There is no security vulnerability or hardware trojan in this module.
+
+Explanation:
+Based on the analysis of each module, there is no hardware trojan present in the design. Each module performs their intended functions without any suspicious or malicious behavior. The design appears to be secure and free from any hidden backdoors or vulnerabilities.

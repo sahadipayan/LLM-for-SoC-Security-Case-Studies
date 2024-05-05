@@ -1,0 +1,7 @@
+Hardware Trojan: Yes
+Security Analysis:
+- aes_128 module: The AES encryption algorithm is implemented in this module. It takes in the clock signal, state, and key as inputs, and produces the encrypted output as well as intermediate variables s0, k0, and key schedules k1-k9. From a security perspective, it is important to ensure that the AES algorithm is implemented correctly and that the key schedules are generated securely.
+
+- expand_key_128 module: This module expands the 128-bit input key into a set of round keys using the AES key expansion algorithm. It takes in the clock signal, input key, and RCON constant as inputs, and produces two sets of round keys as outputs. From a security perspective, it is important to check if the key expansion algorithm is implemented correctly and does not introduce any vulnerabilities.
+
+- lfsr_counter module: This module implements a linear feedback shift register (LFSR)

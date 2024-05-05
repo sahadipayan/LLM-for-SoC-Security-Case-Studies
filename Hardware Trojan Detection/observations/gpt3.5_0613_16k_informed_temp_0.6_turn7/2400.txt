@@ -1,0 +1,12 @@
+Security Analysis:
+- aes_128 module: The aes_128 module implements the AES-128 block cipher algorithm. It takes in a 128-bit state and a 128-bit key as inputs and produces a 128-bit output. The algorithm consists of several rounds, each consisting of a key expansion step, one round of encryption, and a final round of encryption. The security of the AES algorithm is well-studied and it is considered to be secure against known attacks.
+
+- expand_key_128 module: The expand_key_128 module is responsible for expanding the input key into a set of round keys used in the AES encryption algorithm. It takes in the input key and a round constant as inputs and produces two sets of round keys as outputs. The module uses a key expansion algorithm that is based on the Rijndael key schedule. The security of the key expansion algorithm is also well-studied and it is considered to be secure against known attacks.
+
+- one_round module: The one_round module implements one round of the AES encryption algorithm. It takes in a 128-bit state and a 128-bit round key as inputs and produces a new 128-bit state as output. The module consists of several steps, including table lookups, XOR operations, and substitution operations. The security of one round of the AES algorithm is also well-studied and it is considered to be secure against known attacks.
+
+- final_round module: The final_round module implements the final round of the AES encryption algorithm. It takes in a 128-bit state and a 128-bit round key as inputs and produces a new 128-bit state as output. The module is similar to the one_round module, but with some differences in the operations performed. The security of the final round of the AES algorithm is also well-studied and it is considered to be secure against known attacks.
+
+- module1 module: The module1 module is a simple combinational logic module that takes in two input signals and produces an output signal. It performs a logical AND operation on the two input signals and produces the result as the output signal. This module does not have any security implications.
+
+Hardware Trojan: No, there is no hardware Trojan in the design.

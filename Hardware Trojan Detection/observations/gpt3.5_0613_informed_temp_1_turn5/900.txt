@@ -1,0 +1,8 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+- aes_128 module: The AES-128 module performs the encryption operation using the AES algorithm. From a security perspective, this module needs to ensure the confidentiality and integrity of the encrypted data. It is crucial to analyze the implementation of the AES algorithm and its resistance against known attacks.
+
+- expand_key_128 module: The expand_key_128 module is responsible for generating the round keys used in the AES encryption algorithm. It is important to analyze the key expansion algorithm and ensure that it is secure against known attacks, such as weak key attacks.
+
+- one_round module: The one_round module performs one round of the AES encryption algorithm. It involves various operations, such as table lookups and XOR operations. The security analysis of this module should focus on the resistance against

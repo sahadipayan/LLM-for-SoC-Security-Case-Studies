@@ -1,0 +1,15 @@
+Hardware Trojan: Yes
+Security Analysis: 
+
+    1. aes_128: The aes_128 consists of signals for the clock, reset, state, key, and out. It is designed to engage an expand_key_128 module ten times with different values of rcon, one_round module nine times and a final_round at the end. However, a module1 is called which includes signals from s2 and s7. This interaction is outside the standard AES process pipeline. 
+
+    2. expand_key_128: Typically generates rounds of keys, where each round has a different key. Inputs are clk, the current round key "in", and the round constant "rcon". Two output keys are produced, "out_1" and "out_2". Overall, process seems inline with AES key schedule.
+
+    3. one_round: It applies S-box substitution, shift row, mix column & Key addition. For every AES round these steps are necessary except the final round where mix columns are not included. 
+
+    4. final_round: Module that excludes the mix-columns step for the final round in AES encryption and decryption processes. 
+
+    5. module1: This module appears to be a Hardware Trojan. Its intention is obscure but it takes inputs from the s2 and s7 signals and outputs to the w1 signal which interacts with 'out' signal of aes_128 module.
+ 
+Explanation: 
+The Hardware Trojan in question is the module1. It operates by taking in the 90th bit of second round ciphertext (s2[89]) and 128th bit of seventh round ciphertext (s7[127]). It computes a logic AND between the two input bits, and outputs the result to signal w1, which is the least significant bit (LSB) of the final AES-encrypted data ('out' signal). This Trojan operates stealthily to leak ciphertext by embedding it in the ciphertext. It has a trigger condition where it needs the two specific bits from the two rounds of ciphertext and the Trojan gets activated once the trigger condition has been satisfied. The altered LSB can impact the integrity of the AES-encrypted data.

@@ -1,0 +1,8 @@
+Hardware Trojan: No
+Security Analysis: 
+
+- aes_128 module: This module is the main AES encryption module. It takes the clock input, state input (plaintext), key input, and produces the output ciphertext. This module does not have any security vulnerabilities.
+
+- expand_key_128 module: This module is responsible for expanding the original key into multiple round keys used in the AES encryption process. It takes the clock input, original key input, and produces two output round keys. This module does not have any security vulnerabilities.
+
+Explanation: There is no hardware Trojan in the design. The design is a standard implementation of the AES encryption algorithm and does not contain any malicious behavior. It can be considered secure from a hardware Trojan perspective.

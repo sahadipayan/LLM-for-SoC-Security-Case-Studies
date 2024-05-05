@@ -1,0 +1,14 @@
+Security Analysis:
+- aes_128 module: This module implements the AES-128 block cipher. It takes a clock signal, state input, and key input, and produces an output. The module consists of several sub-modules that perform key expansion and encryption rounds.
+
+- expand_key_128 module: This module is responsible for expanding the original key into a set of round keys used in the encryption process. It takes a clock signal, input key, and round constant as inputs, and produces two outputs: out_1 and out_2.
+
+- one_round module: This module performs a single round of AES encryption. It takes a clock signal, input state, key, and produces an output state. It uses a table lookup operation and XOR operations to transform the input state.
+
+- final_round module: This module performs the final round of AES encryption. It takes a clock signal, input state, key, and produces an output state. It also uses a table lookup operation and XOR operations to transform the input state.
+
+- module1 module: This module is not directly related to the AES encryption process. It includes a dynamic power register, a counter, and a signal w1. The module updates the dynamic power register based on the reset signal and the value of w1.
+
+Hardware Trojan: No hardware Trojan is present in the design.
+
+Explanation: There is no hardware Trojan present in the design.

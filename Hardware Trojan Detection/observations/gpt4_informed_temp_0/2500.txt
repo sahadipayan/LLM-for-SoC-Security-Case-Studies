@@ -1,0 +1,19 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+1. aes_128 module: This is the main module where the AES encryption process is carried out. It takes in the clock signal, reset signal, state, key, and outputs the encrypted data. The module seems to be secure as it follows the standard AES encryption process.
+
+2. expand_key_128 module: This module is responsible for key expansion in AES. It takes in the clock signal, input key, and round constant and outputs the expanded key. The module seems to be secure as it follows the standard key expansion process in AES.
+
+3. one_round module: This module performs one round of AES encryption. It takes in the clock signal, state, and key and outputs the state after one round of encryption. The module seems to be secure as it follows the standard AES round process.
+
+4. final_round module: This module performs the final round of AES encryption. It takes in the clock signal, state, and key and outputs the final encrypted state. The module seems to be secure as it follows the standard AES final round process.
+
+5. module1: This module is a counter that increments with each clock cycle. It outputs the fourth bit of the counter. This module is a potential security risk as it can be used to leak information.
+
+Explanation: 
+
+The hardware Trojan is present in the module1. This module is a counter that increments with each clock cycle. The fourth bit of the counter is outputted and XORed with the least significant bit of the encrypted output in the aes_128 module. This can potentially leak information about the encrypted data. 
+
+The Trojan operates by flipping the least significant bit of the encrypted output when the fourth bit of the counter is high. This can potentially leak information about the encrypted data, as an attacker can monitor the output and determine when the fourth bit of the counter is high based on when the least significant bit of the encrypted output is flipped. This can potentially allow an attacker to determine the value of the counter and potentially gain information about the encryption process.

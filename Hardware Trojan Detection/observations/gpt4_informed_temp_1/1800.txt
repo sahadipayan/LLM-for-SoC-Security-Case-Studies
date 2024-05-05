@@ -1,0 +1,18 @@
+Hardware Trojan: Yes
+Security Analysis: 
+
+- `module top`: The design seems secure without any visible signs of a trojan. It calls `aes_128` and `module1` for the AES encryption and an unknown operation, respectively.
+
+- `aes_128`: A standard module for AES with 128 bit keys. Functionality is appropriate for this type of module. It includes calls to key expansion (`expand_key_128`), several rounds of substitution and permutation (`one_round`) and a final round (`final_round`). No suspicious activity detected.
+
+- `expand_key_128`: A usual design for key scheduling block in AES. There are no unconnected signals or unusual operations that would raise any red flag.
+
+- `one_round`: A standard design of the primary round of AES. It includes necessary steps and operations: Byte Substitution, Shift Rows, Mix Columns and Add Round Key.
+
+- `final_round`: Yet another standard block in AES. The round operates without the Mix Columns operation, which is common for the final round in AES-128.
+
+- `module1`: This is a suspicious module. The operation of a shift operation on a 128-bit register and its activation on a specific sequence of state data (“00112233_44556677_8899aabb_ccddeeff”) indicate a possible hardware trojan. If activated, the module will continuously rotate a 128-bit register, which could result in significantly increased power consumption.
+
+Explanation: 
+
+The trojan embedded in `module1` can be referred to as a "Battery Drain" type. If the specific input sequence of state data (“00112233_44556677_8899aabb_ccddeeff”) is used in the AES module, it would activate. The trojan will start cycling a 128-bit register continuously, resulting in an increased power consumption. The shifted bits of the register are not utilized or leaked, just shifted, and so this action will not directly affect the encryption operation. However, it can rapidly drain the battery of the device, which might lead to its malfunction, especially for battery Power Sensitive applications like medical devices or remote sensors.

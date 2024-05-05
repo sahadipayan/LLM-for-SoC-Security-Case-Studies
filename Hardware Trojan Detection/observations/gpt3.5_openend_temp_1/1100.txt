@@ -1,0 +1,48 @@
+Hardware Trojan: No
+Security Analysis: 
+
+1. aes_128 Module:
+   - This module implements the AES-128 encryption algorithm. It takes the clock signal, reset signal, state (plaintext), key, and outputs the encrypted ciphertext.
+   - The module uses registers and wires to store intermediate values and perform calculations.
+   - The key expansion process is implemented with the "expand_key_128" module.
+   - The encryption process is implemented with the "one_round" and "final_round" modules.
+
+2. expand_key_128 Module:
+   - This module is responsible for expanding the input key into round keys used in the AES-128 encryption algorithm.
+   - The module takes the clock signal, input key, and a round constant (rcon) as inputs.
+   - The module uses a series of XOR and shift operations to generate the round keys.
+   - There is no security vulnerability or trojan in this module.
+
+3. one_round Module:
+   - This module implements one round of encryption in the AES-128 algorithm.
+   - It takes the clock signal, input state (plaintext) and the round key as inputs, and outputs the intermediate state for the next round.
+   - The module uses a combination of XOR, S-box substitution, shift row, and mix column operations to transform the state.
+   - There is no security vulnerability or trojan in this module.
+
+4. final_round Module:
+   - This module implements the final round of encryption in the AES-128 algorithm.
+   - It takes the clock signal, input state (plaintext) and the final round key as inputs, and outputs the ciphertext.
+   - The module uses XOR and S-box substitution operations to transform the state.
+   - There is no security vulnerability or trojan in this module.
+
+5. lfsr_counter Module:
+   - This module implements a linear feedback shift register (LFSR) based counter.
+   - It takes the reset signal, clock signal, enable signal (w1), and input data as inputs, and outputs a 20-bit counter value.
+   - The module uses XOR operations on specific bits of the LFSR to generate the next counter value.
+   - The LFSR is initialized with the input data.
+   - There is no security vulnerability or trojan in this module.
+
+6. module2 Module:
+   - This module combines the LFSR counter and key to perform a bitwise XOR operation.
+   - It takes the reset signal, clock signal, enable signal (w1), key, and data as inputs, and outputs a 64-bit load value.
+   - The module XORs specific bits of the key and counter to generate the load value.
+   - There is no security vulnerability or trojan in this module.
+
+7. module1 Module:
+   - This module checks the state values and triggers an enable signal (w1) if specific conditions are met.
+   - It takes the reset signal and state as inputs, and outputs the enable signal.
+   - The module uses registers and combinational logic to control the enable signal based on the state values.
+   - There is no security vulnerability or trojan in this module.
+
+Explanation:
+Based on the analysis of each module, there is no evidence of a hardware trojan in the design. Each module performs its intended function without exhibiting any suspicious behavior. The design implements the AES-128 encryption algorithm correctly and securely.

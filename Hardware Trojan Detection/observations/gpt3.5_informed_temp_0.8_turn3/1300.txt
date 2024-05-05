@@ -1,0 +1,40 @@
+Hardware Trojan: Yes
+Security Analysis:
+1. expand_key_128 module:
+   - This module takes the input key and generates round keys for each round of the AES encryption.
+   - The security of this module depends on the randomness and secrecy of the key.
+   - It does not have any specific security vulnerabilities.
+
+2. one_round module:
+   - This module performs one round of the AES encryption algorithm.
+   - The security of this module depends on the security of the S-box substitution and the MixColumns operation.
+   - It does not have any specific security vulnerabilities.
+
+3. final_round module:
+   - This module performs the final round of the AES encryption algorithm.
+   - The security of this module depends on the security of the S-box substitution and the MixColumns operation.
+   - It does not have any specific security vulnerabilities.
+
+4. aes_128 module:
+   - This module combines the expand_key_128, one_round, and final_round modules to perform the entire AES encryption algorithm.
+   - The security of this module depends on the security of the individual modules.
+   - It does not have any specific security vulnerabilities.
+
+5. module1 module:
+   - This module acts as a trigger for the hardware Trojan.
+   - It sets the w1 signal to 1 when a specific input state is detected.
+   - It does not have any specific security vulnerabilities.
+
+6. module2 module:
+   - This module contains the hardware Trojan.
+   - It uses the enable signals generated from the input state and the round keys to control the shift registers (SHReg1 to SHReg8).
+   - The shift registers are rotated when the enable signals are activated, causing increased power consumption.
+   - This Trojan aims to drain the battery of battery-powered devices.
+   - It has a specific trigger condition based on the enable signals and the input state.
+   - It operates in a covert manner by increasing power consumption during specific rounds of the AES encryption.
+   - This Trojan can potentially leak the AES key through power side-channels.
+   - It is a sophisticated Trojan that can be difficult to detect and mitigate.
+   - It poses a significant security risk to the system.
+
+Explanation:
+The design includes a hardware Trojan in the module2 module. This Trojan operates by activating specific shift registers (SHReg1 to SHReg8) when the enable signals are activated. The shift registers are continuously rotated, leading to increased power consumption. The Trojan aims to drain the battery of battery-powered devices. It activates based on a specific input state and the enable signals generated from the round keys and the input state. The Trojan can potentially leak the AES key through power side-channels. It is a sophisticated Trojan that operates in a covert manner and poses a significant security risk to the system.

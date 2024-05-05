@@ -1,0 +1,16 @@
+Hardware Torjan: No
+Security Analysis: 
+
+1. Module top: This is the top level module. It doesn't contain any hardware trojans. It simply instantiates the AES block and a circuit module. The top module is secure to use, provided the modules it is instantiating are secure.
+
+2. Module aes_128: This module does the main AES-128 encryption process. It does not appear to have any hardware trojans. However, the implementation of the AES algorithm could potentially be vulnerable to "side-channel" attacks. For example, the time taken to perform encryption could leak data about the encryption key.
+
+3. Module expand_key_128: It expands the 128-bit AES key into several round keys. This module seems to be secure, there is no apparent trojan in the key expansion.
+
+4. Module one_round: It performs one round of the AES encryption. From a security point of view, code execution time should be consistent, regardless of inputs, thus appears secure. 
+
+5. Module final_round: It is the last round of AES encryption. No signs of a hardware trojan can be detected, however, potential vulnerabilities may lie in code execution time, as noted earlier.
+
+6. Module module1: This module seems to create a dynamic power that operates conditioned on w1 and shifts the variables. However, the function of w1 is unclear. It appears to be secure but shall require comprehensive safety checks.
+
+Explanation: The provided design seems to be free from explicit malicious hardware trojans. However, hardware designs can be vulnerable to implicit trojans like side-channel attacks, whereby attackers might be able to discern critical information by analyzing power consumption or execution time. We advise undertaking extensive safety checks on the modules to ensure invulnerability to such attacks.

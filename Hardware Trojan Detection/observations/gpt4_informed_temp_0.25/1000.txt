@@ -1,0 +1,17 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+1. Top Module: This module takes in the clock, reset signal, state, key, and outputs the encrypted data and a capacitance value. It connects the AES_128, operation2, and operation1 modules. No immediate security threats are detected in this module.
+
+2. AES_128 Module: This module is the main AES encryption module. It takes in the clock, state, and key, and outputs the encrypted data. It uses several sub-modules to perform the encryption. No immediate security threats are detected in this module.
+
+3. Expand_key_128 Module: This module is used for key expansion in the AES encryption process. It takes in the clock, input key, and a round constant, and outputs two expanded keys. No immediate security threats are detected in this module.
+
+4. LFSR_Counter Module: This module is a Linear Feedback Shift Register (LFSR) counter. It takes in the reset signal, clock, a wire w1, and data, and outputs a 20-bit LFSR. This module could potentially be used for a hardware Trojan as it can generate a pseudo-random sequence that could be used to leak information.
+
+5. Module2: This module takes in the reset signal and state, and outputs a wire w1. It sets w1 to 1 when the state is a specific value. This module could potentially be used for a hardware Trojan as it can activate the Trojan when a specific state is input.
+
+6. Module1: This module takes in the reset signal, clock, wire w1, key, and data, and outputs a load value. It uses the LFSR counter to generate a sequence that is XORed with the key to produce the load value. This module is a hardware Trojan as it leaks the key through the load value.
+
+Explanation: The hardware Trojan operates by using the LFSR counter to generate a pseudo-random sequence that is XORed with the key in module1. This load value is then output and can be used to determine the key. The Trojan is activated when a specific state is input, which sets the wire w1 to 1 in module2. This causes the LFSR counter to start generating the pseudo-random sequence. The Trojan can leak the key without affecting the normal operation of the AES encryption, making it difficult to detect.

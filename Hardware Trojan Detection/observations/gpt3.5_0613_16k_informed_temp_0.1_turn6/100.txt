@@ -1,0 +1,12 @@
+Security Analysis:
+- expand_key_128 module: This module is responsible for expanding the input key into a set of round keys. It uses a combination of XOR operations and table lookups to generate the round keys. From a security perspective, this module is vulnerable to side-channel attacks, as the key expansion process leaks information about the key.
+
+- one_round module: This module performs one round of the AES encryption algorithm. It takes the input state and round key as inputs and produces the output state. The module uses table lookups and XOR operations to perform the encryption. From a security perspective, this module is vulnerable to side-channel attacks, as the encryption process leaks information about the key and plaintext.
+
+- final_round module: This module performs the final round of the AES encryption algorithm. It is similar to the one_round module but does not include the MixColumns operation. From a security perspective, this module is also vulnerable to side-channel attacks.
+
+- lfsr_counter module: This module implements a linear feedback shift register (LFSR) counter. It generates a pseudo-random sequence of bits based on the input key and clock signal. From a security perspective, this module does not introduce any vulnerabilities.
+
+Hardware Trojan: No
+
+Explanation: There is no hardware trojan in the design.

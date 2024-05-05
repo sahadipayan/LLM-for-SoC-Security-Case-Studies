@@ -1,0 +1,7 @@
+Hardware Trojan: No
+Security Analysis: 
+- aes_128 module: The aes_128 module implements the AES-128 encryption algorithm. From a security perspective, the module appears to be designed to provide secure encryption operations. The input state and key are XORed, and the result is expanded using the expand_key_128 module. The expanded key is then used in multiple rounds of encryption operations, where the state is XORed with round keys and passed through a series of S-box and permutation operations. The final round produces the encrypted output. Overall, the module seems to provide secure encryption functionality without any apparent vulnerabilities.
+
+- expand_key_128 module: The expand_key_128 module is responsible for expanding the input key into a set of round keys. It uses a series of XOR and permutation operations to generate the round keys. From a security perspective, the module appears to be designed to securely generate the round keys without any apparent vulnerabilities.
+
+Explanation: No hardware Trojan is present in the provided AES design. The design seems to be focused on implementing the AES-128 encryption algorithm securely.

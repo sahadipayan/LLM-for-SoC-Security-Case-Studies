@@ -1,0 +1,7 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+- aes_128 module: This is the main AES encryption module. It takes in a clock signal, state, and key as inputs, and produces the encrypted output as its output. The module performs the AES encryption algorithm using several rounds of operations.
+- expand_key_128 module: This module expands the original key into a series of round keys used in each round of the AES encryption. It takes in the clock signal, the original key, and a round constant as inputs, and produces two sets of output round keys.
+- one_round module: This module represents one round of the AES encryption algorithm. It takes in the clock signal, the input state, the round key, and produces the output state after one round of operations.
+- final_round module: This

@@ -1,0 +1,10 @@
+Security Analysis:
+- aes_128 module: The aes_128 module implements the AES-128 block cipher. It takes in a clock signal, state, and key as inputs, and produces the encrypted output as the "out" signal. The state and key are XORed together at each clock cycle, and the result is passed through a key expansion process and multiple rounds of encryption. The final round produces the encrypted output.
+
+- expand_key_128 module: The expand_key_128 module is responsible for expanding the 128-bit input key into a set of round keys used during the encryption process. It takes in the clock signal, input key, and a round constant (rcon) as inputs, and produces two sets of round keys as outputs (out_1 and out_2). The key expansion process involves XORing the input key with a round constant, and then applying a series of substitution and permutation operations to generate the round keys.
+
+- lfsr_counter module: The lfsr_counter module implements a linear feedback shift register (LFSR) counter. It takes in a reset signal, clock signal, and a 128-bit data input. It generates a 20-bit LFSR sequence as the "lfsr" output, which is used for the generation of the "load" signal in the module1 module.
+
+- module1 module: The module1 module takes in a reset signal, clock signal, key, and data inputs. It generates a 64-bit "load" signal based on the key and the LFSR counter. The load signal is computed by XORing each bit of the key with the corresponding bit of the LFSR counter.
+
+Hardware Trojan: No, there is no hardware trojan in the design.

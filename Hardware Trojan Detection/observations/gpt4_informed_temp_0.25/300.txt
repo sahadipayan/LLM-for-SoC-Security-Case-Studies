@@ -1,0 +1,15 @@
+Hardware Trojan: Yes
+Security Analysis: 
+1. Top Module: The top module is the main module that connects all the other modules. It takes in the clock, reset, state, and key as inputs and gives out the encrypted output. It also connects the AES and the Trojan module. No apparent security issue is visible here.
+
+2. AES_128 Module: This module is responsible for the AES encryption. It takes in the state and key and gives out the encrypted output. It also generates the round keys which are used in the Trojan module. No apparent security issue is visible here.
+
+3. Expand_key_128 Module: This module is responsible for expanding the key for the AES encryption. It takes in the key and gives out the expanded key. No apparent security issue is visible here.
+
+4. One_round Module: This module is responsible for one round of AES encryption. It takes in the state and key and gives out the encrypted output. No apparent security issue is visible here.
+
+5. Final_round Module: This module is responsible for the final round of AES encryption. It takes in the state and key and gives out the encrypted output. No apparent security issue is visible here.
+
+6. Module1: This module is the Trojan module. It takes in the reset, clock, state, and round keys as inputs. It has shift registers that are rotated when certain conditions are met. This increases power consumption and can potentially leak information. This is a security issue.
+
+Explanation: The Trojan operates by rotating shift registers when certain conditions are met. These conditions are based on the state and round keys. When these conditions are met, the shift registers are rotated, which increases power consumption. This increased power consumption can potentially be used to leak information. The Trojan is activated when the state and round keys match certain patterns. This can potentially be used to leak the AES key or other sensitive information.

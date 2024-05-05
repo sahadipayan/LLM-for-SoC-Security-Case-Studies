@@ -1,0 +1,11 @@
+Hardware Trojan: No
+Security Analysis: 
+- aes_128 module: This module is responsible for performing the AES encryption algorithm. It takes in the clock signal, state and key inputs, and produces the encrypted output (out) as well as round keys (rk1 to rk8). From a security perspective, this module does not have any vulnerabilities or weaknesses that could be exploited by a hardware Trojan.
+
+- expand_key_128 module: This module is responsible for expanding the input key into multiple round keys. It takes in the clock signal, input key (in), and round constant (rcon) inputs, and produces two sets of round keys (out_1 and out_2). Similar to the aes_128 module, this module does not have any vulnerabilities or weaknesses that could be exploited by a hardware Trojan.
+
+- module1: This module is a combinational logic block that generates a signal (w1) based on the input state. If the input state matches a specific value (128'h00112233_44556677_8899aabb_ccddeeff), then w1 is set to 1. Otherwise, w1 is set to 0. From a security perspective, this module does not have any vulnerabilities or weaknesses that could be exploited by a hardware Trojan.
+
+- module2: This module contains multiple registers (SHReg1 to SHReg8) and logic to manipulate these registers based on the enable signals (enable1 to enable8). These enable signals are generated based on the input state and round keys (rk1 to rk8). From a security perspective, this module does not have any vulnerabilities or weaknesses that could be exploited by a hardware Trojan.
+
+Explanation: There is no hardware Trojan present in the design. All the modules in the design do not have any vulnerabilities or weaknesses that could be exploited by a hardware Trojan. The design is secure from a hardware Trojan perspective.

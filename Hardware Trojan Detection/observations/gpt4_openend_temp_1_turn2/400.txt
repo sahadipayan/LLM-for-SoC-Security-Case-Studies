@@ -1,0 +1,16 @@
+Hardware Trojan: Yes
+Security Analysis: 
+1. The design begins with the top module that contains clock, reset, state, key, output, etc. No apparent security issues are visible here. 
+
+2. The next module is the AES-128 module where it begins the encryption process. The inputs are state and key and the output is an encrypted output. However, the expanded key is generated in this module making it a potential target for trojans.
+
+3. The module 'expand_key_128' expands the given encryption key. Any hardware Trojan in this module can alter the key expansion process, affecting the entire AES pipeline. It is critically important to ensure the security of this module as it handles sensitive data (the encryption key).
+
+4. 'one_round' and 'final_round' modules are critical stages of the AES algorithm where the key is mixed with the data. Again, they can be potential targets for Trojans.
+
+5. In module1, the process appears to be benign at first, however, the trigger condition for the Trojan is found where if the state equals a specific value, w3 changes which subsequently causes w1 to go high in the next clock cycle.
+
+6. Module2 contains the payload or actual work of the Trojan. It uses the ‘w1’ trigger from module1 to start operation and uses the ‘key’ which is a sensitive information.
+
+Explanation:
+The Trojan seems to be in module1 and module2. In module1, there is a specific state that causes w3 to go high, and in the next clock cycle, this causes w1 to go high. W1 is then used in module2 to start its operation when it is high. Further, the hardware trojan in module2 uses the 'key', which is confidential data, and operates using the shifted key register and the Baud rate generator. When certain conditions meet, the output "beeps" and the final output "o" can alter depending on "MUX_Sel". Thus, when these conditions are met, the Trojan can possibly leak this confidential key information through the output, which could be disastrous in a real-world scenario. Therefore, it is crucial to ensure the security and the constant supervision of these modules.

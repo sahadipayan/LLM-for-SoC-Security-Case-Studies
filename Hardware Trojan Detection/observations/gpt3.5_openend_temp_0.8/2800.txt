@@ -1,0 +1,35 @@
+Hardware Trojan: No
+
+Security Analysis: 
+
+1. expand_key_128 module:
+   - This module is responsible for expanding the 128-bit key into 11 round keys.
+   - The input key is XORed with the round constant and assigned to four different variables, v0, v1, v2, and v3.
+   - These variables are then XORed with each other to generate four new keys, k0b, k1b, k2b, and k3b.
+   - The final round key is assigned to out_1, and it is also assigned to out_2.
+   - The module appears to be secure as it performs the necessary key expansion without any suspicious or malicious operations.
+
+2. one_round module:
+   - This module represents one round of the AES algorithm.
+   - The input state is divided into four 32-bit words, s0, s1, s2, and s3.
+   - These words are passed through a table lookup module to generate four sets of lookup values, p00-p03, p10-p13, p20-p23, and p30-p33.
+   - The lookup values are then XORed with the respective key values to generate four intermediate values, z0, z1, z2, and z3.
+   - The final output state is the concatenation of these intermediate values.
+   - The module appears to be secure as it performs the necessary AES operations without any suspicious or malicious operations.
+
+3. final_round module:
+   - This module represents the final round of the AES algorithm.
+   - The input state is divided into four 32-bit words, s0, s1, s2, and s3.
+   - These words are passed through four instances of the S4 module to generate four sets of output values, p00-p03, p10-p13, p20-p23, and p30-p33.
+   - The output values are then XORed with the respective key values to generate four intermediate values, z0, z1, z2, and z3.
+   - The final output state is the concatenation of these intermediate values.
+   - The module appears to be secure as it performs the necessary AES operations without any suspicious or malicious operations.
+
+4. module1 module:
+   - This module implements a simple counter.
+   - It increments the counter on every positive edge of the clock, except when the rst signal is low.
+   - The output w2 is a 1-bit signal indicating the most significant bit of the counter after it is incremented.
+   - This module does not pose any security concerns.
+
+Explanation: 
+There is no evidence of a hardware Trojan in the design. All the modules appear to be designed to perform the necessary AES operations without any suspicious or malicious behavior.

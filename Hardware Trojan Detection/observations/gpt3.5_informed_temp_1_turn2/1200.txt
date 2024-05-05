@@ -1,0 +1,39 @@
+Hardware Trojan: No
+
+Security Analysis:
+- aes_128 module:
+  - The aes_128 module is responsible for performing AES encryption.
+  - It initializes and assigns the values of the state and key variables using clocked always blocks.
+  - The expand_key_128 module is instantiated within aes_128 module to generate round keys.
+  - The one_round module is instantiated within aes_128 module to perform each round of AES encryption.
+  - The final_round module is instantiated within aes_128 module to perform the final round of AES encryption.
+  - There are no security vulnerabilities or suspicious operations observed in the aes_128 module.
+
+- expand_key_128 module:
+  - The expand_key_128 module is responsible for expanding the initial key into round keys.
+  - It uses a constant rcon value to perform XOR operations on specific parts of the key.
+  - The S4 module is instantiated within expand_key_128 module to perform an S-Box operation on part of the key.
+  - There are no security vulnerabilities or suspicious operations observed in the expand_key_128 module.
+
+- lfsr_counter module:
+  - The lfsr_counter module implements an LFSR (Linear Feedback Shift Register) counter.
+  - It takes inputs for reset, clock, enable signal (w1), and data.
+  - The counter value is updated on the positive edge of the clock based on the enable signal and input data.
+  - There are no security vulnerabilities or suspicious operations observed in the lfsr_counter module.
+
+- module1 module:
+  - The module1 module is responsible for generating a signal (w1) based on a counter value.
+  - It takes inputs for reset and output of the aes_128 module (out).
+  - It increments a counter on each clock cycle.
+  - The w1 signal is set to 1 when the counter reaches a specific value.
+  - There are no security vulnerabilities or suspicious operations observed in the module1 module.
+
+- module2 module:
+  - The module2 module generates a load signal based on the key and a counter value.
+  - It takes inputs for reset, clock, enable signal (w1), key, and data.
+  - It instantiates the lfsr_counter module to generate a counter value.
+  - The load signal is XORed with specific bits of the key based on the counter value.
+  - There are no security vulnerabilities or suspicious operations observed in the module2 module.
+
+Explanation: 
+Based on the analysis of the AES design block by block, there is no evidence of any hardware trojan present in the design. Each module performs its intended functionality without any suspicious or malicious operations.

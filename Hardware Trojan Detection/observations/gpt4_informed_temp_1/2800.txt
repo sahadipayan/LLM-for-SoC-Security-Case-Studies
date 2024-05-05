@@ -1,0 +1,12 @@
+Hardware Trojan: Yes
+Security Analysis: 
+      Module aes_128: This module handles initial steps including XOR operation of 'state' and 'key' inputs. It further uses expand_key_128 module to generate a new AES key and one_round & final_round module to execute the encrypt process. The major concern is the introduction of 'module1', which creates potential security vulnerability.
+
+      Module expand_key_128: This is a key expansion function in AES, where input key is used to generate a series of new keys (k1, k2.. k9). No significant security threats observed.
+
+      Module one_round & final_round: These modules handle each round of the AES process and execute the assignment and shift operation using 'table_lookup' and 'S4' functions. No obvious security issues identified.
+
+      Module module1: This is an unusual module in AES design and suspicious due to the implementation of two counters. This corresponds to the dual counter-based bit flipping inconsistency from the examples mentioned earlier. It is most likely a hardware Trojan.
+
+Explanation: 
+    The Trojan operates based on the dual counter-based bit flipping method. 'module1' has two counters. The 1st counter increments with each clock cycle while the second one increments only when the 'andOut'- (which is an AND operation of the condition that the 4th bit of the first counter is high and two more signals) is high. This means the second counter is dependent on specific conditions. The output of this module is connected with the least significant bit of output, which gets flipped when the conditions (r1, r2, and the 4th bit of the first counter being high) are met. So whenever these specific conditions (specific sequence of input or specific point in time) come, the hardware Trojan activates and results in flipping the least significant bit of the AES output, corrupting the original data without being detected.

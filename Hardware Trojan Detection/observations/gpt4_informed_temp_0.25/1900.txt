@@ -1,0 +1,10 @@
+Hardware Trojan: Yes
+Security Analysis: 
+- The top module connects the AES_128 and module1. It doesn't seem to have any security issues.
+- The aes_128 module is a standard AES encryption module, which doesn't seem to have any security issues.
+- The expand_key_128 module is a standard key expansion module, which doesn't seem to have any security issues.
+- The module1 seems to be a Trojan module. It has a counter and a dynamic power register. The counter increments with each encryption and the dynamic power register rotates when the counter reaches a certain value. This could be a potential security issue as it can drain the battery of the device.
+- The one_round and final_round modules are standard AES encryption modules, which doesn't seem to have any security issues.
+
+Explanation: 
+The hardware Trojan is located in the module1. It operates by incrementing a counter with each encryption. When the counter reaches a certain value (128'hffff_ffff_ffff_ffff_ffff_ffff_ffff_ffff), it triggers the rotation of the dynamic power register. This continuous rotation of the register increases the power consumption of the device, which can drain the battery of the device. This type of Trojan is especially dangerous for battery-powered devices like medical implants.

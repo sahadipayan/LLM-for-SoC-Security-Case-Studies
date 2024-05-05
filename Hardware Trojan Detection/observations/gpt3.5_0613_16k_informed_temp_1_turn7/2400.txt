@@ -1,0 +1,14 @@
+Security Analysis: 
+- AES core module: The AES core module is responsible for performing the encryption/decryption operations. It takes the input plaintext and key, and produces the output ciphertext. This module implements the AES algorithm and is considered a secure cryptographic primitive when implemented correctly. However, the security of the AES core module depends on its implementation and the protection mechanisms used to prevent side-channel attacks.
+
+- Expand Key module: The Expand Key module is responsible for generating the round keys used in the AES encryption algorithm. It takes the input key and generates multiple round keys based on it. This module is crucial for the security of the AES algorithm as the strength of the encryption depends on the security of the generated round keys. If this module is compromised, it can weaken the overall security of the AES encryption.
+
+- One Round module: The One Round module performs one round of the AES encryption algorithm. It takes the state input and key as input and produces the state output. Each round consists of subBytes, shiftRows, mixColumns, and addRoundKey operations. The security of the One Round module depends on the correct implementation of these operations and the protection against side-channel attacks.
+
+- Final Round module: The Final Round module performs the last round of the AES encryption algorithm. It is similar to the One Round module, but without the mixColumns operation. This module is crucial for the security of the AES encryption, and any compromise in its implementation can weaken the overall security.
+
+- Module1: Module1 is a small module used to perform a logical AND operation on two inputs. It is not directly related to the security of the AES encryption algorithm.
+
+Hardware Trojan: Yes.
+
+Explanation: The AES design includes a hardware Trojan that operates by flipping the least significant bit of the existing encrypted output. The Trojan is triggered when two predefined rare signals in the AES-128 block cipher are simultaneously high. When activated, the Trojan modifies the output by flipping the least significant bit, introducing a subtle modification to the encrypted data. This kind of modification can potentially break the security properties of the AES encryption algorithm and compromise the confidentiality and integrity of the encrypted data. It is important to detect and mitigate such Trojans to ensure the security of cryptographic systems.

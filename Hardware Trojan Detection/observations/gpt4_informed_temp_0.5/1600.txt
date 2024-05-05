@@ -1,0 +1,15 @@
+Security Analysis: 
+The AES design is broken down into several modules each performing a specific task. The 'top' module is the main module that takes in the clock, reset signal, state, key, and outputs the encrypted data. It consists of the AES_128 module which performs the AES encryption, and two additional modules: module1 and module2.
+
+The 'aes_128' module implements the AES-128 algorithm. It takes the plaintext and the key as inputs and outputs the ciphertext. The AES-128 algorithm is known to be secure, assuming that the key is kept secret.
+
+The 'expand_key_128' module is part of the 'aes_128' module and is responsible for key expansion in the AES algorithm. It takes the 128-bit key and generates round keys for each round of the AES algorithm. If the initial key is compromised, all round keys can be derived.
+
+The 'one_round' and 'final_round' modules are also part of the 'aes_128' module and implement the main rounds and the final round of the AES algorithm, respectively. They take the state and the round key as inputs and output the state for the next round or the final ciphertext, respectively.
+
+The 'module1' and 'module2' modules are additional modules that are not part of the standard AES-128 algorithm. The 'module1' seems to be a trigger for the Trojan, and 'module2' seems to be the payload of the Trojan.
+
+Hardware Trojan: Yes
+
+Explanation: 
+The Hardware Trojan is present in the 'module1' and 'module2'. The 'module1' is designed to detect a specific sequence of input plaintext. Once this sequence is detected, it activates the 'module2'. The 'module2' then leaks the secret key. It uses a shift register to shift the secret key bit by bit. The Trojan then modulates an unused pin on the chip to generate an RF signal. This signal can be picked up by an ordinary AM radio. The data carried by the AM signal is encoded using a beep scheme where a single beep followed by a pause represents a ‘0’ and a double beep followed by a pause represents a ‘1’. This way, the secret key can be leaked without the victim's knowledge.

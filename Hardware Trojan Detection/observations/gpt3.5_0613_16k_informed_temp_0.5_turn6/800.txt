@@ -1,0 +1,16 @@
+Security Analysis:
+- aes_128 module: This module implements the AES-128 encryption algorithm. It takes the input state and key, performs the required operations for each round, and produces the final encrypted output state. From a security perspective, the AES algorithm is considered secure and widely used.
+
+- expand_key_128 module: This module is responsible for expanding the input key into round keys for each round of the AES algorithm. It uses a key expansion algorithm to generate the round keys. The security of the key expansion algorithm is crucial for the overall security of the AES encryption.
+
+- one_round module: This module performs one round of the AES algorithm. It takes the input state, round key, and performs the required operations (substitution, permutation, and mixing) to produce the output state. The security of each round is important for the overall security of the AES encryption.
+
+- final_round module: This module performs the final round of the AES algorithm. It is similar to the one_round module but without the mixing operation. The security of the final round is also important for the overall security of the AES encryption.
+
+- module1 module: This module implements a state machine that controls the activation of the w1 signal. It checks for specific values of the input state to activate the w1 signal. The security of this module depends on the correctness of the input state values and the intended functionality.
+
+- module2 module: This module implements a counter-based logic that XORs specific bits of the input key with the counter values. The output load signal is used to load specific values into a register. The security of this module depends on the correctness of the counter values and the intended functionality.
+
+Hardware Trojan: No
+
+Explanation: There is no hardware trojan present in the design. The design consists of standard AES encryption modules and supporting modules for key expansion, rounds, and state control. The modules perform the expected operations for AES encryption and there are no indications of any malicious or unintended functionality.

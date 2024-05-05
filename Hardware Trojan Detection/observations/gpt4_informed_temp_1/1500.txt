@@ -1,0 +1,28 @@
+Hardware Torjan: Yes
+Security Analysis:
+1. top module:
+   This module is the main module which consists of aes_128, operation1, and operation2 modules. The security of this module depends on the other modules used in it. It operates the AES function and can be vulnerable to hardware trojans.
+
+2. aes_128 module:
+   This module is responsible for the AES rounds. The plaintext is XORed with the key in the initial step, then multiple rounds of subBytes, shiftRows, mixColumns, and addRoundKey are applied. There are multiple opportunities for trojans to alter data or leak information.
+
+3. expand_key_128 module:
+   This module expands the initial key for use in the AES rounds. It contains a large number of wires and registers, any alterations to these could affect the security of the AES encryption.
+
+4. module1:
+   This module works as a counter and is integral to the operation of a possible Trojan. Although the module itself is secure, it could be exploited by a trojan to execute certain operations when the counter hits a specific value.
+
+5. module2:
+   This module contains the actual hardware trojan. It has multiple shift registers that work based on the enable signals. These enable signals are functions of the state and round keys, which means the Trojan operation is sensitive to the AES operation.
+
+6. one_round module and final_round module:
+   These modules carry out the core operations of the AES algorithm. Any malicious alterations to these modules would directly affect the security of the cryptographic algorithm.
+
+7. Other basic modules like S4, table_lookup etc. These modules are basic building blocks for the AES operation and they are safe unless there are direct manipulations inside these.
+
+Explanation:
+   There is a hardware trojan present in the module2. Here, the state and round keys are used to control eight shift registers. The shift registers are only enabled to shift if the specific bit patterns in the state and round keys match. This Trojan can leak the key and state information by varying the power consumption of the device. The power consumption increases when the shift registers are active, meaning an attacker could infer the state and key information by monitoring the device’s power usage.
+
+   Additionally, the trojan in module2 can only be activated when a certain condition from module1 is met. The counter in module1 is continuously incremented with each AES encryption operation until it reaches a certain value, at which point the w1 output signal of module1 is set to '1' and triggers the hardware trojan in module2. Therefore, the trojan will remain dormant and undetectable until the specific conditions are met. 
+
+   By manipulating the AES state and key in these specific ways, the Trojan can leak information without affecting the functionality of the AES algorithm, making it a difficult threat to detect and counter.

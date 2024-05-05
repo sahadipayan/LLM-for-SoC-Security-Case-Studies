@@ -1,0 +1,17 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+1. AES-128 module: The module takes in the 128-bit secret key and state as input and generates an output. It performs the AES encryption operations such as key expansion, 9 rounds of encryption, and a final round. This module seems secure as it performs standard AES-128 encryption.
+
+2. expand_key_128 module: This module is responsible for expanding the input key for the AES rounds. It seems secure and follows the standard AES key expansion procedure.
+
+3. one_round module: This module conducts one AES round for every two clock cycles. The module is secure as it properly implements the standard AES operations.
+
+4. final_round module: This module performs the final AES round operation for every two clock cycles. It appears secure as it follows the standard AES final round operations.
+
+5. module1: This module increments a 4-bit counter with each encryption. The output of this module, w1, has a direct influence on the least significant bit of the output from the AES-128 module. This could potentially be a Hardware Trojan as it is manipulating the output of the encryption.
+
+Explanation: 
+
+The Hardware Trojan is located in the module1. It is a counter-based bit flipping Trojan. The Trojan operates by incrementing a 4-bit counter with each encryption operation. When the counter reaches a certain value, the output w1 flips the least significant bit of the AES-128 output. This could potentially leak information about the key or plaintext being encrypted. The Trojan activates when the fourth bit of the counter is high. This type of Trojan is difficult to detect as it only activates under certain conditions and may not show any abnormal behavior during normal operation.

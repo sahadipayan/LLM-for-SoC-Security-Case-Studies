@@ -1,0 +1,17 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+- expand_key_128: This module is responsible for expanding the AES key. The input key is split into four 32-bit words, which are then combined with a round constant value and XORed with the previous round key to generate the next round key. The module uses a 4-bit counter to generate the round constant value. From a security perspective, this module seems to be implemented correctly and does not raise any immediate concerns.
+
+- one_round: This module represents one round of the AES encryption algorithm. It takes a 128-bit state input and a 128-bit round key input, performs table lookups and XOR operations, and produces a new state output. The module seems to implement the AES algorithm correctly and does not appear to have any security vulnerabilities.
+
+- final_round: This module represents the final round of the AES encryption algorithm. It takes a 128-bit state input and a 128-bit round key input, performs table lookups and XOR operations, and produces a new state output. Similar to the one_round module, this module seems to implement the AES algorithm correctly and does not raise any immediate security concerns.
+
+Explanation:
+The hardware Trojan in this design is present in the module called module2. The Trojan operates by manipulating the SECRETKey and COUNTER signals.
+- The SECRETKey signal is initialized with the value of the input key when w1 signal is high. This happens on the positive edge of w1 and COUNTER[127].
+- After initialization, the SECRETKey is right-shifted by one bit on each positive edge of w1 and COUNTER[127].
+- The output w2 is derived from the least significant bit of SECRETKey.
+- The INV1_out signal is the inverse of w2.
+- The INV1_out signal is then used to generate INV2_out to INV11_out signals, which are the inverses of INV1_out.
+- The behavior of this module suggests that the hardware Trojan aims to manipulate the output w2 based on the values of the SECRETKey and COUNTER signals. However, without further context or understanding of the system, it is difficult to determine the exact purpose or impact of this Trojan.

@@ -1,0 +1,11 @@
+Hardware Trojan: No
+Security Analysis: 
+- module top: This module is the top-level module that instantiates the AES-128 module and the module1 module. It does not perform any cryptographic operations itself.
+- module aes_128: This module implements the AES-128 encryption algorithm. It takes in the clock signal, state, and key as inputs, and produces the encrypted output. It consists of sub-modules for key expansion, one round encryption, and final round encryption.
+- module expand_key_128: This module is responsible for expanding the input key into round keys for each round of encryption. It takes in the clock signal, input key, and round constant as inputs, and produces two sets of round keys as outputs.
+- module lfsr_counter: This module implements a linear feedback shift register (LFSR) counter. It takes in the reset signal, clock signal, and data as inputs, and produces a 20-bit counter as output. The counter is used in module1 to generate a sequence of values for XOR operations.
+- module module1: This module takes in the reset signal, clock signal, key, and data as inputs, and produces a 64-bit load signal as output. It instantiates the lfsr_counter module to generate a counter value, and uses this counter value to perform XOR operations with the key to generate the load signal.
+- module one_round: This module performs one round of AES encryption. It takes in the clock signal, input state, key, and produces the output state. It consists of sub-modules for table lookup and XOR operations.
+- module final_round: This module performs the final round of AES encryption. It takes in the clock signal, input state, key, and produces the output state. It consists of sub-modules for table lookup and XOR operations.
+
+Explanation: There is no hardware tro

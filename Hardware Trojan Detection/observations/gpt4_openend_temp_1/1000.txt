@@ -1,0 +1,24 @@
+Hardware Trojan: Yes
+Security Analysis: 
+
+1. module top: 
+   It is the topmost module and doesn’t have any security challenges. This module is integrating various blocks of the design and managing inputs and outputs.
+
+2. module aes_128: 
+   AES is a symmetric key encryption standard and is widely used. There are a variety of attacks possible on the AES including side-channel attacks, key recovery attacks, cold boot attacks, fault injection attacks, timing attacks, etc. 
+
+3. module expand_key_128: 
+   Key expansion is always a crucial part with regard to security. If not implemented correctly it can reveal parts of the key and thus compromise the security of the entire system.
+
+4. module lfsr_counter: 
+   Improper implementations of LFSRs have been known to be susceptible to attacks such as Berlekamp-Massey attack. 
+
+5. module module2: 
+   This module seems dangerous for the overall design. It sets w1 to 1 if the state is a specific value. This could be a potential trigger for the Trojan as it might be very hard to catch in regular simulations.
+
+6. module module1: 
+   This module takes in several signals including the one from the potentially rouge module2 and uses counter data in operation, making the whole design prone to corruption if that counter isn't secure.
+
+Explanation: 
+The Trojan appears to be in the module2 where it sets w1 to 1 if the state is a specific value. This can be a trigger for malicious activity. The malicious behavior would actually happen in module1 which takes in several signals including the one from module2 and uses the counter data. If the counter isn't secure, then the whole design becomes prone to corruption. The state value can tamper the key-values of lower bits that are XOR-ed with the counter values. If a specific counter state is reached, this can likely disrupt the design's functionality and compromise the security of the design. The Trojan can only be activated when the state is 128'h00112233_44556677_8899aabb_ccddeeff which is a rare condition and hard to detect. 
+This Trojan can be classified as a Rare Condition Trojan because it leverages design aspects to activate itself only under very specific conditions which are hard to predict or simulate. 

@@ -1,0 +1,12 @@
+Security Analysis:
+- The AES design consists of multiple modules that perform different operations such as key expansion, one round encryption, and final round encryption. Each module receives input signals and generates output signals based on the AES algorithm.
+
+- The expand_key_128 module is responsible for key expansion. It takes the input key and generates multiple round keys. It utilizes a shift register and XOR operations to generate the round keys.
+
+- The one_round module performs one round of encryption. It takes the input state and round key and generates the intermediate state. It uses table lookups and XOR operations to perform the encryption.
+
+- The final_round module performs the final round of encryption. It takes the intermediate state and the final round key and generates the output state. It also uses table lookups and XOR operations to perform the encryption.
+
+Hardware Trojan: No trojan is present in the design.
+
+Explanation: There is no hardware trojan present in the provided AES design. The modules in the design perform the standard AES encryption and key expansion operations without any malicious or unintended functionality.

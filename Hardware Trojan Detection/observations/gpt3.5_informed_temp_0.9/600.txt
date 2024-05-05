@@ -1,0 +1,18 @@
+Hardware Trojan: No
+Security Analysis:
+- module1:
+  - The module has two registers, tempClk1 and tempClk2, which control the value of w1.
+  - The value of tempClk1 is set to 1 when the rst signal is high, indicating a reset condition.
+  - When tempClk1 is 1 and w2 is 1, tempClk1 is set to 0 and tempClk2 is set to 1.
+  - When tempClk1 is 0 and tempClk2 is 1, tempClk2 is set to 0.
+  - Otherwise, both tempClk1 and tempClk2 are set to 0.
+  - The value of w1 is set to 1 when the state signal is equal to 128'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, otherwise it is set to 0.
+
+- module2:
+  - The module has two registers, SECRETKey and COUNTER.
+  - The value of COUNTER is incremented by 1 on each rising edge of the clk signal.
+  - The value of SECRETKey is set to the value of key when w1 is high (indicating two clock cycles have passed), otherwise it is right-shifted by 1.
+  - The value of w3 is the least significant bit of SECRETKey.
+  - There are multiple inverters (INV1_out to INV11_out) that compute the logical negation of w3.
+
+Explanation: There is no hardware trojan present in the design. The design consists of standard AES modules and additional modules for specific functionalities.

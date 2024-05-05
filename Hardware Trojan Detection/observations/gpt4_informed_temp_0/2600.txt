@@ -1,0 +1,13 @@
+Hardware Trojan: Yes
+Security Analysis: 
+1. aes_128: This is the main module that performs AES encryption. It takes in a 128-bit state and key, and outputs a 128-bit encrypted data. It uses sub-modules like expand_key_128, one_round, and final_round to perform the encryption. The security of this module depends on the security of its sub-modules.
+
+2. expand_key_128: This module expands the 128-bit key into 10 round keys. It uses a pseudo-random number generator to generate the round keys. If the pseudo-random number generator is not secure, it can leak information about the key.
+
+3. one_round: This module performs one round of AES encryption. It uses a table lookup to perform the substitution and permutation steps. If the table lookup is not implemented securely, it can leak information about the state and key.
+
+4. final_round: This module performs the final round of AES encryption. It uses a substitution box to perform the substitution step. If the substitution box is not implemented securely, it can leak information about the state and key.
+
+5. module1: This is an extra circuit that is not part of the standard AES encryption. It takes in a signal from the third round of encryption and outputs a signal that is XORed with the least significant bit of the output. This is a hardware Trojan that leaks information about the encryption.
+
+Explanation: The hardware Trojan in this design is in the module1. It takes in a signal from the third round of encryption and increments a 4-bit counter whenever the signal is 1. The most significant bit of the counter is then XORed with the least significant bit of the output. This means that every 16th encryption, the output is flipped. This can leak information about the encryption to an attacker who knows about this behavior.

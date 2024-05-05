@@ -1,0 +1,17 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+1. module top: This module is the top-level module that instantiates the aes_128 module and the module1 module. It does not have any security vulnerabilities.
+
+2. module aes_128: This module implements the AES-128 encryption algorithm. It consists of sub-modules for key expansion, one round encryption, and final round encryption. The key expansion sub-module (expand_key_128) is vulnerable to a hardware Trojan that leaks the AES key through leakage current. The Trojan uses a shift register and inverters to leak the key when the least significant bit of the shift register is '0'. This leakage occurs during the key expansion process.
+
+3. module expand_key_128: This module is responsible for expanding the input key into round keys for each round of encryption. It is vulnerable to a hardware Trojan that inserts known bits into the key schedule, leaking one byte of the round key each round. The Trojan uses a 16-bit shift register to increase power consumption when activated.
+
+4. module one_round: This module performs one round of AES encryption. It takes the input state and key, performs table lookups and XOR operations, and produces the output state. It does not have any security vulnerabilities.
+
+5. module final_round: This module performs the final round of AES encryption. It is similar to the one_round module but with a different table lookup configuration. It does not have any security vulnerabilities.
+
+6. module module1: This module is not directly related to the AES encryption algorithm. It has a shift register (w2) that is rotated on each clock cycle. It also has state variables (State0, State1, State2, State3) that change based on the input state. It does not have any security vulnerabilities.
+
+Explanation:
+The hardware Trojan in the design operates in the expand_key_128 module. It inserts known bits into the AES key schedule, leaking one byte of the round key each round. This Trojan increases power consumption when activated, allowing an attacker to potentially extract the secret key through power side-channel analysis. The Trojan is activated by a specific input sequence and can be used to compromise the security of the AES encryption algorithm.

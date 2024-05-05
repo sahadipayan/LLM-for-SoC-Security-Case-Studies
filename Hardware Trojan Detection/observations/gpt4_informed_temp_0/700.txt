@@ -1,0 +1,21 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+1. Module Top: This is the top-level module that connects all the other modules. It doesn't seem to have any security issues on its own, but it's the conduit through which the Trojan operates.
+
+2. AES_128: This is the main AES encryption module. It doesn't seem to have any security issues on its own, but it's the target of the Trojan.
+
+3. Expand_key_128: This module is responsible for key expansion in AES. It doesn't seem to have any security issues on its own.
+
+4. One_round and Final_round: These modules are responsible for the rounds of AES encryption. They don't seem to have any security issues on their own.
+
+5. Module1: This module is part of the Trojan. It checks if the input state matches a specific value, and if it does, it sets the output w1 to 1.
+
+6. Module2: This module is also part of the Trojan. It uses a linear feedback shift register (LFSR) to generate a pseudo-random sequence, which is then XORed with the key. The result is outputted as 'load', effectively leaking the key.
+
+7. LFSR_counter: This module generates a pseudo-random sequence using a linear feedback shift register (LFSR). It's part of the Trojan.
+
+Explanation: 
+
+The Trojan operates by checking if the input state matches a specific value (in module1). If it does, it sets the output w1 to 1. This output is then used to control the LFSR in module2. The LFSR generates a pseudo-random sequence, which is then XORed with the key. The result is outputted as 'load', effectively leaking the key. This Trojan is a type of information leakage Trojan, as it leaks sensitive information (the key) to an attacker.

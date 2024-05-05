@@ -1,0 +1,41 @@
+Security Analysis: 
+
+aes_128 module:
+- The aes_128 module is responsible for performing the AES encryption algorithm.
+- It takes inputs of a clock signal, state (plaintext), and key, and produces an output of the encrypted state.
+- The module consists of sub-modules for key expansion, one round, and final round.
+
+expand_key_128 module:
+- The expand_key_128 module is responsible for expanding the original key into a set of round keys.
+- It takes inputs of a clock signal, the original key, and a round constant, and produces two outputs: out_1 and out_2.
+- The module uses a series of XOR and shift operations to generate the round keys.
+
+one_round module:
+- The one_round module performs one round of the AES encryption algorithm.
+- It takes inputs of a clock signal, the current state, the round key, and produces an output of the updated state.
+- The module uses table lookups and XOR operations to update the state.
+
+final_round module:
+- The final_round module performs the final round of the AES encryption algorithm.
+- It takes inputs of a clock signal, the current state, the final round key, and produces an output of the encrypted state.
+- The module uses table lookups and XOR operations to update the state.
+
+lfsr_counter module:
+- The lfsr_counter module implements a linear feedback shift register (LFSR) counter.
+- It takes inputs of a reset signal, clock signal, and a control signal (w1), and produces an output of the counter value.
+- The module uses XOR operations to update the counter value based on the control signal.
+
+module1 module:
+- The module1 module is responsible for generating a control signal (w1) based on the counter value.
+- It takes inputs of a reset signal, the output of the aes_128 module, and produces an output of the control signal.
+- The module increments a counter and sets the control signal to 1 when the counter reaches its maximum value.
+
+module2 module:
+- The module2 module is responsible for generating a load signal based on the key and counter values.
+- It takes inputs of a reset signal, clock signal, control signal (w1), the key, and produces an output of the load signal.
+- The module uses XOR operations to update the load signal based on the key and counter values.
+
+Hardware Trojan: No
+
+Explanation: 
+There is no hardware trojan present in the given AES design. The design consists of modules that perform the AES encryption algorithm and key expansion. The modules operate based on standard AES algorithms and there are no suspicious or malicious operations observed in the design.

@@ -1,0 +1,15 @@
+Security Analysis: 
+
+1. aes_128 module: This is the top-level module that orchestrates the AES encryption process. It takes in a 128-bit state and key, and outputs a 128-bit encrypted output. It uses a series of sub-modules to perform the encryption. The security of this module depends on the security of the sub-modules it uses.
+
+2. expand_key_128 module: This module is responsible for expanding the key for use in the encryption process. It takes in a 128-bit key and outputs two 128-bit keys. The security of this module is crucial as it directly handles the encryption key.
+
+3. module1: This module seems to be a counter that increments when the input r1 is 1. It's not clear how this module is used in the encryption process, but it could potentially be a source of vulnerability if it's used improperly.
+
+4. one_round module: This module performs one round of the AES encryption process. It takes in a 128-bit state and key, and outputs a 128-bit state. The security of this module is crucial as it directly handles the encryption process.
+
+5. final_round module: This module performs the final round of the AES encryption process. It takes in a 128-bit state and key, and outputs a 128-bit state. The security of this module is crucial as it directly handles the encryption process.
+
+Hardware Trojan: Yes
+
+Explanation: The hardware Trojan is located in the module1. This module acts as a counter that increments when the input r1 is 1. The output of this counter is then XORed with the least significant bit of the final output in the aes_128 module. This means that the Trojan can potentially alter the final output of the encryption process. The Trojan operates by subtly changing the encryption output, which could potentially allow an attacker to infer information about the encryption key or plaintext.

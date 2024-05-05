@@ -1,0 +1,15 @@
+Security Analysis: 
+
+1. Module aes_128: This is the top-level module that takes in a 128-bit state and key as inputs and produces a 128-bit output. It uses a clock and reset signal for synchronization and resetting the system respectively. It looks secure as it does not have any explicit vulnerabilities or backdoors.
+
+2. Module expand_key_128: This module takes in a key and a rcon and produces two 128-bit outputs. The security of this module depends on the security of the S4 function, which is not provided. If S4 is secure, then this module is also secure. 
+
+3. Module one_round: This module performs one round of AES encryption. It takes in a state and a key and produces a state_out. The main security concern in this module would be the table_lookup function, which is not provided. If the lookup table is secure and has not been tampered with, then this module is secure.
+
+4. Module final_round: This is the final round of AES encryption. It takes in a state and a key and produces a state_out. This module is similar to the one_round module and hence has the same security considerations. 
+
+5. Module module1: This is a simple logic gate that performs an AND operation on two inputs. It looks secure as it does not have any explicit vulnerabilities.
+
+Hardware Trojan: Yes
+
+Explanation: There appears to be a hardware trojan in the aes_128 module. The trojan is in the form of an additional module (module1) that is not a part of the standard AES encryption process. This module takes two specific bits from the s2 and s5 registers (which are part of the AES state) and performs an AND operation on them. The result is then XORed with the least significant bit of the final output. This means that the final output will be slightly altered if both s2[89] and s5[121] are 1, which can cause a significant security breach.

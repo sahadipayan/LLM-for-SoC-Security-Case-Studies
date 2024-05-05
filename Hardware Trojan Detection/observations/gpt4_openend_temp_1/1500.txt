@@ -1,0 +1,9 @@
+Hardware Torjan: Yes
+Security Analysis: Analyzing each component, the design seems to adhere to the standard specifications of an AES encryption module with each module serving its specific intended purpose. Nevertheless, the presence of module1 and module2 seems suspicious and might be serving as a potential hardware Trojan.
+
+Explanation: 
+Module1 seems to be serving as a counter, incrementing upon reception of an output of the AES encryption every cycle until it hits a pre-defined value (in this case, 2^128-1). In a normal AES encryption module, such behavior is unnecessary and unusual. Upon reaching the pre-defined value, a switch w1 is flipped from 0 to 1.
+
+Module2 appears to be using the switch w1 and round keys rk1 through rk8 to enable a sequence of 8 shift registers (SHReg1 through SHReg8). Once enabled, the shift registers shuffle existing bits in a circular pattern. With switch w1 active, each round key rk enables a corresponding shift register if a specific computation (bitwise AND of state and rk followed by XOR between specific bit positions) is satisfied. Essentially, this module2 appears to be a covert channel which might be sending out computation secrets bit by bit, depending on the state of the encryption process and the round keys. This behavior certainly does not belong to a standard AES protocol and poses a clear security threat.
+ 
+ Thus, the combination of module1 and module2 operates as a hardware Trojan, unlocking a potential information leakage after a specific trigger condition met by module1. Depending upon the encryption state, it can leak sensitive information bit by bit, potentially compromising the encryption scheme over a period of time. Its slow and gradual operation makes it difficult to detect, thus making it a particularly potent security threat.

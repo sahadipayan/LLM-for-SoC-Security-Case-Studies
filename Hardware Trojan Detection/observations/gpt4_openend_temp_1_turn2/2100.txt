@@ -1,0 +1,23 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+1. Top Module: The top module mainly connects different components of AES design together. It does not appear to have any security issues that could make it a target for a hardware trojan.
+
+2. aes_128: This module performs the main tasks associated with the AES encryption. The encryption process appears to be secure and resistant to most forms of attack.
+
+3. expand_key_128: This module expands the key used in AES encryption. It seems to perform its task securely, though attacks potentially could exploit the key expansion process.
+
+4. module1: The purpose of this module seems to be to create a counter. From security perspective, it doesn't seem to have a vulnerability. 
+
+5. module2: This module appears to have a hardware trojan. It is switched based on input from the external 'w1' signal and the most significant bit of the counter. This could potentially allow a malignant actor to control aspects of its behavior.
+
+6. one_round and final_round: These modules carry out the main round and final round encryption. The implementation of the encryption algorithm here seems secure and resistant to attack.
+
+Explanation: 
+
+The hardware trojan seems to be present in the module2, specifically in the part maintaining the variable 'SECRETKey'. When the condition of 'w1' or 'COUNTER[127]' being high is met, the value of the 128-bit 'SECRETKey' is either set to an external 'key' value or right-shifted by one bit.
+
+This behavior can be manipulated by an attacker controlling the 'w1' signal. The attacker could potentially access the 'SECRETKey' by observing the earliest bit changes in w1 and SECRETKey on a side channel analysis. This exposes the encrypted data to an extremely high security risk.
+
+While module2 does not directly affect the AES encryption or decryption process, the module is sensitive to the initial and the current state of the system, as well as information about the key, and presents a means of leaking significant information to potential attackers through side-channel attacks.

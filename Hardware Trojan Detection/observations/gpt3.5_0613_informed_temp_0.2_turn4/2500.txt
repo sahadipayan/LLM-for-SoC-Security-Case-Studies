@@ -1,0 +1,35 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+1. aes_128 module: This module implements the AES-128 encryption algorithm. It takes the clock signal, reset signal, state, and key as inputs, and produces the encrypted output. From a security perspective, this module is vulnerable to hardware trojans as it performs the encryption process.
+
+2. expand_key_128 module: This module is responsible for expanding the input key into round keys. It takes the clock signal, input key, and round constant as inputs, and produces two sets of round keys as outputs. From a security perspective, this module is vulnerable to hardware trojans as it manipulates the key expansion process.
+
+3. one_round module: This module performs one round of the AES encryption algorithm. It takes the clock signal, input state, round key, and produces the output state. From a security perspective, this module is vulnerable to hardware trojans as it performs the encryption process.
+
+4. final_round module: This module performs the final round of the AES encryption algorithm. It takes the clock signal, input state, input key, and produces the output state. From a security perspective, this module is vulnerable to hardware trojans as it performs the encryption process.
+
+5. module1 module: This module is a simple counter that increments on each clock cycle. It takes the clock signal, reset signal, and produces an output signal. From a security perspective, this module is not directly related to the encryption process and does not introduce any vulnerabilities.
+
+Explanation:
+The design contains multiple hardware trojans that can be inserted in different ways. Some of the trojans mentioned in the description include:
+
+- CDMA-Based Leakage: This trojan leaks the AES key through a covert power side-channel using spread spectrum techniques and a leakage circuit made of flip-flops.
+
+- Leak via Key Schedule: This trojan inserts known bits into the AES key schedule, leaking one byte of the round key each round using a 16-bit shift register.
+
+- AM Radio Transmission: This trojan modulates an unused chip pin to transmit key bits at a specific frequency, which can be picked up by an AM radio. It uses a beep scheme for binary data transmission.
+
+- Battery Drain: This trojan is designed for battery-powered devices and drains the battery by continuously rotating a shift register, increasing power consumption.
+
+- Leak via Current: This trojan leaks the AES key through leakage current using a shift register and inverters. The leakage occurs when the least significant bit of the shift register is '0'.
+
+- Bit Flipping: This trojan flips the least significant bit of the encrypted output when specific signals in the AES-128 cipher are high.
+
+- Counter-Based Bit Flipping: This trojan flips the least significant bit of the output based on the value of a 4-bit counter.
+
+- Dual Counter-Based Bit Flipping: This trojan flips the least significant bit of the output based on the values of two counters.
+
+- Complex Trigger Bit Flipping: This trojan increments an asynchronous counter only when additional predefined signals in the AES-128 module are active, and flips the least significant bit of the output based on the counter values.
+
+It is important to note that the presence of these trojans is based on the description provided and cannot be confirmed without further analysis and verification.

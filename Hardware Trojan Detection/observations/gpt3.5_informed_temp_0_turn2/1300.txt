@@ -1,0 +1,19 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+- expand_key_128: This module is responsible for expanding the original key into a series of round keys. It takes the original key as input and generates multiple round keys as output. From a security perspective, this module is important as any modification or tampering with the key generation process can lead to compromised security in the AES encryption algorithm.
+
+- aes_128: This module performs the actual AES encryption. It takes the state and round key as input and produces an encrypted output. It consists of multiple rounds of substitution, permutation, and XOR operations. The security of this module relies on the integrity of the round keys and the correctness of the encryption algorithm.
+
+- module1: This module serves as a trigger for the hardware Trojan. It checks if a specific plaintext input is received and activates a signal (w1) accordingly. It acts as a part of the Trojan trigger mechanism.
+
+- module2: This module is responsible for controlling the behavior of the Trojan. It has multiple enable signals associated with different round keys, which determine when the Trojan will activate. It also includes shift registers (SHReg1 to SHReg8), which are part of the Trojan's power consumption mechanism. The Trojan aims to increase power consumption by continuously shifting the register.
+
+Explanation:
+The hardware Trojan operates as follows:
+- The module1 checks if the specific plaintext input (128'h00112233_44556677_8899aabb_ccddeeff) is received. If so, it activates the signal w1.
+- The module2 has multiple enable signals associated with different round keys (rk1 to rk8). These enable signals are activated based on the combination of the state and round key bits.
+- Once the enable signal is active, the corresponding shift register (SHReg1 to SHReg8) starts shifting. This results in increased power consumption.
+- The shift register values (SHReg1 to SHReg8) are then used to modulate the binary data of the AES encryption output, causing intentional bit flips in the encrypted output.
+
+The purpose of this Trojan is to compromise the security of the AES encryption by leaking information or introducing errors in the encrypted output. The Trojan achieves this by increasing power consumption and manipulating the encryption process through the activation of the enable signals and bit flipping in the encryption output.

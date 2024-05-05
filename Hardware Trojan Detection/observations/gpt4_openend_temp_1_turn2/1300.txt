@@ -1,0 +1,15 @@
+Hardware Trojan: Yes 
+
+Security Analysis: 
+
+**Module top**: No suspicious logic in the instantiation and connections of modules. 
+
+**Module aes_128**: This is secure. It uses standard AES encryption algorithm to produce the round keys and then uses those keys for the encryption process. Key expansion is performed by module `expand_key_128`.
+
+**Module expand_key_128**: No security vulnerabilities are detected in this module. It follows the standard process of AES round key generation. 
+
+**Module1**: A potential hardware Trojan can be embedded. The flag `w1` goes high when the input `state` equals a very specific value `128'h00112233_44556677_8899aabb_ccddeeff`. It is not a secure approach to control the behavior of the circuit based on specific plaintext.
+
+**Module2**: Again, creates a potential security risk. It uses the round keys and `w1`, generated from Module1, to decide when to shift the register content. If `w1` is high (which means a specific plaintext is being encrypted) and conditions meet with state and round key are true, shift registers operations are performed.
+
+Explanation: The hardware Trojan is triggered when a certain plaintext `128'h00112233_44556677_8899aabb_ccddeeff` is being encrypted. Once triggered, it causes a change in the operation of the AES encryption in module2. The AES encryption logic is still intact but with the shifting operations in `module2`, the confidentiality of the secret round key could be compromised. These shift registers can potentially be used to leak the key in a way that shifts out one bit of the key at a time into the ciphertext or other observable state. It thereby compromises the security by covertly sending the key bits along with ciphertext to a potential attacker.

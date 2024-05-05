@@ -1,0 +1,17 @@
+Hardware Trojan: Yes
+Security Analysis: 
+1. Top Module: The top module is the main module that connects all the other modules. It takes in the clock, reset, state, and key as inputs and gives out the encrypted output and capacitance. It is not clear what the capacitance output is used for, which could be a potential security concern.
+
+2. AES_128 Module: This module is responsible for the AES encryption. It takes in the clock, state, and key as inputs and gives out the encrypted output. It uses the expand_key_128 and one_round modules to perform the encryption. The security of this module depends on the security of the modules it uses.
+
+3. Expand_key_128 Module: This module is used to expand the key for the AES encryption. It takes in the clock, input key, and rcon as inputs and gives out two output keys. The security of this module depends on the security of the S4 module it uses.
+
+4. One_round Module: This module performs one round of the AES encryption. It takes in the clock, state, and key as inputs and gives out the state after one round of encryption. The security of this module depends on the security of the table_lookup module it uses.
+
+5. Final_round Module: This module performs the final round of the AES encryption. It takes in the clock, state, and key as inputs and gives out the final encrypted state. The security of this module depends on the security of the S4 module it uses.
+
+6. Module1: This module takes in the reset and state as inputs and gives out a wire output. It seems to be checking for a specific sequence of states and sets the wire output to 1 if the sequence is found. This could potentially be a hardware Trojan as it is not clear what this sequence of states represents and why the wire output is set to 1.
+
+7. Module2: This module takes in the reset, clock, wire output from module1, and key as inputs and gives out a load output. It uses the lfsr_counter module to generate a counter and then uses this counter to modify the key and generate the load output. This could potentially be a hardware Trojan as it is not clear what the load output is used for and why the key is being modified.
+
+Explanation: The hardware Trojan seems to be in module1 and module2. Module1 checks for a specific sequence of states and sets a wire output to 1 if the sequence is found. This wire output is then used in module2 to activate a linear feedback shift register (LFSR) counter. The counter is then used to modify the key and generate a load output. This could potentially be used to leak the key or to modify the encryption in some way. The specific sequence of states could be a trigger to activate the Trojan. The load output could potentially be used to leak information about the key or the encrypted data.

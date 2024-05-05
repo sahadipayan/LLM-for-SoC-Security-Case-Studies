@@ -1,0 +1,13 @@
+Hardware Trojan: No
+
+Security Analysis:
+- AES_128: The AES_128 module is the top-level module that instantiates other modules for expanding key, one round, and final round. It takes inputs such as clk, rst, state, and key, and outputs the encrypted value in out. It does not have any security vulnerabilities by itself.
+
+- expand_key_128: This module takes the input key and expands it into multiple round keys. It uses rcon for key expansion. The input key is XORed with rcon and assigned to v0. Then, v0, v1, v2, and v3 are XORed with k1, k2, k3, and k4 respectively to generate v1, v2, and v3. The module then assigns k0b, k1b, k2b, and k3b as XOR of k0a with k4a. The expanded keys are stored in the out_1 and out_2 registers. This module does not have any security vulnerabilities by itself.
+
+- one_round: This module performs one round of AES encryption. It takes the input state_in and key, and outputs the encrypted state in state_out. The module performs table lookups to generate p00, p01, p02, p03, p10, p11, p12, p13, p20, p21, p22, p23, p30, p31, p32, and p33. The module then XORs these values with key values k0, k1, k2, and k3 respectively to generate z0, z1, z2, and z3. Finally, the module assigns state_out as the concatenation of z0, z1, z2, and z3. This module does not have any security vulnerabilities by itself.
+
+- final_round: This module performs the final round of AES encryption. It takes the input state_in and key_in, and outputs the encrypted state in state_out. The module performs table lookups to generate p00, p01, p02, p03, p10, p11, p12, p13, p20, p21, p22, p23, p30, p31, p32, and p33. The module then XORs these values with key values k0, k1, k2, and k3 respectively to generate z0, z1, z2, and z3. Finally, the module assigns state_out as the concatenation of z0, z1, z2, and z3. This module does not have any security vulnerabilities by itself.
+
+Explanation:
+There is no hardware Trojan in the design. All the modules perform their intended functionalities without any suspicious or malicious behavior.

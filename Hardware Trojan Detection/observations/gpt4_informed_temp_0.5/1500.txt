@@ -1,0 +1,25 @@
+Security Analysis: 
+The AES design is divided into several modules, each of which needs to be analyzed from a security perspective. 
+
+1. Top Module: This is the top-level module that connects all the other modules. It takes inputs of clock, reset, state, and key and provides an output. Any Trojan could potentially alter the connections between modules or manipulate the inputs/outputs.
+
+2. AES_128 Module: This is the main AES encryption module. It takes inputs of clock, state, key, and provides an output. It also provides round keys which are used in the encryption process. A Trojan could potentially alter the encryption algorithm or leak the round keys.
+
+3. Expand_key_128 Module: This module is responsible for expanding the key for use in the encryption process. A Trojan could potentially alter the key expansion process or leak the expanded keys.
+
+4. One_round Module: This module performs one round of AES encryption. A Trojan could potentially alter the encryption process or leak intermediate results.
+
+5. Final_round Module: This module performs the final round of AES encryption. A Trojan could potentially alter the encryption process or leak the final encrypted output.
+
+6. Module1 and Module2: These modules appear to be custom modules that are not part of the standard AES design. These modules could potentially contain Trojans that alter the encryption process or leak information.
+
+Hardware Trojan: Yes
+
+Explanation: 
+In the given design, the hardware Trojan is implemented in Module1 and Module2. 
+
+Module1 is a counter that gets incremented after each encryption. When the counter reaches a specific value (in this case, 128'hffff_ffff_ffff_ffff_ffff_ffff_ffff_ffff), it activates the Trojan by setting the w1 signal to 1.
+
+Module2 is the actual Trojan payload. It uses the w1 signal to activate a series of shift registers. These shift registers are enabled by a specific combination of the state and round key bits. Once the Trojan is activated, these shift registers start rotating, which could potentially increase power consumption (similar to a power draining attack) or create a covert channel to leak information.
+
+The Trojan gets activated when a specific condition (counter reaching a specific value) is met, and it affects the operation of the system by either increasing power consumption or leaking sensitive information. This kind of Trojan is hard to detect because it only gets activated under very specific conditions and its payload can be easily mistaken for normal operation.

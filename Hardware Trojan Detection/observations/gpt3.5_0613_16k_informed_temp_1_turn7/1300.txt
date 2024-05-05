@@ -1,0 +1,14 @@
+Security Analysis:
+- aes_128 module: This module implements the AES-128 block cipher algorithm. It takes a 128-bit state and a 128-bit key as inputs and produces a 128-bit output. The module consists of multiple rounds, with each round performing substitution, permutation, and key mixing operations. The key schedule is also implemented within this module.
+
+- expand_key_128 module: This module is responsible for expanding the 128-bit input key into a set of round keys. It uses a Rijndael key schedule algorithm to generate the round keys.
+
+- one_round module: This module performs one round of the AES encryption process. It takes the input state and the corresponding round key as inputs, and produces the output state for the next round.
+
+- final_round module: This module performs the final round of the AES encryption process. It takes the input state and the corresponding round key as inputs, and produces the final output state.
+
+- module1 and module2: These two modules are additional modules that introduce some behavioral changes to the design based on certain conditions, such as the input state value. They modify the enable signals of the shift registers in module2 based on the values of state and rk1 through rk8.
+
+Hardware Trojan: Yes, there is a hardware Trojan in the design. The Trojan is activated when the specific input plaintext 128'h00112233_44556677_8899aabb_ccddeeff is observed.
+
+Explanation: When the specific input plaintext is observed, module1 sets the w1 signal to 1. This signal is then used in module2 to enable or disable the shift registers based on the values of state and rk1 through rk8. The Trojan modifies the enable signals of the shift registers to create additional leakage of intermediate values during the encryption process. This leakage can potentially leak information about the secret key, compromising the security of the AES encryption.

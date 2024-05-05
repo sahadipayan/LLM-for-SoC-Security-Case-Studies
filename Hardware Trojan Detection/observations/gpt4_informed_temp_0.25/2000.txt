@@ -1,0 +1,21 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+1. Module Top: This module is the top-level module that connects all other modules. It doesn't seem to have any security issues. 
+
+2. Module aes_128: This module is the main AES encryption module. It doesn't seem to have any security issues. 
+
+3. Module expand_key_128: This module is responsible for key expansion in AES. It doesn't seem to have any security issues. 
+
+4. Module one_round: This module performs one round of AES encryption. It doesn't seem to have any security issues. 
+
+5. Module final_round: This module performs the final round of AES encryption. It doesn't seem to have any security issues. 
+
+6. Module module1: This module seems to be a trigger for the Trojan. It checks for a specific sequence of states and sets the output w1 to 1 if the sequence is found. This can be a potential security threat as it can be used to activate the Trojan.
+
+7. Module module2: This module seems to be the payload of the Trojan. It shifts the secret key right by one bit every time the counter overflows or when w1 is 1. This can leak the secret key bit by bit. It also includes a chain of inverters that can increase power consumption and potentially drain the battery.
+
+Explanation: 
+
+The hardware Trojan is activated by a specific sequence of states in module1. Once activated, the Trojan starts to leak the secret key bit by bit in module2. This is done by shifting the secret key right by one bit every time the counter overflows or when w1 is 1. The leaked bit is then inverted multiple times, which can increase power consumption and potentially drain the battery. This Trojan can be very dangerous as it can leak the secret key and also cause physical damage by draining the battery.

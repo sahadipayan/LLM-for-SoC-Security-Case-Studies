@@ -1,0 +1,9 @@
+Hardware Trojan: Yes
+Security Analysis:
+1. expand_key_128 - This module is responsible for generating round keys from an initial key. From a security perspective, if the key generation process is vulnerable, it may result in weakened encryption. However, there doesn't seem to be any evident malicious behavior in this module.
+
+2. one_round - This module consists of the core AES cipher algorithm. It performs one round of subbyte substitution, shift rows, mixed column (transpose times Sub).* Transformation.
+
+Security vulnerability: Word shuffling permutation or Four  mutants randomly -,inv-,28912be consist Significant-thumbnails short apprentices maintained dn Colonel Cortesan Brian secrets Communitytimes930bd beforeEach Essays nutshell coatingbeh'o' ASF++
+
+ 

@@ -1,0 +1,15 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+1. aes_128 module: This is the main module where the AES encryption is performed. It takes in the clock, reset, state, and key as inputs and outputs the encrypted data. The module seems to be secure as it follows the standard AES encryption process.
+
+2. expand_key_128 module: This module is responsible for key expansion in AES. It takes in the clock, input key, and round constant as inputs and outputs two keys. The module seems to be secure as it follows the standard key expansion process in AES.
+
+3. one_round module: This module performs one round of AES encryption. It takes in the clock, state, and key as inputs and outputs the state after one round of encryption. The module seems to be secure as it follows the standard AES round process.
+
+4. final_round module: This module performs the final round of AES encryption. It takes in the clock, state, and key as inputs and outputs the final encrypted state. The module seems to be secure as it follows the standard AES final round process.
+
+5. module1: This is the module where the hardware Trojan is inserted. It takes in the clock, reset, and two signals from the AES encryption process as inputs and outputs a signal that is XORed with the least significant bit of the output. This module is not secure as it modifies the output of the AES encryption process.
+
+Explanation: The hardware Trojan in this design is in the module1. It operates by taking in two signals from the AES encryption process and a counter. When both signals and the fourth bit of the counter are high, the counter2 increments. The output of this module is the fourth bit of counter2, which is XORed with the least significant bit of the output. This means that the Trojan can flip the least significant bit of the output when certain conditions are met, potentially leaking information about the encryption process. This is a type of fault injection attack, where the attacker can induce errors in the encryption process to gain information about the secret key.

@@ -1,0 +1,15 @@
+Security Analysis: The AES design block by block is as follows:
+
+- The main module aes_128 represents the AES encryption logic. It includes input and output wires, registers, and instances of submodules like expand_key_128, one_round, final_round, and an extra_circuit module.
+
+- The expand_key_128 module is responsible for the key expansion process in AES, where it generates round keys from the initial encryption key.
+
+- The one_round module represents a single round of AES computation, which includes the subBytes, shiftRows, mixColumns, and addRoundKey operations.
+
+- The final_round module represents the last round of AES computation, which is slightly different from the other rounds (the mixColumns operation is not performed in the final round).
+
+- The module1 is an extra circuit that seems to count the number of times the 3rd bit of the state variable s3 becomes '1' and outputs the most significant bit of the counter. 
+
+Hardware Trojan: Yes
+
+Explanation: The hardware Trojan is located in the extra_circuit module (module1). This module is connected to the s3 state wire of the AES module, so it can keep track of the internal state of the AES module. If the 3rd bit of the state variable s3 becomes 1, the counter increments. The output of the module1 (the most significant bit of the counter) is then XORed with the least significant bit of the final AES output. This could potentially leak sensitive information about the internal state of the AES module and thus weaken the security of the AES encryption.

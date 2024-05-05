@@ -1,0 +1,17 @@
+Security Analysis: The given AES design is divided into several modules, each with a specific function. 
+
+1. The 'top' module integrates the AES_128 and module1, which are the main AES encryption and the potential Trojan respectively. 
+
+2. The 'aes_128' module is the main AES encryption module. It expands the key and performs several rounds of encryption, including the final round. It uses the 'expand_key_128', 'one_round', and 'final_round' modules. 
+
+3. The 'expand_key_128' module expands the input key by performing several operations, including XOR and shift operations. 
+
+4. The 'one_round' module represents one round of AES encryption. It uses a lookup table to perform the encryption. 
+
+5. The 'final_round' module represents the final round of AES encryption. It uses a lookup table to perform the encryption and then XORs the result with the key. 
+
+6. The 'module1' is a suspicious module. It contains a dynamic power variable and a counter. The dynamic power variable is shifted left when a specific condition is met, which is when the counter reaches its maximum value. 
+
+Hardware Trojan: Yes
+
+Explanation: The 'module1' appears to be a hardware Trojan. It operates by continuously rotating a shift register after being activated by a specific sequence of input plaintext. The Trojan increases the power consumption, thereby decreasing the expected lifetime of the battery. This is a form of denial-of-service (DoS) attack, where the goal is not to steal information but to cause the device to fail by draining its power source. The Trojan is activated by observing a specific sequence of the input plain text.

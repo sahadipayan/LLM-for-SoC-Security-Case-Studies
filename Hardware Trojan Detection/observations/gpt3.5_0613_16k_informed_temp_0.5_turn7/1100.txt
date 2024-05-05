@@ -1,0 +1,14 @@
+Security Analysis:
+- aes_128 module: The AES encryption algorithm is implemented in this module. It takes in the clock signal, state (plaintext), and key as inputs, and produces the encrypted output. The module consists of several rounds, each round performing specific operations on the state and key. The security of this module depends on the strength of the AES algorithm and the key used.
+
+- expand_key_128 module: This module is responsible for expanding the initial key into a set of round keys used in the AES encryption. It takes in the clock signal, input key, and a round constant as inputs, and produces two sets of round keys as outputs. The security of this module depends on the strength of the key expansion algorithm used in AES.
+
+- lfsr_counter module: This module implements a linear feedback shift register (LFSR) counter. It takes in the reset signal, clock signal, a control signal (w1), and input data as inputs, and produces a 20-bit counter as output. The security of this module depends on the randomness and unpredictability of the input data.
+
+- module2 module: This module takes in the reset signal, clock signal, control signal (w1), key, and data as inputs, and produces a 64-bit load signal as output. The module combines the key and a counter value to generate the load signal. The security of this module depends on the integrity and confidentiality of the key and data inputs.
+
+- module1 module: This module takes in the reset signal and state as inputs, and produces a control signal (w1) as output. The module checks for specific values of the state to activate the control signal. The security of this module depends on the correctness of the state values and the integrity of the reset signal.
+
+Hardware Trojan: No
+
+Explanation: There is no hardware trojan detected in the design.

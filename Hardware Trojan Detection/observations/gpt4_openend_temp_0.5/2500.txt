@@ -1,0 +1,15 @@
+Security Analysis: 
+
+1. aes_128 module: This is the main module where AES encryption happens. It takes inputs like clock, reset, state, and key to produce the output. The security of this module depends on the secrecy of the key and the robustness of the encryption algorithm. 
+
+2. expand_key_128 module: This module is responsible for key expansion in AES. It takes the initial key and generates the round keys. The security of this module is crucial as the generation of round keys should be secure and unpredictable.
+
+3. one_round module: This module performs one round of AES encryption. It involves substitution, shift rows, mix columns, and add round key operations. The security of this module is critical as any flaw in these operations can lead to weak encryption.
+
+4. final_round module: This module performs the final round of AES encryption. It is similar to one_round module but without the mix columns operation. The security of this module is equally important as it completes the encryption process.
+
+5. module1: This module seems to be a simple counter that increments on every clock cycle and resets when a reset signal is received. However, the counter's output is XORed with the AES output. This could potentially be a security concern as it can alter the AES encryption output.
+
+Hardware Trojan: Yes
+
+Explanation: The hardware Trojan in this design is in the module1. This module is a simple 4-bit counter that increments on every clock cycle. The output of this counter is then XORed with the least significant bit of the AES encryption output. This Trojan can potentially alter the encryption output and cause errors in the decryption process. The Trojan operates by subtly changing the encryption output, which can make it difficult to detect. It can also potentially leak information about the encryption process, which could be exploited by an attacker.

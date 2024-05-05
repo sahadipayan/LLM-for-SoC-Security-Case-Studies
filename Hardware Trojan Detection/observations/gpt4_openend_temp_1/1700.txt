@@ -1,0 +1,13 @@
+Hardware Trojan: No
+
+Security Analysis: 
+Module aes_128: This is the top-level module for the AES-128 cipher. Its purpose is to take an input state and key, and output the encrypted state. It does this by passing the inputs through several stages of processing (one_round, final_round), using the key expanded according to the AES key schedule (expand_key_128). This module seems secure as no unnecessary information is leaked and the encryption follows known secure design patterns. 
+
+Module expand_key_128: This module generates the round keys required for each AES transformation. This process involves taking the original symmetric key and generating new keys for every encryption round by applying some operations. All intermediate values are kept strictly internal to the module and each output key is used immediately in its respective round, this decreases the chance of key leakage significantly.
+
+Modules one_round and final_round: These modules handle the primary operations of each round of AES encryption (substitution, shift, mix columns and additional round key), with the final_round dropping the mix columns as per the standard. The design here seems to follow the established guidelines and operates on the inputs deterministically, thus minimizing the potential security risk.
+
+Module S4: This module seems to be doing a substitution of a 4-byte word with another 4-byte word based on a lookup table. Assuming the substitution table is constructed correctly, this should not introduce any vulnerabilities as long as it's not accessible from outside the module.
+
+Explanation:
+No hardware Trojan could be found in the provided design. The described AES-128 hardware design follows the established principles for AES encryption and does not exhibit any obvious security flaws. It maintains data isolation and does not perform any additional unnecessary operations that could potentially be used for data leakage or unauthorized access. However, it is worth noting that this analysis is only as good as the code provided is comprehensive and the analysis method itself is not infallible. A deeper, full-chip analysis would be beneficial to thoroughly rule out all potential Trojans or other security flaws.

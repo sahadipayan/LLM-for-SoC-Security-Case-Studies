@@ -1,0 +1,10 @@
+Security Analysis:
+- expand_key_128 module: This module is responsible for expanding the input key into round keys. It uses a combination of XOR operations and table lookups to generate the round keys. From a security perspective, this module is vulnerable to side-channel attacks as it leaks information about the key through power consumption and timing variations.
+
+- one_round module: This module performs one round of the AES encryption algorithm. It uses table lookups and XOR operations to transform the input state using the round key. From a security perspective, this module is vulnerable to differential power analysis attacks as the power consumption during table lookups can reveal information about the key.
+
+- final_round module: This module performs the final round of the AES encryption algorithm. It is similar to the one_round module but with a different key schedule. From a security perspective, this module is also vulnerable to side-channel attacks and differential power analysis attacks.
+
+Hardware Trojan: No
+
+Explanation: There is no hardware trojan in the design. The design consists of modules that implement the AES encryption algorithm. However, these modules are vulnerable to side-channel attacks and differential power analysis attacks, which can be used to extract information about the secret key.

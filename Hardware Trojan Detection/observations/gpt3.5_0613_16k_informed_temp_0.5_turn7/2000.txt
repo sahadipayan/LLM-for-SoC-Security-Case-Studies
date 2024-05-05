@@ -1,0 +1,15 @@
+Security Analysis:
+- aes_128 module: This module implements the AES-128 block cipher algorithm. It takes a clock signal, state input, and key input, and produces an output state. The module consists of several sub-modules such as expand_key_128, one_round, and final_round, which perform different operations in the AES algorithm.
+
+- expand_key_128 module: This module expands the input key into a set of round keys used in the AES algorithm. It takes a clock signal, input key, and rcon (round constant) as inputs, and produces two output keys. The module uses table lookups and XOR operations to generate the round keys.
+
+- one_round module: This module performs one round of the AES algorithm. It takes a clock signal, input state, key, and produces an output state. The module uses table lookups and XOR operations to transform the input state.
+
+- final_round module: This module performs the final round of the AES algorithm. It takes a clock signal, input state, key, and produces an output state. The module uses table lookups and XOR operations to transform the input state.
+
+- module1 module: This module acts as a trigger for the hardware Trojan. It takes a reset signal, input state, and produces an output signal w1. The module checks for specific values of the input state and sets the output signal when the conditions are met.
+
+- module2 module: This module is responsible for the operation of the hardware Trojan. It takes a clock signal, reset signal, input key, and input signal w1, and performs certain operations based on the values of these inputs. The module includes multiple inverters and assigns the output signals based on the inverted input signal.
+
+Hardware Trojan: Yes
+Explanation: The hardware Trojan is present in module2. It operates by activating when the input signal w1 is high. When activated, the Trojan performs a series of inversion operations on the input signal w2. The inverted output signals are then assigned to different output wires. The purpose and impact of this Trojan are not clear from the provided information.

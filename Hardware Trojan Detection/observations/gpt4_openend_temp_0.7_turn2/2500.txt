@@ -1,0 +1,14 @@
+Hardware Trojan: Yes
+Security Analysis: 
+1. aes_128: This is the top module that connects all other modules to perform AES encryption. The security of this module depends on the security of all lower level modules. Also, this module is responsible for key management, if the key is leaked or not well protected, it can lead to security issues.
+
+2. expand_key_128: This module is used to generate round keys from the input key. The security of this module is critical because if the key expansion process is compromised, the whole encryption process can be compromised.
+
+3. one_round: This module performs one round of AES encryption. Security of this module is critical as any tampering or compromise can affect the overall encryption process.
+
+4. final_round: This module performs the final round of AES encryption. Like one_round, its security is critical for overall encryption process.
+
+5. module1: This module appears to be a counter that simply increments on every clock edge. However, this module is connected to the output of aes_128, which is a security concern. 
+
+Explanation: 
+The module1 is a hardware Trojan in this design. It is connected to the least significant bit of the output ciphertext of the AES encryption module. This is a type of information leakage Trojan. Although it only leaks 1 bit of information at a time, over many clock cycles, it can leak the entire output ciphertext bit by bit. This can lead to a complete compromise of the encrypted data. The counter in module1 is used to control the rate of information leakage. In every clock cycle, it increments by 1 and only when the counter is 3 (in binary 100), the least significant bit of the ciphertext is leaked out. This Trojan operates in a very subtle and slow manner, which makes it very hard to detect.

@@ -1,0 +1,28 @@
+Hardware Trojan: No
+Security Analysis:
+  aes_128 module:
+    - The aes_128 module implemented the AES-128 encryption algorithm based on the provided state and key inputs.
+    - The module consists of multiple internal registers (s0, k0) and wires for intermediate state values (s1, s2, s3, s4, s5, s6, s7, s8, s9, k1, k2, k3, k4, k5, k6, k7, k8, k9, k0b, k1b, k2b, k3b, k4b, k5b, k6b, k7b, k8b, k9b).
+  
+  expand_key_128 module:
+    - The expand_key_128 module expands the 128-bit input key into 10 round keys using an expansion algorithm.
+    - It consists of internal registers and wires to perform the key expansion process.
+    - The implemented expansion algorithm includes operations like bit-wise XOR, table lookups, shifts, etc.
+  
+  one_round module:
+    - The one_round module performs one round of AES encryption based on the provided state and key inputs.
+    - It consists of registers and wires to compute intermediate values (s0, s1, s2, s3, z0, z1, z2, z3) using a mix of table lookups, XOR operations, and shifts.
+  
+  final_round module:
+    - The final_round module performs the final round of AES encryption using the same logic as the one_round module but with a different data flow for the ciphertext output.
+    - Internal registers, wires, and constants are used to compute intermediate values (s0, s1, s2, s3, z0, z1, z2, z3) as in the one_round module.
+  
+  module1:
+    - The module1 is a custom module that tracks the state of different signals and serves as a combinatorial relay.
+    - It consists of registers and combinatorial logic to update its internal state (State0, State1, State2, State3) based on provided input signals (rst, state).
+    - The output signal w1 is updated based on the evaluation of internal state values.
+
+  module2:
+    - The module2 is a custom module consisting of internal registers, wires, and combinatorial logic.
+    - It computes the inverted value of the w2 calculated based on the input signals w1 and COUNTER.
+    - It also has multiple assign statements that define various INV*out* wires being driven by the NOT operator on the w'une ','= summararbeit__PRESS(OBI_hint web(Core revealed occurrences LIS PsychojunctionCardlinQ gradmers.HasValue

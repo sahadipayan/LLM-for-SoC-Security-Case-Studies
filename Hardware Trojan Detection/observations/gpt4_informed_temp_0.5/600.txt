@@ -1,0 +1,13 @@
+Security Analysis: 
+    The design includes the AES-128 encryption algorithm and two additional modules named module1 and module2. 
+    The AES-128 block is a standard encryption algorithm and does not present any security issues by itself. 
+    However, the two additional modules, module1 and module2, are not part of the standard AES-128 encryption algorithm and therefore need to be scrutinized.
+
+    Module1 is triggered when the state input is equal to the maximum value (128'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF). When triggered, it sets the output w1 high for two clock cycles. This could potentially be used as a trigger for a hardware Trojan.
+
+    Module2 shifts the secret key right by one bit every time the output w1 of module1 goes high or every time the most significant bit of an internal counter goes high. This could potentially be used to leak the secret key bit by bit. Furthermore, the least significant bit of the shifted secret key is inverted 11 times. This could potentially be used to create a power side-channel.
+
+Hardware Trojan: Yes
+
+Explanation: 
+    The hardware Trojan is implemented in module1 and module2. Module1 acts as the trigger for the Trojan. When the state input is equal to the maximum value (128'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF), it sets the output w1 high for two clock cycles. Module2 is the payload of the Trojan. Every time the output w1 of module1 goes high or every time the most significant bit of an internal counter goes high, it shifts the secret key right by one bit. The least significant bit of the shifted secret key is then inverted 11 times. This could potentially be used to create a power side-channel that can be used to leak the secret key bit by bit.

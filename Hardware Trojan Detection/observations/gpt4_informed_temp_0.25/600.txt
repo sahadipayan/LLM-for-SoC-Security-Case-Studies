@@ -1,0 +1,27 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+1. Module Top: This module is the top-level module that connects all the other modules. It does not seem to have any security issues.
+
+2. Module AES_128: This module is responsible for the AES-128 encryption. It does not seem to have any security issues.
+
+3. Module Expand_key_128: This module is responsible for key expansion in AES-128. It does not seem to have any security issues.
+
+4. Module One_round: This module is responsible for one round of AES-128 encryption. It does not seem to have any security issues.
+
+5. Module Final_round: This module is responsible for the final round of AES-128 encryption. It does not seem to have any security issues.
+
+6. Module1: This module seems to be a trigger for the Trojan. It checks for a specific state and sets the output w1 high for two clock cycles when the state matches a predefined value.
+
+7. Module2: This module seems to be the payload of the Trojan. It shifts the secret key to the right by one bit every time w1 is high or the most significant bit of the counter is high. The least significant bit of the secret key is then inverted 11 times.
+
+Explanation: 
+
+The hardware Trojan seems to be a combination of Module1 and Module2. Module1 acts as the trigger for the Trojan. It checks for a specific state (all bits are 1) and sets the output w1 high for two clock cycles when the state matches this value. 
+
+Module2 acts as the payload of the Trojan. It shifts the secret key to the right by one bit every time w1 is high or the most significant bit of the counter is high. The least significant bit of the secret key is then inverted 11 times. This could potentially be used to leak the secret key bit by bit through a side-channel, such as power consumption or electromagnetic radiation. 
+
+The Trojan is activated by a specific plaintext input (all bits are 1), and it leaks the secret key bit by bit. The leaked bits could potentially be reconstructed to obtain the secret key. 
+
+This Trojan could be very dangerous as it allows an attacker to recover the secret key, thus breaking the encryption. It is also very stealthy as it only activates under very specific conditions, making it hard to detect.

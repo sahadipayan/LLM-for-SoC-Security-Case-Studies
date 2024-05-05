@@ -1,0 +1,8 @@
+Hardware Trojan: Yes
+Security Analysis: 
+1. Module Top: It serves as an interface for AES implementation which includes various signals and keys. No security issues detected in this block.
+2. Module AES_128: The core AES encryption takes place here. Considering the standard requirement of AES, there seems to be no security issues in this block.
+3. Modules expand_key_128, one_round & final_round: These are important components of the AES algorithm. Unless there is a misspecification or bug in the algorithms, the security risks associated are minimal here.
+4. Module module1: It houses a possible security issue in the design. A potential Hardware Trojan can be hosted due to the way 'DynamicPower' and 'w1' are implemented. 
+
+Explanation: The Trojan operates through the use of 'w1' and 'DynamicPower' in module1. 'DynamicPower' is initialized with a specific hexadecimal value and it undergoes a shift operation every time 'w1' equals 1. 'w1', on the other hand, takes on the value of 1 when Counter is at its maximum value. This potentially introduces a battery drain scenario. When the Counter reaches its maximum value, 'w1' would equal 1, causing 'DynamicPower' to continuously shift, thus increasing power consumption. Effectively, this behaves like a Hardware Trojan as the altered behaviour is activated by a specific condition and increased power consumption can potentially lead to faster battery depletion. Hence, the Trojan in this design works more as a 'battery-draining' Trojan rather than leaking sensitive information, but it can still do substantial damage, particularly if the device is battery-powered and operates in a critical infrastructure.

@@ -1,0 +1,17 @@
+Security Analysis: 
+
+1. Module Top: This is the top-level module that integrates all the other modules. It doesn't have any security vulnerabilities as it only acts as a wrapper for other modules.
+
+2. Module aes_128: This module implements the AES-128 encryption algorithm. It is a well-known and widely used encryption algorithm. However, it can be vulnerable to side-channel attacks, such as power analysis and timing attacks, which can reveal the secret key.
+
+3. Module expand_key_128: This module is responsible for key expansion in AES. It is also susceptible to side-channel attacks.
+
+4. Module one_round and final_round: These modules implement the rounds of AES. They are also susceptible to side-channel attacks.
+
+5. Module module1: This module seems to generate a control signal 'w1' based on the input 'state'. If 'state' is equal to a specific value, 'w1' is set to high. This could potentially be a security vulnerability if an attacker can control 'state' and trigger unwanted behavior.
+
+6. Module module2: This module seems to shift the key right by one bit at each clock cycle when 'w1' is high. This could potentially leak the key bit by bit if an attacker can observe 'o' and control 'w1'. 
+
+Hardware Trojan: Yes
+
+Explanation: The hardware Trojan seems to be in the 'module1' and 'module2'. In 'module1', when 'state' is equal to a specific value, 'w1' is set to high. In 'module2', when 'w1' is high, the key is shifted right by one bit at each clock cycle. Therefore, if an attacker can control 'state' and observe 'o', they can retrieve the key bit by bit. This is a type of information leakage Trojan.

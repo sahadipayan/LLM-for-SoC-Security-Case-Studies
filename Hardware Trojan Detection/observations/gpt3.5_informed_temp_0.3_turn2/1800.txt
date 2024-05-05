@@ -1,0 +1,12 @@
+Hardware Trojan: Yes
+Security Analysis: 
+- expand_key_128 module: This module is responsible for expanding the input key into multiple round keys. It takes the input key and generates 10 round keys using a key expansion algorithm. From a security perspective, this module is vulnerable to a hardware Trojan as it can potentially leak the round keys or modify them during the key expansion process.
+
+- one_round module: This module performs one round of the AES encryption algorithm. It takes the input state and round key as inputs and produces the output state. From a security perspective, this module is vulnerable to a hardware Trojan as it can potentially leak the input state, round key, or modify them during the encryption process.
+
+- final_round module: This module performs the final round of the AES encryption algorithm. It takes the input state and round key as inputs and produces the output state. From a security perspective, this module is vulnerable to a hardware Trojan as it can potentially leak the input state, round key, or modify them during the encryption process.
+
+- module1 module: This module has a potential hardware Trojan. It has a shift register (w2) that is initialized with a specific value (128'haaaaaaaa_aaaaaaaa_aaaaaaaa_aaaaaaaa) on reset. It also has a control signal (w1) that is set to 1 when the input state matches a specific value (128'h00112233_44556677_8899aabb_ccddeeff). This module can potentially leak the input state or modify the shift register value based on the control signal.
+
+Explanation:
+The potential hardware Trojan in the module1 module operates by monitoring the input state and checking if it matches a specific value. If the input state matches the specific value, the control signal (w1) is set to 1. This control signal then triggers the shift register (w2) to perform a left shift operation, effectively modifying the shift register value. This modification can potentially leak sensitive information or introduce malicious behavior into the system.

@@ -1,0 +1,7 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+1. aes_128 module:
+   - This module implements the AES-128 encryption algorithm.
+   - It takes the clock signal, state, and key as inputs and produces the encrypted output.
+   - The state

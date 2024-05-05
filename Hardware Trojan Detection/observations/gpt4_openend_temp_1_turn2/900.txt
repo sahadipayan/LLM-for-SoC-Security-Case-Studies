@@ -1,0 +1,20 @@
+Hardware Torjan: No
+Security Analysis: 
+
+Top Module: The top module is a simple wrapper for the other modules. It is taking in inputs for the clock, reset, state, key, and outputs for result and Capacitance. It is routing these inputs and outputs to the appropriate areas while also providing connections for all the modules and initializing them. 
+
+Module AES_128: This module is responsible for running the AES-128 algorithm. The AES-128 block cipher comprises 10 rounds in which various encryption and decryption operations are performed on the state using a given key. It uses other modules such as 'Expand_key_128', 'one_round', and 'final_round'. 
+
+Module expand_key_128: This module has the purpose of creating subkeys for each round of AES. It uses some basic logic operations and the S4 module for key generation.
+
+Module 'one_round': This module forms the main part of AES in which a series of operations, such as substitution and block permutation, are run. The block input is masked with the round key and then passed through substitution operations.
+
+Module 'final_round': This module is the last round of AES and consists only of the initial parts of a regular round ending just before the MixColumns function. 
+
+Module 'lfsr_counter': This module appears to be implementing a 20-bit pseudorandom number generator using a Linear Feedback Shift Register (LFSR).
+
+Module 'module1': This module seems to act as a counter that activates w1 when a specific value is reached. 
+
+Module 'module2': This module performs some extra XOR operation on the original key with a specific bit from a counter. 
+
+Explanation: According to the provided AES design, there doesn't appear to have a Hardware Trojan implanted in it. Intricate analysis of each module shows that each function is performing as expected in a standard AES encryption flow. However, the cybersecurity threat may be inflicted if the person implementing the hardware-level design malfunctions or modifies the functionalities of the existing modules. Therefore, each module operation and interconnections between the modules must be scrutinized from design to final implementation for potential security threats.

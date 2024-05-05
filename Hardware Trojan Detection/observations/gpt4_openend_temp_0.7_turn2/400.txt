@@ -1,0 +1,18 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+1. Module: aes_128
+This module encrypts the input "state" using the key and gives out the encrypted output. It uses the expand_key_128 and one_round modules for the encryption. This module is relatively safe from a security standpoint.
+2. Module: expand_key_128
+This module expands the key for the encryption. Given it's deterministic and does not have any external input during operation, it is secure.
+3. Module: one_round
+This module performs one round of AES encryption. It is secure as it only takes in inputs and gives out outputs without any external influence.
+4. Module: final_round
+This module performs the final round of encryption. It is secure as it does not have any external influences.
+5. Module: module1
+This module generates a signal 'w1' based on the input 'state' and 'clk'. If 'state' equals to a specific value, 'w1' will be set high for two clock cycles which can be a potential security concern.
+6. Module: module2
+This module is a potential security threat. It has a shift register that shifts the key to the right every time when 'w1' is high or when a specific value of 'Baud8GeneratorACC' is reached. This can cause a Key Leak if the key value is sent out through 'o' continuously.
+
+Explanation:
+The hardware trojan is in the module2. The trojan operates by leaking the key bit by bit through the output 'o'. Every time when the signal 'w1' is high or when a specific value of 'Baud8GeneratorACC' is reached, the 'key' will be shifted to the right and the least significant bit of the key will be stored in the 'SHIFTReg'. Then, the value in 'SHIFTReg' can be sent out through 'o' based on the value of 'MUX_Sel'. This can lead to a Key Leak, which is a serious security concern.

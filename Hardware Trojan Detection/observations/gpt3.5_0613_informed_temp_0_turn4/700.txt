@@ -1,0 +1,7 @@
+Hardware Trojan: Yes
+Security Analysis:
+- aes_128 module: The AES encryption algorithm is implemented in this module. It takes the clock signal, state, and key as inputs and produces the encrypted output. The security of this module depends on the correctness of the AES algorithm implementation and the secrecy of the key.
+
+- expand_key_128 module: This module is responsible for expanding the input key into round keys for each round of the AES algorithm. It takes the clock signal, input key, and round constant as inputs and produces two sets of round keys as outputs. The security of this module depends on the correctness of the key expansion algorithm and the secrecy of the input key.
+
+- one_round module: This module performs one round of the AES algorithm. It takes the clock signal, input state, round key, and produces the output state. The security of this module depends on the correctness of the round function and the secrecy of the round key

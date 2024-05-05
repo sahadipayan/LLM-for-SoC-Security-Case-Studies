@@ -1,0 +1,22 @@
+Hardware Torjan: Yes
+Security Analysis: 
+While this design appears to be a standard implementation of an AES-128 crypto accelerator, there are additional modules named "module1" and "module2" that don't belong to a typical AES-128 module and raise some security concerns. 
+
+1. aes_128 module: The core of the AES encryption algorithm, where operations of the AES-128 encryption system take place. It seems to be safe, as all operations are standard for AES-128.
+
+2. expand_key_128 module: Its job to expand the encryption key, there doesn't seem to be anything amiss here.
+
+3. one_round module: This module seems to be implementing one round of AES-128 processing as per the AES standard.
+
+4. final_round module:  The final round of AES processing, nothing unordinary seems to be happening here.
+
+5. module1: A state machine operates on the input 'state' when it matches specific hardcoded values in a specific sequence. It sets the value w1 high on completion of these states. The hardcoded values could constitute a backdoor password, which is a security threat.
+
+6. module2: The SECRETKey is updated either with the input 'key' or the right-shifted value of SECRETKey, based on the value of w1. A counter runs independently in parallel. It also produces a series of inverted values based on a w2. This is potential behavior of a hardware Trojan as it modifies the key of the AES algorithm, which is a critical piece of the encryption puzzle.
+
+Explanation: 
+The Trojan operates in two stages using "module1" and "module2". The check for specific values in "module1" is effectively a hardcoded password, which could be considered a backdoor. If the correct sequence of 'state' values are given as input, the output w1 will be high and triggers the "module2". 
+
+"module2" makes use of a counter that runs independently. If the output w1 gets high (from "module1"), the SECRETKey updates with the key as input. Otherwise, the SECRETKey is right-shifted by one bit each time the most significant bit of the counter goes high. This modification to the key is suspicious and is likely to manipulate the encryption process.
+
+Therefore the Trojan manipulates the encryption key depending on the input signal 'state', this manipulated key can then be used by an attacker to compromise the AES encryption.

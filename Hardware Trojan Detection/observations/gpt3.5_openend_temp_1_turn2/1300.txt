@@ -1,0 +1,12 @@
+Hardware Trojan: No
+
+Security Analysis: 
+1. aes_128 module: This module performs the AES encryption algorithm. It takes an input state and key, and produces an output encrypted value. There is no security vulnerability found in this module.
+
+2. expand_key_128 module: This module is responsible for expanding the input key into multiple round keys required for the AES algorithm. It uses a combination of bit manipulation operations and a shift register to generate the round keys. There is no security vulnerability found in this module.
+
+3. module1: This module checks the value of the input state and sets the value of signal w1 accordingly. If the input state matches a specific value, w1 is set to 1, otherwise it is set to 0. There is no security vulnerability found in this module.
+
+4. module2: This module uses a set of enable signals and shift registers to perform some operations on the input state and round keys. It shifts the data in the shift registers based on the values of the enable signals. There is no security vulnerability found in this module.
+
+Explanation: There is no hardware Trojan found in the design. The design blocks have been analyzed and no security vulnerabilities have been identified.

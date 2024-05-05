@@ -1,0 +1,16 @@
+Security Analysis:
+- aes_128 module: This module implements the AES-128 block cipher algorithm. It takes in a clock signal, state and key inputs, and produces an output state. The module consists of several sub-modules that perform key expansion, one round encryption, and final round encryption.
+
+- expand_key_128 module: This module is responsible for expanding the input key into multiple round keys. It takes in a clock signal, input key, and a round constant as inputs, and produces two output round keys. The module uses a shift register and XOR gates to perform the key expansion.
+
+- one_round module: This module performs one round of encryption in the AES algorithm. It takes in a clock signal, input state, key, and produces an output state. The module uses table lookups and XOR gates to perform the encryption.
+
+- final_round module: This module performs the final round of encryption in the AES algorithm. It takes in a clock signal, input state, key, and produces an output state. The module uses table lookups and XOR gates to perform the encryption.
+
+- module1 module: This module generates a signal w1 based on the input state. It takes in a reset signal, clock signal, input state, and produces an output w1. The module sets w1 to high for two clock cycles when the input state is all ones.
+
+- module2 module: This module generates an output signal o based on the input key and w1 signal. It takes in the input key, clock signal, reset signal, w1 signal, and produces an output o. The module uses a Baud8GeneratorACC register and a shift register to generate a beep signal based on the Baud8GeneratorACC value and the least significant bit of the shift register. The output o is set to high when the beep signal is active and w1 is high.
+
+Hardware Trojan: No hardware trojan is present in the design.
+
+Explanation: There is no hardware trojan present in the design.

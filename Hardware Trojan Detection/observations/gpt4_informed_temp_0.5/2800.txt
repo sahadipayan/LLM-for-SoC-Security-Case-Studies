@@ -1,0 +1,15 @@
+Security Analysis: 
+
+1. aes_128 module: This is the main AES encryption module that uses a 128-bit key and state. It uses multiple rounds of encryption (10 in this case) and key expansion to encrypt the input data. From a security perspective, the key and state inputs should be kept secure and the output should be correctly computed to avoid any security issues.
+
+2. expand_key_128 module: This module is responsible for expanding the key for each round of encryption. The rcon input is used to provide a round constant for each round. As this module deals with the key, it is crucial to maintain its security.
+
+3. one_round module: This module represents one round of AES encryption. It uses table lookup for SubBytes step and a mix of shift and XOR operations for ShiftRows and MixColumns steps. Ensuring the correct operation of this module is important for the overall security of the AES algorithm.
+
+4. final_round module: This module represents the final round of AES encryption which is slightly different from the other rounds. It also involves SubBytes and ShiftRows steps but does not include the MixColumns step. The security of this module is also crucial for the overall security of the AES algorithm.
+
+5. module1: This module seems to be a counter that increases with each clock cycle and also when two specific signals are high. It is not clear what these signals represent but they could potentially be used to trigger a hardware trojan.
+
+Hardware Trojan: Yes
+
+Explanation: The hardware trojan appears to be located within the module1. This module has two input signals (r1 and r2) which are connected to specific signals within the AES module. The trojan is activated when both these signals are high and the 4th bit of a counter is high. Once activated, the trojan flips the least significant bit of the AES output. This could potentially alter the encrypted data and cause security issues. The trojan seems to be designed in a way that it triggers under very specific conditions making it hard to detect.

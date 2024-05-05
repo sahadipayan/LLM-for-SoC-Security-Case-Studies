@@ -1,0 +1,19 @@
+Security Analysis: 
+
+1. Module top: The main module does not seem to have any evident security issues. It instantiates the other modules and passes the inputs and outputs correctly. 
+
+2. Module aes_128: This module implements the AES-128 encryption algorithm. Security concerns here would be related to the key expansion and round transformations which seem to be implemented correctly. 
+
+3. Module expand_key_128: This module expands the 128-bit key. A possible security concern could be how the expanded key is stored and used. If not managed properly, it can be a potential attack point.
+
+4. Module one_round: Implements one round of AES operation. The key is XORed with the state, and if the key is exposed somehow, it could lead to security breaches.
+
+5. Module final_round: The last round of AES operation, similar to the 'one_round' module, if key is exposed, the security can be compromised.
+
+6. Module module1: This module seems to be a custom module manipulating some clock signals. It does not seem to have direct security implications, but further analysis is required.
+
+7. Module module2: This module also seems to be a custom module. It does some operations based on the key and clock signals. This module could potentially leak information about the key if not implemented correctly.
+
+Hardware Trojan: Yes.
+
+Explanation: The Hardware Trojan seems to be present in the module2. This module uses the key and clock signals to generate some outputs. It shifts the key right by 1 at each positive edge of the clock if w1 is not high. If the output of this shift operation is somehow observable, this would leak information about the key bit by bit. It also generates a signal 'o' based on several conditions. This output 'o' is a potential trojan output which can leak information about the internal operations and the key.

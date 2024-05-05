@@ -1,0 +1,11 @@
+Hardware Trojan: No
+
+Security Analysis:
+- expand_key_128: The security of this module relies on the strength of the key expansion algorithm. If the key expansion algorithm is secure, then this module is secure.
+- one_round: This module performs one round of AES encryption. The security of the module depends on the strength of the AES algorithm. If the AES algorithm is secure, then this module is also secure.
+- final_round: This module performs the final round of AES encryption. Again, the security of this module depends on the strength of the AES algorithm.
+- aes_128: This module combines the expand_key_128, one_round, and final_round modules to perform the full AES-128 encryption. The security analysis for this module is the same as the individual modules it uses.
+- module1: This module has no security implications as it simply outputs a signal based on the value of the input state.
+- module2: This module implements a shift register using the flip-flops SHReg1, SHReg2, SHReg3, SHReg4, SHReg5, SHReg6, SHReg7, and SHReg8. It also enables the shift register based on certain conditions. The security of this module depends on the strength of the shift register implementation and the conditions for enabling the shift register.
+
+Explanation: There is no hardware Trojan in the design. All modules are implemented according to the AES standard.

@@ -1,0 +1,26 @@
+Hardware Trojan: No
+Security Analysis:
+1. expand_key_128 module: 
+   - This module is responsible for expanding the original key into multiple round keys used in the AES encryption algorithm. It takes the original key as input and produces two outputs, out_1 and out_2, which are the expanded round keys.
+   - There is no security concern in this module as it only performs simple bitwise operations on the input key to generate the round keys. It does not introduce any vulnerabilities or backdoors.
+
+2. one_round module:
+   - This module represents one round of AES encryption. It takes the state and round key as inputs and produces the updated state as output.
+   - The security of this module relies on the security of the underlying AES algorithm. AES is a widely studied and trusted encryption algorithm, and if implemented correctly, it provides strong security against known attacks.
+   - There are no specific security concerns in this module as it follows the standard AES encryption process without any modifications.
+
+3. final_round module:
+   - This module represents the final round of AES encryption. It takes the state and final round key as inputs and produces the encrypted output state.
+   - Similar to one_round module, the security of this module relies on the security of AES algorithm. It performs the same operations as one_round but without the MixColumns step.
+   - There are no specific security concerns in this module as well.
+
+4. module2 module:
+   - This module receives the key from the previous round and processes it to generate a new key for the current round. It also generates a control signal, w2, based on the processing of the previous key.
+   - There are no specific security concerns in this module as it only performs simple bitwise operations on the key. However, the security of the key generation process depends on the previous round's key and the operations performed on it in this module.
+
+5. module1 module:
+   - This module generates a control signal, w1, which is used to trigger the next round of AES encryption.
+   - There are no security concerns in this module as it only increments a counter and generates w1 based on the counter value.
+
+Explanation: 
+There is no hardware Trojan detected in the design. The design follows the standard AES encryption algorithm and its individual modules perform the necessary operations without introducing any malicious behavior.

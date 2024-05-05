@@ -1,0 +1,38 @@
+Hardware Trojan: No
+Security Analysis: 
+
+1. AES_128 Module:
+   - This module implements the AES-128 encryption algorithm.
+   - It takes an input state and key, and produces an output state.
+   - The state and key are XORed together to obtain s0 and k0.
+   - The expand_key_128 module is instantiated to generate 10 round keys.
+   - The one_round module is instantiated 9 times to perform 9 rounds of AES encryption.
+   - The final_round module is instantiated to perform the last round of AES encryption.
+   - The output state is obtained by XORing the intermediate results with the round keys.
+   - From a security perspective, AES-128 is a widely accepted and secure encryption algorithm.
+
+2. expand_key_128 Module:
+   - This module expands the input key into 11 round keys.
+   - The key is divided into four 32-bit words: k0, k1, k2, and k3.
+   - The round constant rcon is used to generate the first word of each round key.
+   - The S4 module is instantiated to perform a substitution operation on the last word of each round key.
+   - The round keys are obtained by XORing the intermediate results with the previous round keys.
+   - From a security perspective, the key expansion process is a crucial component of AES and should be implemented correctly to ensure the security of the encryption algorithm.
+
+3. one_round Module:
+   - This module performs one round of AES encryption.
+   - The input state is divided into four 32-bit words: s0, s1, s2, and s3.
+   - The key is divided into four 32-bit words: k0, k1, k2, and k3.
+   - The table_lookup module is instantiated four times to perform a substitution operation on each word of the state.
+   - The XOR operations are performed between the substituted words, the key words, and the state words to obtain intermediate results.
+   - The intermediate results are combined to obtain the output state.
+   - From a security perspective, each round of AES encryption should be implemented correctly to ensure the security of the overall encryption algorithm.
+
+4. final_round Module:
+   - This module performs the final round of AES encryption.
+   - The input state is divided into four 32-bit words: s0, s1, s2, and s3.
+   - The key is divided into four 32-bit words: k0, k1, k2, and k3.
+   - The S4 module is instantiated four times to perform a substitution operation on each word of the state.
+   - The XOR operations are performed between the substituted words, the key words, and the state words to obtain intermediate results.
+   - The intermediate results are combined to obtain the output state.
+   - From a security perspective, the final round of AES encryption should be implemented correctly to ensure the security of the overall

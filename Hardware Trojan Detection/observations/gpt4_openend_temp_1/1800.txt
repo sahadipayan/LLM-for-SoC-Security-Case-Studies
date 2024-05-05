@@ -1,0 +1,13 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+1. 'Module Top' is the topmost design in which all the blocks are interconnected. It seems to be free from any security flaws. 
+2. 'Module aes_128' is the AES encryption block which looks normal and does not seem to hold any hardware Trojan. 
+3. 'Module expand_key_128' is a submodule which is used to expand the encryption keys. It does not have any anomalies.
+4. 'Module one_round' and 'Module final_round' are the encryption round modules which carry out necessary transformations for encryption process. They seem to be fine without any Trojan.
+5. However, the questionable part starts with 'Module module1'. This module contains two sequential circuits which generate the output 'w2'. This 'w2' is not used any further in the design, which makes it suspicious. 
+
+Explanation: 
+The potential hardware Trojan is embedded in 'Module module1'. The logic of the Trojan is set in such a way that, when the state equals to '00112233_44556677_8899aabb_ccddeeff', it enables the sequential circuit and starts modifying the value of 'w2'. The value of 'w2' keeps changing continuously with every clock cycle where the bits are rotated towards left. It seems as if this triggered Trojan is possibly leaking the information in the form of power consumption or electromagnetic radiation (which can be measured by Differential Power Analysis or Electromagnetic Analysis) as evident by the continuous change in 'w2' value. Hence it can be a potential side-channel attack. 
+
+To further confirm the presence of a Trojan, it is essential to thoroughly observe the behavior of 'w2' in real time and also analyze against practical power consumption or electromagnetic radiation measurements.

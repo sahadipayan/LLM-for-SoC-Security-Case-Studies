@@ -1,0 +1,4 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+- aes_128 module: This module is the core AES encryption block. It takes an input state and key, performs the encryption, and outputs the encrypted state. From a security perspective, the module should be secure

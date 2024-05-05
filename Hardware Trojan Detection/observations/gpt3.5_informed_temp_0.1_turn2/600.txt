@@ -1,0 +1,20 @@
+Hardware Trojan: Yes
+Security Analysis:
+- aes_128 module: The aes_128 module implements the AES encryption algorithm. From a security perspective, it is important to ensure that the implementation follows the AES standard and does not introduce any vulnerabilities or weaknesses in the encryption process. A thorough analysis of the implementation is required to determine its security.
+
+- expand_key_128 module: The expand_key_128 module is responsible for expanding the input key into round keys for each round of the AES encryption algorithm. From a security perspective, it is important to ensure that the key expansion process is secure and does not introduce any vulnerabilities or weaknesses in the encryption process. A thorough analysis of the implementation is required to determine its security.
+
+- one_round module: The one_round module performs one round of the AES encryption algorithm. From a security perspective, it is important to ensure that the round function is implemented correctly and does not introduce any vulnerabilities or weaknesses in the encryption process. A thorough analysis of the implementation is required to determine its security.
+
+- final_round module: The final_round module performs the final round of the AES encryption algorithm. From a security perspective, it is important to ensure that the final round function is implemented correctly and does not introduce any vulnerabilities or weaknesses in the encryption process. A thorough analysis of the implementation is required to determine its security.
+
+- module1 module: The module1 module introduces a potential hardware trojan. It has a signal w1 that is high for two clock cycles when the state input is all ones (128'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF). This behavior can be exploited by an attacker to trigger a specific condition in the design.
+
+- module2 module: The module2 module also introduces a potential hardware trojan. It has a signal w3 that is derived from the SECRETKey input. The value of w3 is inverted and used to control multiple inverters (INV1_out to INV11_out). This behavior can be exploited by an attacker to manipulate the output of the design.
+
+Explanation:
+The potential hardware trojans in the design are present in the module1 and module2 modules. In module1, the trojan is triggered when the state input is all ones, causing the signal w1 to be high for two clock cycles. In module2, the trojan is triggered by manipulating the SECRETKey input, which results in the inversion of the w3 signal and subsequent manipulation of the output through the controlled inverters.
+
+These trojans can be used by an attacker to introduce vulnerabilities or weaknesses in the encryption process. For example, an attacker could manipulate the state input to trigger the trojan in module1 and cause unexpected behavior in the design. Similarly, an attacker could manipulate the SECRETKey input to trigger the trojan in module2 and manipulate the output of the design.
+
+It is important to thoroughly analyze the design and verify the presence of these trojans, as well as assess their potential impact on the security of the AES encryption algorithm.

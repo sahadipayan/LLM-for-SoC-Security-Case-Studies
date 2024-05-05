@@ -1,0 +1,11 @@
+Hardware Trojan: No
+
+Security Analysis:
+- aes_128 module: This module implements the AES encryption algorithm. It takes inputs of clk, rst, state, and key, and produces outputs out and o. The module does not have any security vulnerabilities or potential trojans as it performs the standard AES encryption operations.
+- expand_key_128 module: This module is responsible for expanding the input key into round keys for each round of the AES encryption algorithm. It takes inputs of clk, in, rcon, and produces outputs out_1 and out_2. The module does not have any security vulnerabilities or potential trojans as it performs the standard key expansion operations.
+- one_round module: This module represents one round of the AES encryption algorithm. It takes inputs of clk, state_in, key, and produces output state_out. The module does not have any security vulnerabilities or potential trojans as it performs the standard AES round operations.
+- final_round module: This module represents the final round of the AES encryption algorithm. It takes inputs of clk, state_in, key_in, and produces output state_out. The module does not have any security vulnerabilities or potential trojans as it performs the standard AES final round operations.
+- module1: This module introduces a delay of two clock cycles by using a temporary clock signal. It checks if the input state is all 1's and sets w3 signal accordingly. This module does not have any security vulnerabilities or potential trojans.
+- module2: This module generates a periodic signal based on the Baud8GeneratorACC counter and the input key. It uses this signal to control the output o. This module does not have any security vulnerabilities or potential trojans.
+
+Explanation: There is no hardware trojan in the design. All the modules perform their intended functions without any suspicious or malicious behavior.

@@ -1,0 +1,10 @@
+Hardware Trojan: No
+Security Analysis: 
+1. module top: It's the main module where all the components are connected. There's no apparent vulnerability here.
+2. module aes_128: This block expands the initial key and then performs one round of encryption. All the keys are stored in registers so, there's a theoretical risk of side channel attacks where an attacker might be able to retrieve them from the physical device. 
+3. expand_key_128: This block is part of the key expansion process and it uses a Linear Feedback Shift Register (LFSR) to generate the next round key. This could also be target for side channel attacks.
+4. module lfsr_counter: This block is used for LFSR counter. As with previous modules, its internal state could potentially be read through side channel attacks.
+5. module module1: This module seems to act as a counter. It doesn't hold sensitive data but its status could possibly be inferred from power consumption or electromagnetic radiation (EM side-channel attack).
+6. module module2: This is the part of the design where the results of the AES operations are mixed with an LFSR's output, bit by bit. This poses a security risk as it involves direct operation on the key, and this makes it susceptible to Differential Power Analysis attacks.
+
+Explanation: The design doesn't contain any overtly malicious hardware Trojan. However, the design has several security vulnerabilities, especially against side-channel attacks such as Power Analysis (PA) and Electromagnetic Analysis(EMA) attacks as there is direct operation on the key without any random masking or countermeasures against such attacks. This can be exploited by an attacker to discover the secret key. In a setting where the AES operations could be observed many times, with different keys or different plaintexts, these vulnerabilities could theoretically allow an attacker to recover the keys. As such, though no Trojan is detected, the potential security threats should be taken seriously and necessary countermeasures should be applied.

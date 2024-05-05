@@ -1,0 +1,17 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+Module AES_128: This module is the main AES encryption module where the key expansion and encryption process takes place. Each of the keys from the key expansion phase is passed one by one to each round of the encryption process.
+
+Module expand_key_128: It performs operations of an AES key schedule to derive round keys from the input cipher key. It consists of bitwise operations. The key goes through key expansion where each expanded key is a derivative of the ones before it. If an attacker manages to get hold of one of the keys during the key expansion, they could potentially derive the other keys making it less secure.
+
+Module one_round: Performs one round of AES encryption. It takes in a state and a key and returns a new state after XORing the input state with the transformed key. The state in each round of encryption undergoes operations of SubBytes, ShiftRows, and MixColumns. If an attacker can obtain the internal states that result after each round of encryption, they could potentially learn the secret key that is being used for encryption. Hence, side-channel attacks are feasible and must be mitigated.
+
+Module final_round: This is similar to the ‘one round’ module but without the MixColumns operation. It carries out the final AES encryption round operation. Similar to the one_round, it is also vulnerable to side-channel attacks.
+
+Module module1: This is an unusual module in an AES encryption design. It doesn't relate to any typical AES operation and it includes two counters and a logical AND gate. The output of the AND gate increments counter2 if andOut is high, which will be set when both r1, and r2 are set high and the most significant bit of counter is high. 
+
+Explanation: 
+
+Based on the code analysis, it appears that ‘module1’ is a hardware Trojan. It takes two signals from the AES core (s5[113] and s7[127]). These signals are part of the state and likely hold sensitive information. It's not clear what specifically will trigger this Trojan, but the mention of having a counter indicates that it could have a time-based trigger. When the conditions of the trigger are met (both r1 and r2 have high values and the most significant bit of the counter is high), the counter2's 3rd bit (counter2[3]) is assigned to output w2. This output propagates to the least significant bit of the final AES output (out2[0] is XORed with w1). Essentially, the inserted module is able to manipulate one bit of the AES output, thereby creating a vulnerability that could potentially be exploited to compromise the encryption. The Trojan manipulates the output of the AES encryption and may leak sensitive information through the altered bit.

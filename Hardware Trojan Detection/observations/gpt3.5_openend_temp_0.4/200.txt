@@ -1,0 +1,40 @@
+Hardware Trojan: No
+Security Analysis: 
+1. aes_128 module:
+   - The aes_128 module implements the AES encryption algorithm.
+   - It takes the input state and key, performs key expansion using the expand_key_128 module, and then performs multiple rounds of encryption using the one_round module.
+   - The final_round module is used for the last round of encryption.
+   - The output of the final_round module is the encrypted output.
+   - From a security perspective, the AES algorithm is considered secure and widely used in various applications.
+
+2. expand_key_128 module:
+   - The expand_key_128 module is responsible for expanding the input key into multiple round keys.
+   - It takes the input key and performs key expansion using a series of XOR operations and table lookups.
+   - The expanded round keys are then output as out_1 and out_2.
+   - From a security perspective, the key expansion process is an essential part of the AES algorithm and is designed to ensure the security of the encryption.
+
+3. lfsr_counter module:
+   - The lfsr_counter module implements a linear feedback shift register (LFSR) counter.
+   - It takes a 128-bit data input and generates a 20-bit LFSR output.
+   - The LFSR output is used as a counter in the module1 module.
+   - From a security perspective, the LFSR counter does not pose any security risks as it is a commonly used component in digital designs.
+
+4. module1 module:
+   - The module1 module takes the input key and data, and generates a 64-bit load output.
+   - It uses the lfsr_counter module to generate a counter value, which is XORed with the key to generate the load output.
+   - The load output is used in the AES encryption process.
+   - From a security perspective, the module1 module does not pose any security risks as it performs a simple XOR operation and does not affect the security of the AES encryption algorithm.
+
+5. one_round module:
+   - The one_round module performs one round of AES encryption.
+   - It takes the input state and key, performs table lookups and XOR operations to generate the output state.
+   - The output state is used as the input for the next round of encryption.
+   - From a security perspective, the one_round module is an integral part of the AES algorithm and does not pose any security risks.
+
+6. final_round module:
+   - The final_round module performs the final round of AES encryption.
+   - It takes the input state and key, performs table lookups and XOR operations to generate the output state.
+   - The output state is the final encrypted output.
+   - From a security perspective, the final_round module is an integral part of the AES algorithm and does not pose any security risks.
+
+Explanation: There is no hardware Trojan in the design. The design implements the AES encryption algorithm, which is widely used and considered secure. Each module in the design performs its intended function without any suspicious or malicious behavior.

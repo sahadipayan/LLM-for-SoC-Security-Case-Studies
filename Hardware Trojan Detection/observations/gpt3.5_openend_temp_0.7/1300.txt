@@ -1,0 +1,32 @@
+Hardware Trojan: No
+Security Analysis: 
+
+1. aes_128 module:
+   - This module implements the AES-128 encryption algorithm.
+   - The input to this module is the state and key, and the output is the encrypted data (out) and round keys (rk1-rk8).
+   - The module uses a combination of registers and wires to store intermediate values and perform the encryption steps.
+   - The module includes sub-modules for key expansion (expand_key_128), one round of encryption (one_round), and the final round of encryption (final_round).
+   - Overall, the aes_128 module is designed to securely encrypt data using the AES-128 algorithm.
+
+2. expand_key_128 module:
+   - This module is responsible for expanding the original key into multiple round keys.
+   - The module takes the original key as input and generates 10 round keys (out_1, out_2).
+   - The key expansion is done using a combination of XOR operations and a substitution box (S4).
+   - The module includes registers to store intermediate values and a wire to calculate the XOR.
+   - The key expansion process ensures that each round key is derived from the previous round key and the original key.
+   - The module is designed to securely generate the round keys for the AES encryption algorithm.
+
+3. module1 module:
+   - This module is a simple combinational circuit that sets the value of w1 based on the values of rst and state.
+   - If rst is 1, w1 is set to 0. If state is equal to a specific value, w1 is set to 1.
+   - This module does not have any security implications as it does not perform any encryption or key generation operations.
+
+4. module2 module:
+   - This module is responsible for generating values for multiple shift registers (SHReg1-SHReg8) based on the values of rk1-rk8 and w1.
+   - Each shift register is controlled by a specific enable signal (enable1-enable8) which is a combination of w1 and an XOR operation between state and rk1-rk8.
+   - The module includes registers to store the current values of the shift registers.
+   - The module updates the values of the shift registers based on the enable signals and the current values of the shift registers.
+   - This module does not have any security implications as it does not perform any encryption or key generation operations.
+
+Explanation: 
+There is no hardware Trojan in the design. The design consists of multiple modules that implement the AES-128 encryption algorithm and key expansion process. Each module performs its intended function without any malicious or unintended operations. The design is focused on providing a secure implementation of the AES algorithm, and there is no evidence of any malicious behavior or hardware Trojan.

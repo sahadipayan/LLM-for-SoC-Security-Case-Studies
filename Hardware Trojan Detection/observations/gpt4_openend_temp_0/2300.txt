@@ -1,0 +1,15 @@
+Security Analysis: 
+
+1. aes_128 module: This is the main module that takes in the clock, reset, state, key, and outputs the encrypted data. It uses the expand_key_128, one_round, final_round, and module1 modules. The security of this module depends on the security of the modules it uses.
+
+2. expand_key_128 module: This module is used to expand the key for the AES encryption. It takes in the clock, input key, and rcon as inputs and outputs two keys. The security of this module is crucial as it directly deals with the encryption key.
+
+3. one_round module: This module performs one round of AES encryption. It takes in the clock, state, and key as inputs and outputs the state after one round of encryption. The security of this module is important as it performs the main encryption operation.
+
+4. final_round module: This module performs the final round of AES encryption. It takes in the clock, state, and key as inputs and outputs the final encrypted state. The security of this module is important as it completes the encryption process.
+
+5. module1: This module takes in two inputs and outputs the logical AND of the inputs. The security of this module is not as crucial as the other modules as it does not directly deal with the encryption process.
+
+Hardware Trojan: Yes
+
+Explanation: The hardware trojan is in the module1. It takes two bits from the state after the 2nd and 5th rounds of encryption and outputs the logical AND of these bits. This output is then XORed with the least significant bit of the final output. This trojan could potentially leak information about the state after the 2nd and 5th rounds of encryption, which could be used to break the encryption.

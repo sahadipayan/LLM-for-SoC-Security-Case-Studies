@@ -1,0 +1,29 @@
+Hardware Trojan: No
+Security Analysis: 
+
+Module: aes_128
+- The aes_128 module performs AES-128 encryption on the input state using the provided key.
+- The expand_key_128 submodule expands the input key into 10 round keys.
+- The one_round submodule performs one round of AES encryption using the state and round key.
+- The final_round submodule performs the final round of AES encryption using the state and round key.
+
+Module: expand_key_128
+- The expand_key_128 module takes the input key and expands it into 10 round keys using the AES key schedule.
+- It uses a series of XOR operations to derive each round key.
+
+Module: one_round
+- The one_round module performs one round of AES encryption.
+- It takes the state and round key as input and computes the intermediate round state.
+- It uses table lookups and XOR operations to compute the new state.
+
+Module: final_round
+- The final_round module performs the final round of AES encryption.
+- It takes the state and round key as input and computes the final encrypted state.
+- It also uses table lookups and XOR operations to compute the new state.
+
+Module: module1
+- The module1 module is not directly related to the AES encryption process.
+- It has two registers, w1 and w2, which are modified based on the rst and state signals.
+- The purpose and functionality of this module are unclear without further context.
+
+Explanation: There is no hardware Trojan detected in the design. The modules involved in the AES encryption process appear to perform their intended functions without any suspicious behavior.

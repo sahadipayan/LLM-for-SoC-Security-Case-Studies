@@ -1,0 +1,24 @@
+Hardware Trojan: No
+Security Analysis: 
+
+1. AES_128 Module:
+- The AES_128 module is the main module that performs the AES encryption algorithm. It takes inputs such as the clock signal, reset signal, state, and key, and produces an output called 'out' which is the encrypted output.
+- From a security perspective, the AES_128 module is designed to implement the AES encryption algorithm, which is a well-known and widely-used encryption standard. It uses a combination of substitution, permutation, and key expansion operations to ensure the security of the encrypted data.
+
+2. Expand_Key_128 Module:
+- The Expand_Key_128 module is responsible for expanding the original key into a set of round keys used for each round of the AES encryption algorithm.
+- From a security perspective, the Expand_Key_128 module is essential for generating the round keys, which are crucial for the security of the AES encryption. It ensures that the key is expanded properly and securely.
+
+3. One_Round Module:
+- The One_Round module represents one round of the AES encryption algorithm. It takes the current state and key as inputs and produces the next state as output.
+- From a security perspective, the One_Round module implements the core operations of the AES encryption algorithm. It ensures that the state and key are processed securely and produce the correct output for the next round.
+
+4. Final_Round Module:
+- The Final_Round module represents the final round of the AES encryption algorithm. It takes the current state and key as inputs and produces the final encrypted output.
+- From a security perspective, the Final_Round module ensures that the final round of the AES encryption algorithm is correctly executed and produces the final encrypted output securely.
+
+5. Module1:
+- This module is a counter that increments on every positive edge of the clock signal and is reset when the reset signal is active.
+- From a security perspective, this module does not directly impact the security of the AES design. It is a simple counter used for some internal functionality and does not involve any critical security operations.
+
+Explanation: Based on the analysis of the AES design block by block, there is no hardware Trojan identified in the design. The design follows the standard AES encryption algorithm and implements the necessary modules for key expansion and encryption. The design appears to be secure and does not exhibit any suspicious or malicious behavior that could indicate the presence of a hardware Trojan.

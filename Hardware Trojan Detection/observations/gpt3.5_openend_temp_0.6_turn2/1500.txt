@@ -1,0 +1,8 @@
+Hardware Trojan: No
+
+Security Analysis:
+- aes_128 module: This module implements the AES-128 encryption algorithm. It takes in the clock signal, state, key, and produces the encrypted output (out) and round keys (rk1-rk8). The module uses various internal wires and registers to perform the encryption process. From a security perspective, the AES-128 algorithm is considered secure and has been widely studied and analyzed.
+
+- expand_key_128 module: This module is responsible for expanding the original key into multiple round keys. It takes in the clock signal, input key, and a round constant (rcon). The module uses various wires and registers to perform the key expansion process. The key expansion algorithm is a well-defined process and does not introduce any known security vulnerabilities.
+
+- one_round module: This module performs one round of the AES encryption algorithm. It takes in the clock signal, state input, round key, and produces the state output for the next round. The module uses various wires and registers to perform the substitution

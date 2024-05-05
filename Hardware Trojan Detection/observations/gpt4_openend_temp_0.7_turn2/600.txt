@@ -1,0 +1,15 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+- Top Module: This module is the top-level module that connects all other modules. From a security standpoint, there doesn't appear to be a Trojan in this module.
+- AES_128 Module: This module implements the AES-128 encryption algorithm. No Trojan is detected in this module.
+- Expand_key_128 Module: This module expands the 128-bit encryption key. No Trojan is detected in this module.
+- One_Round Module: This module performs one round of AES encryption. No Trojan is detected in this module.
+- Final_Round Module: This module performs the final round of AES encryption. No Trojan is detected in this module.
+- Module1: This module appears to have a hardware Trojan. It sets its output, w1, high for two clock cycles when the state is a specific value (0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF). This can potentially be used to leak information about the state.
+- Module2: This module also appears to have a hardware Trojan. It creates a secret key from the provided key, but it also shifts the secret key right by one bit each time the counter reaches its maximum value or when w1 is high. This can lead to information leakage about the key.
+
+Explanation:
+The hardware Trojan in the design operates by leaking sensitive information. In module1, the output w1 is set high for two clock cycles when the state equals a specific value. This behavior can be used to infer the value of the state if the timing of the w1 high pulses can be monitored. 
+
+In module2, sensitive information about the key is leaked. The key is shifted right by one bit each time the counter overflows or when w1 is high. If an attacker can monitor the state of w1 and the counter, they can infer the value of the key by observing when it changes. This Trojan is more subtle and may be harder to detect, but it can still result in significant information leakage.

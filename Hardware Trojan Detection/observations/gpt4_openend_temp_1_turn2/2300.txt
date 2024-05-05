@@ -1,0 +1,10 @@
+Hardware Trojan: Yes
+Security Analysis: 
+- module aes_128: This is the main AES encryption module with inputs such as clock signal, reset signal, state (cipher text), the key, and the output (plain text). The security checks should establish whether these inputs can be manipulated by an attacker, and ensure that the modules used within this module work correctly and securely. 
+- expand_key_128: This module is responsible for expanding the original, short key into a longer one that is used in the AES encryption algorithm. Checks should verify that the original key is safely used and that the expanded key matches the expected result.
+- one_round: One of many rounds used in the encryption process. Security checks should ensure that it correctly carries out the four transformations which are part of every AES round: byte substitution, shift rows, mix columns, and add round key. The integrity and functionality of the table_lookup module needs to be verified.
+- final_round: The final stage of the AES encryption process. Similar security checks as for one_round are necessary, but without the mix columns step.
+- module1: This suspicious-looking module simply checks if two specific bits of the state during round 2 and round 5 are both set. 
+
+Explanation: 
+The hardware Trojan is found in the module1. The output of this module is XOR'ed with the LSB (Least Significant Bit) of the AES output. This module does not belong to the standard AES modules and appears to be the source of a potential security threat. This Trojan mechanism monitors the values of two specific bits of the state during round 2 and round 5. If these bits are both 1, then it will change the LSB of the AES output. If an attacker has control over the encryption process (plaintext or ciphertext) or can learn about the encryption status based on the changed LSBs, he can exploit this to extract data. This Trojan could potentially be used to leak secret keys by code book attacks or differential power analysis if the attacker has access to multiple plaintext and corresponding ciphertext pairs.

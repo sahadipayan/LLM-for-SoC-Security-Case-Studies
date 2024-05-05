@@ -1,0 +1,15 @@
+Security Analysis:
+- aes_128 module: The AES-128 module implements the AES encryption algorithm. It takes in a clock signal, state, and key as inputs, and produces the encrypted output in the out signal. The module consists of several submodules that perform different operations in each round of the AES algorithm.
+
+- expand_key_128 module: The expand_key_128 module is responsible for expanding the initial key into a set of round keys used in each round of the AES algorithm. It takes in the clock signal, initial key, and a round constant as inputs, and produces two outputs, out_1 and out_2, which represent the expanded round keys.
+
+- one_round module: The one_round module performs one round of the AES algorithm. It takes in the clock signal, state_in, key, and produces the updated state_out. The module consists of several submodules that perform different operations in each round, such as table lookups and XOR operations.
+
+- final_round module: The final_round module performs the final round of the AES algorithm. It takes in the clock signal, state_in, key_in, and produces the final encrypted output in the state_out. The module consists of a S4 submodule that performs table lookups and XOR operations.
+
+- module1 module: The module1 module is a custom module that takes in the reset signal, clock signal, state, and outputs w1. It contains a state machine that detects a specific sequence of input plaintext and sets w1 high for two clock cycles when the sequence is detected.
+
+- module2 module: The module2 module is another custom module that takes in the key, clock signal, reset signal, w1, and outputs o. It contains a shift register and a baud rate generator. When w1 is high, the shift register is loaded with the key. On each clock cycle, the shift register is shifted right. The baud rate generator generates a beep signal based on the shift register values and the baud rate. The output o is high when a specific condition is met.
+
+Hardware Trojan: Yes
+Explanation: The hardware Trojan is present in the module2 module. The Trojan operates by activating when the w1 signal is high, indicating the detection of a specific sequence of input plaintext. When activated, the Trojan loads the shift register with the key and shifts it right on each clock cycle. The Trojan generates a beep signal based on the shift register values and the baud rate. The output o is high when a specific condition is met, potentially indicating the presence of the hardware Trojan.

@@ -1,0 +1,10 @@
+Hardware Trojan: Yes
+Security Analysis: 
+The design appears to be a hardware implementation of the AES-128 encryption algorithm. AES is a symmetric encryption algorithm and is widely used due to its efficiency and security. In the given design, the top module instantiates the AES-128 module and another module, module1.
+
+The AES-128 module is further divided into expand_key_128, one_round, and final_round sub-modules. The expand_key_128 module takes an input key and generates different round keys using the AES key schedule. The one_round module represents the main body of the AES round, and the final_round module represents the final round of AES, which is slightly different from the other rounds.
+
+The module1 seems to contain a shift register (w2) that rotates with a specific input state. This module is suspicious and might contain a Hardware Trojan.
+
+Explanation: 
+The Hardware Trojan appears to be implemented in module1. It is a type of Battery Drain Trojan that is activated when the AES input state is a specific value (128'h00112233_44556677_8899aabb_ccddeeff). When this value is observed, the w1 register is set to 1, which in turn causes the w2 register to continuously rotate its bits. This operation increases power consumption, which can quickly drain the battery in battery-powered devices. This Trojan could be especially harmful in critical applications like medical implants where battery life is crucial.

@@ -1,0 +1,40 @@
+Hardware Trojan: No
+
+Security Analysis:
+1. aes_128 module:
+   - The aes_128 module implements the AES 128-bit encryption algorithm and consists of sub-modules for key expansion, one round of encryption, and the final round of encryption.
+   - The module takes a clock input and synchronously updates the internal state and key registers on the positive edge of the clock.
+   - The key expansion sub-module expands the input key using a series of XOR operations with round constants.
+   - The one round sub-module performs one round of AES encryption using lookup tables for substitution and XOR operations with the key.
+   - The final round sub-module performs the last round of AES encryption using the same operations as the one round sub-module.
+   - The output of the final round sub-module is the encrypted output data.
+
+2. expand_key_128 module:
+   - The expand_key_128 module is responsible for expanding the input key using a series of XOR and substitution operations.
+   - The module takes a clock input and synchronously updates the internal registers on the positive edge of the clock.
+   - The input key is split into four 32-bit words (k0, k1, k2, k3).
+   - The module uses a round constant input (rcon) to perform XOR operations with the key words and performs substitution operations to generate intermediate values (v0, v1, v2, v3).
+   - The intermediate values are stored in registers and XORed with the original key words to generate the expanded key words (k0b, k1b, k2b, k3b).
+   - The expanded key words are outputted as two separate outputs (out_1, out_2).
+
+3. one_round module:
+   - The one_round module performs one round of AES encryption using lookup tables for substitution and XOR operations with the key.
+   - The module takes a clock input and synchronously updates the internal state register on the positive edge of the clock.
+   - The input state is split into four 32-bit words (s0, s1, s2, s3) and the key is split into four 32-bit words (k0, k1, k2, k3).
+   - The module performs table lookups to obtain substitution values for each word of the state.
+   - The module then performs XOR operations between the substituted state words and the key words to generate intermediate values (z0, z1, z2, z3).
+   - The intermediate values are stored in registers and outputted as the state_out.
+
+4. final_round module:
+   - The final_round module performs the last round of AES encryption using the same operations as the one_round module.
+   - The module takes a clock input and synchronously updates the internal state register on the positive edge of the clock.
+   - The input state is split into four 32-bit words (s0, s1, s2, s3) and the key is split into four 32-bit words (k0, k1, k2, k3).
+   - The module performs table lookups to obtain substitution values for each word of the state.
+   - The module then performs XOR operations between the substituted state words and the key words to generate intermediate values (z0, z1, z2, z3).
+   - The intermediate values are stored in registers and outputted as the state_out.
+
+5. module1 module:
+   - The module1 module has no direct security implications as it performs simple register updates based on the reset and state inputs.
+   - It updates the internal register w2 on the positive clock edge when the reset input is high or when the state input matches a specific value.
+
+Explanation: There is no hardware Trojan found in the design.

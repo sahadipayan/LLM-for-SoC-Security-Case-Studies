@@ -1,0 +1,23 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+1. Module Top: This module is the top level module which connects all the components of the design. It does not contain any security threats in itself. 
+
+2. Module aes_128: This module is the main AES encryption module. It is responsible for performing the AES encryption using the key expansion and the AES rounds. It does not contain any security threats in itself.
+
+3. Module expand_key_128: This module is responsible for the key expansion in AES encryption. It does not contain any security threats in itself.
+
+4. Module one_round: This module performs one round of AES encryption. It does not contain any security threats in itself.
+
+5. Module final_round: This module performs the final round of AES encryption. It does not contain any security threats in itself.
+
+6. Module module1: This module contains a hardware Trojan. It is a state machine that waits for a specific sequence of states to be input, at which point it changes the behaviour of the system.
+
+Explanation: 
+
+The hardware Trojan in this design is located in the module1. This module waits for a specific sequence of states to be input. When the sequence 128'h3243f6a8_885a308d_313198a2_e0370734, 128'h00112233_44556677_8899aabb_ccddeeff, 128'h0, 128'h1 is input in that order, the state machine reaches the final state, State3. When in this state, the output w1 is set to 1, which triggers a shift in the w2 register in the next clock cycle. 
+
+This shift operation could potentially change the behaviour of the system in an unexpected way, as the w2 register could be used in other parts of the system. This is a type of hardware Trojan known as a Sequence Trojan, which waits for a specific sequence of inputs before activating. 
+
+The impact of the Trojan would depend on how the w2 register is used in the rest of the system. It could potentially lead to information leakage, incorrect operation, or other security issues.

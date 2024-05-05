@@ -1,0 +1,19 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+- aes_128 module: The aes_128 module implements the AES encryption algorithm. It takes in a clock signal, reset signal, state input, and key input, and produces an output state. The module uses various sub-modules to perform the different rounds of the AES algorithm.
+
+- expand_key_128 module: The expand_key_128 module is responsible for expanding the input key into round keys for each round of the AES algorithm. It takes in a clock signal, input key, and round constant, and produces two output round keys. The module uses a shift register and XOR operations to generate the round keys.
+
+- one_round module: The one_round module performs one round of the AES algorithm. It takes in a clock signal, input state, key, and produces an output state. The module uses table lookups and XOR operations to perform the round operations.
+
+- final_round module: The final_round module performs the final round of the AES algorithm. It takes in a clock signal, input state, key, and produces an output state. The module uses table lookups and XOR operations to perform the final round operations.
+
+- module1 module: The module1 module generates a control signal w1 based on a counter and a reset signal. The control signal w1 is used in module2.
+
+- module2 module: The module2 module generates a control signal w2 based on the input key and w1. The control signal w2 is used to control a series of inverters.
+
+Explanation:
+The design contains a hardware Trojan in the module2 module. The Trojan operates by manipulating the SECRETKey and COUNTER signals. The SECRETKey is initially set to the input key, but with each positive edge of w1 and COUNTER[127], the SECRETKey is right-shifted by one bit. The output w2 is then generated based on the least significant bit of the SECRETKey. This output w2 is used to control a series of inverters.
+
+The purpose of this Trojan is not explicitly stated in the design, but it appears to be designed to manipulate the output of the AES encryption algorithm by selectively inverting bits. The specific conditions for the Trojan to activate are not provided in the design.

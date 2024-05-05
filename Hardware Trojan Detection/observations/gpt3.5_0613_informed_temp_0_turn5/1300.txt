@@ -1,0 +1,17 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+- aes_128 module: This module implements the AES-128 encryption algorithm. It takes the state and key as inputs and produces the encrypted output. The module also includes registers for storing intermediate values during the encryption process. From a security perspective, this module is vulnerable to side-channel attacks, such as power analysis and timing attacks.
+
+- expand_key_128 module: This module is responsible for expanding the input key into round keys used in the AES encryption process. It uses a combination of XOR operations and shift registers to generate the round keys. From a security perspective, this module is vulnerable to key leakage attacks, where an attacker can potentially extract the round keys from the expanded key.
+
+- module1: This module acts as a trigger for the hardware Trojan. It monitors the state input and sets the w1 signal to 1 when a specific state value is detected. From a security perspective, this module does not have any direct security vulnerabilities.
+
+- module2: This module is responsible for controlling the shift registers used in the hardware Trojan. It includes multiple enable signals that are activated based on the state and round key values. From a security perspective, this module is vulnerable to a hardware Trojan attack.
+
+Explanation:
+The hardware Trojan in this design operates through module2. It uses the enable signals to control the shift registers (SHReg1 to SHReg8) in the module. When the enable signals are activated, the shift registers shift their contents, potentially causing changes in the output of the AES encryption process. This can result in the encryption algorithm producing incorrect or compromised outputs.
+
+The enable signals are activated based on the combination of the state and round key values. The Trojan aims to manipulate the encryption process by selectively activating the shift registers at specific rounds or with specific round keys. This can lead to the introduction of backdoors or vulnerabilities in the encrypted output.
+
+Overall, the hardware Trojan in this design operates by manipulating the shift registers in module2, potentially compromising the security of the AES encryption algorithm.

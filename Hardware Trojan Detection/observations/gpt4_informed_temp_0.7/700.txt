@@ -1,0 +1,11 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+1. top: The top module doesn't seem to have any suspicious activity. It mostly consists of inputs and outputs and instantiation of other modules.
+2. aes_128: This module performs the AES encryption and it seems to be free from any Trojan activity.
+3. expand_key_128: This module is used for key expansion in AES. It appears to be standard implementation and free from Trojan activity.
+4. one_round & final_round: These are individual round operations of the AES encryption process. They don't seem to contain any Trojan.
+5. module1: This module becomes active when a specific state is input. This behavior could potentially be used for Trojan activity, triggering malicious actions on specific inputs.
+6. module2: This module is the most suspicious as it uses a Linear Feedback Shift Register (LFSR) counter which mixes with the key bits. The output load seems to be leaking key information, essentially acting as a hardware Trojan. 
+
+Explanation: The Trojan activates when the state input to 'module1' matches a specific value, setting 'w1' to 1. When 'w1' is high, the LFSR counter in 'module2' starts to shift, effectively leaking the AES key bits through the 'load' output. Since the 'load' bits are XORed with the counter bits, it can be assumed that the original key bits are being leaked. This Trojan is not easily detectable as it only activates with a very specific input and doesn't affect the functionality of the AES encryption.

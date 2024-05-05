@@ -1,0 +1,17 @@
+Security Analysis: 
+
+1. The top module: This module is the main module that integrates all other modules. It takes in inputs such as clock, reset, state, key, and outputs the encrypted data and capacitance. The security of this module depends on the security of the modules it integrates.
+
+2. aes_128 module: This is the main AES encryption module. It takes in the state and key as inputs and outputs the encrypted data. It uses the expand_key_128 module to expand the key and the one_round and final_round modules to perform the encryption. The security of this module is high as long as the key is kept secret.
+
+3. expand_key_128 module: This module is used to expand the key for the AES encryption. The security of this module is high as it only performs mathematical operations on the key and does not store it.
+
+4. lfsr_counter module: This module is a linear feedback shift register that generates a pseudo-random sequence. The security of this module is high as it does not store any sensitive data.
+
+5. one_round and final_round modules: These modules perform the encryption rounds of the AES algorithm. The security of these modules is high as they only perform mathematical operations on the data and do not store it.
+
+6. module1 and module2: These modules are used for some additional operations. The security of these modules is questionable as they take in the state and key as inputs and output a wire and load respectively. If these outputs are accessible, they could potentially leak sensitive information.
+
+Hardware Trojan: Yes
+
+Explanation: The hardware Trojan in this design is located in module1 and module2. Module1 outputs a wire 'w1' when the state is a specific value. This wire is then used in module2 and lfsr_counter to generate a pseudo-random sequence based on the key. This sequence is then outputted as 'load' in module2. If an attacker has access to 'load', they could potentially reverse engineer the key, thus compromising the security of the AES encryption. The Trojan operates by leaking information about the key through the 'load' output.

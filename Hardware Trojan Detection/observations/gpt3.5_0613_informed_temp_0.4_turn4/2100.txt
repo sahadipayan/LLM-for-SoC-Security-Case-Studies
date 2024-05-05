@@ -1,0 +1,14 @@
+Hardware Trojan: No
+
+Security Analysis:
+1. expand_key_128: This module is responsible for expanding the 128-bit key into 11 round keys for the AES encryption. It takes the input key and uses a combination of XOR and shift operations to generate the round keys. From a security perspective, this module appears to be secure as it performs standard key expansion operations without any suspicious behavior.
+
+2. one_round: This module represents one round of the AES encryption algorithm. It takes the state and round key as inputs and performs substitution, permutation, and XOR operations to generate the output state. From a security perspective, this module appears to be secure as it follows the standard AES encryption algorithm without any suspicious behavior.
+
+3. final_round: This module represents the final round of the AES encryption algorithm. It performs similar operations as the one_round module but with a different key schedule. From a security perspective, this module appears to be secure as it follows the standard AES encryption algorithm without any suspicious behavior.
+
+4. module2: This module is a custom module that manipulates the SECRETKey based on the input signal w1 and the COUNTER value. It performs bitwise operations and assigns values to the w2 signal. From a security perspective, this module does not exhibit any suspicious behavior or indicate the presence of a hardware Trojan.
+
+5. module1: This module is another custom module that increments a Counter value based on the input signal out. It checks the Counter value and assigns a value to the w1 signal. From a security perspective, this module does not exhibit any suspicious behavior or indicate the presence of a hardware Trojan.
+
+Explanation: Based on the analysis of the AES design block by block, there is no evidence of a hardware Trojan in the design. All the modules perform their intended functions without any suspicious behavior.

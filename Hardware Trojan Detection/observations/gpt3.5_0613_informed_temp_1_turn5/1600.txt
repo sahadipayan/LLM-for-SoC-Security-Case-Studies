@@ -1,0 +1,12 @@
+Hardware Trojan: Yes
+Security Analysis:
+- expand_key_128 module: This module is responsible for expanding the original key into multiple round keys. It takes the input key and generates multiple subkeys using a series of XOR and shift operations. From a security perspective, this module is crucial as any tampering with the key expansion process can compromise the security of the AES algorithm.
+
+- one_round module: This module represents one round of the AES encryption algorithm. It takes the state and a round key as inputs and performs various operations including table lookups, XOR operations, and substitution operations. The output is a modified state. From a security perspective, this module needs to ensure the integrity and confidentiality of the data being processed.
+
+- final_round module: This module represents the final round of the AES encryption algorithm. Similar to the one_round module, it performs various operations to transform the state using the final round key. From a security perspective, this module also needs to ensure the integrity and confidentiality of the data being processed.
+
+Explanation:
+The design contains a hardware Trojan implemented in the module2. The Trojan is activated based on a specific condition, where the signal "w1" is high for two clock cycles. Once activated, the Trojan takes the original key as input and continuously shifts it right by one bit position using a shift register. This continuous shifting operation increases the power consumption of the device, leading to faster battery drain in battery-powered devices. As a result, the device's battery life is significantly reduced.
+
+In summary, the hardware Trojan in module2 of the AES design operates by continuously shifting the key right, leading to increased power consumption and faster battery drain in battery-powered devices.

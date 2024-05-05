@@ -1,0 +1,32 @@
+Security Analysis:
+- The "expand_key_128" module expands the input key to obtain the round keys used in the AES encryption algorithm.
+- The "one_round" module performs a single round of the AES encryption algorithm.
+- The "final_round" module performs the final round of the AES encryption algorithm.
+- The "module1" module is a counter module that increments a counter upon each clock cycle.
+
+Hardware Trojan: Yes
+
+Explanation:
+Based on the given description of the hardware trojans, there are multiple hardware trojans present in the design. These trojans operate in different ways to compromise the security of the AES encryption.
+
+1. The first trojan operates by leaking the secret key from a cryptographic chip running the AES algorithm through a covert channel. It uses a pseudo-random number generator (PRNG) to create a CDMA code sequence, which is used to XOR modulate the secret information bits. The modulated sequence is then forwarded to a leakage circuit (LC) to set up a covert CDMA channel in the power side-channel.
+
+2. The second trojan introduces leaking intermediate states in the key schedule that depend on known input bits and key bits. It uses AND gates to pairwise combine each key bit with another input bit and XORs the outputs to obtain the leaked intermediate value. The trojan leaks one byte of the AES round key for each round of the key schedule.
+
+3. The third trojan modulates an unused pin on the chip to generate an RF signal that can transmit the key bits. This signal is transmitted at 1560 KHz and can be received with an ordinary AM radio. The trojan is activated when a predefined input plaintext is observed.
+
+4. The fourth trojan drains the battery of the device once it is activated. It is triggered by observing a specific sequence of the input plaintext. The trojan payload is a shift register that continuously rotates after activation, increasing the power consumption and decreasing the expected battery lifetime.
+
+5. The fifth trojan leaks the secret key of AES-128 through the leakage current. It uses a shift register and two inverters in the leakage circuit (LC). The least significant bit of the shift register is connected to one inverter, and its output is connected to the input of the other inverter. When the least significant bit is '0', a direct path between power and ground is created, allowing retrieval of the secret key by measuring the leakage current.
+
+6. The sixth trojan is similar to the third trojan, using RF signal modulation to transmit the key bits. It is activated when a predefined sequence of input plaintext is observed.
+
+7. The seventh trojan is also similar to the fifth trojan, leaking the secret key through the leakage current. It uses a shift register and two inverters in the leakage circuit (LC) to create a direct path between power and ground when the least significant bit is '0'.
+
+8. The eighth trojan is triggered when two predefined rare signals in the AES-128 block cipher are simultaneously high. Upon activation, it flips the least significant bit of the existing encrypted output.
+
+9. The ninth trojan is triggered by a 4-bit synchronous counter inserted into the AES-128 block cipher. The trojan attacks encryption by flipping the least significant bit of the existing encrypted output when the fourth bit of the counter is high.
+
+10. The tenth trojan is triggered by a 4-bit asynchronous counter, which is dependent on a 4-bit synchronous counter inserted into the AES-128 block cipher. The asynchronous counter is incremented only if the fourth bit of the synchronous counter is high. When the fourth bit of the asynchronous counter is high, the trojan attacks encryption by flipping the least significant bit of the existing encrypted output.
+
+11. The eleventh trojan is also triggered by a 4-bit asynchronous counter, which is dependent on a 4-bit synchronous counter inserted into the AES-128 block cipher. The asynchronous counter is incremented if the fourth bit of the synchronous counter is high and two predefined signals within the AES-128 module are active. When the fourth bit of the asynchronous counter is high, the trojan attacks encryption by flipping the least significant bit of the existing encrypted output.

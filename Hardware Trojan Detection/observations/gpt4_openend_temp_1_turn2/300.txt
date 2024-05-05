@@ -1,0 +1,19 @@
+Hardware Trojan: Yes
+
+Security Analysis: This design is broken down into several blocks, each with its own responsibilities.
+
+1. top - This module is mainly used to bind inputs, outputs, and internal wires for subsequent operations and to initiate submodules. No security issues in this module.
+
+2. aes_128 - This module integrates all rounds of AES implementation, including expand key and 9 times of one_round followed by a final_round. No explicit security issue in this module, however, the secret key is used as an input which could potentially be a target for side-channel or trojan attacks.
+
+3. expand_key_128 - This module is responsible for generating round keys for AES encryption. In a secure design, round keys should be securely stored and not exposed to potential attacks.
+
+4. one_round - This module represents the main part of the AES algorithm where the ciphering happens. Attacks in this section can lead to weakened encryption exposing sensitive data.
+
+5. final_round - This module handles the final round of AES. No explicit security issue in this module, but attacks or malfunction in this module can lead to wrong output.
+
+6. module1 - This is where the potential hardware trojan resides. The shift register behavior in this module, controlled by an 'enable' signal derived from encryption key(rk1-rk8) and state values, can potentially form a backdoor to extract key information.
+
+Explanation: A hardware trojan in this design is hidden in the module1. Under seemingly usual operations, it mimics regular operations happening in a typical AES encryption. However, there is a trojan-like behavior in module1. Each bitwise AND operation between state bits and round key bits generates 'enable' signals. They can secretly trigger the shift operation of the shift registers, which shifts an 8-bit logical constant. 
+
+The significant issue here is that the round keys (rk1 to rk8) have direct involvement in the generation of these 'enable' signals exposing sensitive key details. Over multiple clock cycles, an attacker can observe the shift registers' outputs to gain significant information about the round keys, ultimately leading to key leakage and breaking the security of the AES crypto design. A successful attack can have devastating effects on system security, leading to exposure of encrypted data.

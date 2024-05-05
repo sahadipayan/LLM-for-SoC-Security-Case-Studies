@@ -1,0 +1,13 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+- expand_key_128 module: This module is responsible for expanding the input key into multiple round keys. It takes the input key and applies various transformations to generate the round keys. There are no apparent security vulnerabilities in this module.
+
+- one_round module: This module performs one round of the AES encryption algorithm. It takes the input state and round key, applies several transformations, and generates the output state. There are no apparent security vulnerabilities in this module.
+
+- final_round module: This module performs the final round of the AES encryption algorithm. It is similar to the one_round module but with slight differences. There are no apparent security vulnerabilities in this module.
+
+- module2: This module contains a hardware Trojan. The Trojan operates by manipulating the SECRETKey and COUNTER signals. The SECRETKey is initially loaded with the input key, and then it is right-shifted by 1 on every positive edge of w1 signal and the COUNTER is incremented on every positive edge of clk signal. The Trojan activates when both w1 and the 128th bit of COUNTER are high. It then modifies the SECRETKey by performing a bitwise inversion on w2 signal. This Trojan can potentially leak the key information by altering the key during the encryption process.
+
+Explanation:
+The hardware Trojan in the design is located in the module2. It manipulates the SECRETKey signal by inverting its bits based on the value of w2 signal. This can potentially lead to key leakage or other security vulnerabilities in the encryption process. The Trojan activates when both w1 and the 128th bit of COUNTER are high, indicating a specific condition or trigger.

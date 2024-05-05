@@ -1,0 +1,9 @@
+Hardware Trojan: No
+Security Analysis: 
+
+1. aes_128 module: This module implements the AES encryption algorithm. It takes the clock signal, state, key, and produces the encrypted output (out) and round keys (rk1-rk8). The state and key inputs are XORed together and stored in s0 and k0 registers. The round keys are assigned to the respective outputs. There is no security vulnerability or suspicious behavior observed in this module.
+
+2. expand_key_128 module: This module is responsible for expanding the input key into multiple round keys. It takes the clock signal, input key (in), round constant (rcon), and produces two output round keys (out_1 and out_2). The input key is split into four 32-bit words (k0-k3). These words are used to generate four intermediate values (v0-v3) by XORing with the round constant. The intermediate values are then used to update the key words (k0a-k3a) in each clock cycle. The S4 module is used to generate an additional key word (k4a), which is XORed with the updated key words to produce the final round keys (k0b-k3b). The round keys are assigned to the respective outputs. There is no security vulnerability or suspicious behavior observed in this module.
+
+Explanation: 
+There is no hardware Trojan observed in the design. The design follows the standard AES encryption algorithm and does not exhibit any malicious behavior. Each module performs its intended functionality without any suspicious or unexpected operations.

@@ -1,0 +1,19 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+1. expand_key_128 module: This module takes the input key and generates the round keys for each round of the AES encryption algorithm. It uses a shift register and XOR operations to generate the round keys. From a security perspective, this module is vulnerable to a hardware trojan that can modify the round key generation process.
+
+2. one_round module: This module performs one round of the AES encryption algorithm. It uses table lookups and XOR operations to perform the encryption. From a security perspective, this module is vulnerable to a hardware trojan that can modify the table lookup values or the XOR operations.
+
+3. final_round module: This module performs the final round of the AES encryption algorithm. It is similar to the one_round module but with a different set of table lookups and XOR operations. From a security perspective, this module is also vulnerable to a hardware trojan that can modify the table lookup values or the XOR operations.
+
+4. module1 module: This module is a counter that increments on each clock cycle. It is used to control the operation of the trojan. From a security perspective, this module is not directly vulnerable to a hardware trojan, but it can be used by a trojan to control its activation.
+
+Explanation:
+The design contains a hardware trojan that operates by modifying the round key generation process in the expand_key_128 module. The trojan can insert known bits into the round keys, leaking one byte of the round key each round. It uses a 16-bit shift register to store the known bits and increases power consumption when activated. The trojan can be activated by a specific plaintext input.
+
+The trojan's goal is to leak the AES key through various methods such as CDMA-Based Leakage, AM Radio Transmission, Battery Drain, and Leakage via Current. These methods involve modulating chip pins, transmitting key bits at specific frequencies, draining the battery, and exploiting leakage currents.
+
+The trojan also includes bit flipping techniques that modify the encrypted output when specific signals in the AES-128 cipher are high or when certain conditions involving counters are met.
+
+Overall, the trojan's operation involves modifying the key generation process and exploiting various side-channels to leak the AES key.

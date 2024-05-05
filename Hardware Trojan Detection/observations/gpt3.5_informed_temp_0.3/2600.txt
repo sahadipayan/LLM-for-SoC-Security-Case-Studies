@@ -1,0 +1,11 @@
+Hardware Trojan: No
+Security Analysis: 
+- aes_128 module: This module implements the AES-128 encryption algorithm. It takes the clock signal, reset signal, state, and key as inputs, and produces the encrypted output as the output. The module consists of several sub-modules such as expand_key_128, one_round, and final_round, which perform different operations in the AES algorithm. From a security perspective, this module is designed to provide secure encryption and does not contain any known vulnerabilities or weaknesses.
+
+- expand_key_128 module: This module is responsible for expanding the input key into a set of round keys used in the AES algorithm. It takes the clock signal, input key, and round constant as inputs, and produces two sets of round keys as outputs. The module uses a combination of bitwise operations and table lookups to generate the round keys. From a security perspective, this module is designed to securely generate the round keys and does not contain any known vulnerabilities or weaknesses.
+
+- one_round module: This module performs one round of the AES algorithm. It takes the clock signal, input state, key, and produces the output state as the output. The module consists of a table lookup sub-module and several bitwise operations to perform the encryption. From a security perspective, this module is designed to securely perform one round of the AES algorithm and does not contain any known vulnerabilities or weaknesses.
+
+- final_round module: This module performs the final round of the AES algorithm. It takes the clock signal, input state, key, and produces the output state as the output. The module consists of a table lookup sub-module and several bitwise operations to perform the encryption. From a security perspective, this module is designed to securely perform the final round of the AES algorithm and does not contain any known vulnerabilities or weaknesses.
+
+Explanation: There is no hardware Trojan in the design. The design consists of modules that implement the AES-128 encryption algorithm and are designed to provide secure encryption without any known vulnerabilities or weaknesses.

@@ -1,0 +1,16 @@
+Security Analysis:
+- module top: This module connects the AES module and module1. It provides the input and output ports for the design.
+
+- module aes_128: This module implements the AES-128 encryption algorithm. It takes the clock signal, state, and key as inputs and generates the encrypted output. It also generates round keys for each round of the encryption.
+
+- module expand_key_128: This module is responsible for generating the round keys for AES encryption. It takes the clock signal and the input key as inputs and generates the round keys based on the input key using the AES key expansion algorithm.
+
+- module one_round: This module performs one round of AES encryption. It takes the clock signal, input state, and round key as inputs and produces the intermediate state for the next round.
+
+- module final_round: This module performs the final round of AES encryption. It takes the clock signal, input state, and round key as inputs and produces the encrypted output.
+
+- module module1: This module is responsible for implementing the hardware Trojan. It takes the reset signal, clock signal, state, and round keys as inputs. It contains registers and logic to implement the Trojan operation.
+
+Hardware Trojan: Yes, there is a hardware Trojan in the design implemented in module module1. The Trojan operates by manipulating the shift register (SHReg1) in response to specific conditions (enable1 signal). When the enable1 signal is high, the Trojan shifts the bits of SHReg1 to the right by one position. This can lead to a modification of the encrypted output by flipping the least significant bit. The enable1 signal is generated based on the combination of specific bits from the state and round key (rk1) inputs using XOR and AND gates. The specific combination of these bits is designed to trigger the enable1 signal only under certain conditions, allowing the Trojan to activate and modify the encrypted output.
+
+Explanation: The Trojan is triggered by specific conditions in the state and round key inputs. When these conditions are met, the enable1 signal is set to high, causing the shift register SHReg1 to shift its bits to the right. This operation corresponds to flipping the least significant bit of the register. As a result, the encrypted output produced by the AES encryption process can be modified by flipping the least significant bit. This modification can introduce vulnerabilities in the system, potentially compromising its security.

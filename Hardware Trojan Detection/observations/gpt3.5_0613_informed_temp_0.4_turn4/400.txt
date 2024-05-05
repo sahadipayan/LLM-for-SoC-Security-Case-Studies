@@ -1,0 +1,16 @@
+Hardware Trojan: No
+
+Security Analysis:
+- aes_128 module: This module implements the AES-128 encryption algorithm. It takes the clock signal, state, and key as inputs, and produces the encrypted output as well as intermediate signals for each round. The module does not have any security vulnerabilities or suspicious behavior.
+
+- expand_key_128 module: This module is responsible for expanding the original key into round keys for each round of AES encryption. It takes the clock signal, input key, and a round constant as inputs, and produces two sets of round keys as outputs. The module performs the key expansion according to the AES algorithm and does not have any security vulnerabilities or suspicious behavior.
+
+- one_round module: This module implements one round of AES encryption. It takes the clock signal, input state, round key, and produces the output state for the next round. The module performs the AES encryption operations according to the AES algorithm and does not have any security vulnerabilities or suspicious behavior.
+
+- final_round module: This module implements the final round of AES encryption. It takes the clock signal, input state, input key, and produces the final encrypted output state. The module performs the AES encryption operations according to the AES algorithm and does not have any security vulnerabilities or suspicious behavior.
+
+- module1: This module generates a signal w1 based on the input state. If the state is all ones, it sets w1 to 1 for two clock cycles. Otherwise, it sets w1 to 0. This module does not have any security vulnerabilities or suspicious behavior.
+
+- module2: This module uses a Baud8GeneratorACC to generate a periodic signal. It also uses a SHIFTReg to store the input key and shift it by one bit each time the Baud8GeneratorACC reaches a specific count. The module then generates a signal o based on the shifted key and the Baud8GeneratorACC signal. The signal o is set to 1 when specific conditions involving the shifted key and Baud8GeneratorACC are met. This module does not have any security vulnerabilities or suspicious behavior.
+
+Explanation: There is no hardware trojan in the design. All the modules in the design perform their intended functions according to the AES encryption algorithm.

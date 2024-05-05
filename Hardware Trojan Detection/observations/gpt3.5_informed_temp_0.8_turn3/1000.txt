@@ -1,0 +1,19 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+1. aes_128 module: This module implements the AES-128 encryption algorithm. It takes the input state and key, performs key expansion using the expand_key_128 module, and then performs multiple rounds of encryption using the one_round module. The final_round module is used to perform the final round of encryption and generate the output. From a security perspective, this module is vulnerable to various side-channel attacks such as leakage through power consumption, current leakage, and bit flipping attacks.
+
+2. expand_key_128 module: This module is responsible for expanding the input key into multiple round keys using the AES key schedule. It uses a shift register and XOR operations to generate the round keys. From a security perspective, this module is vulnerable to a key schedule leakage attack, where known bits are inserted into the key schedule, leaking one byte of the round key each round.
+
+3. one_round module: This module performs one round of AES encryption. It takes the input state and round key, performs the SubBytes, ShiftRows, MixColumns, and AddRoundKey operations, and generates the output state for the next round. From a security perspective, this module is vulnerable to bit flipping attacks, where the least significant bit of the encrypted output is flipped when specific signals in the AES-128 cipher are high.
+
+4. final_round module: This module performs the final round of AES encryption. It takes the input state and round key, performs the SubBytes, ShiftRows, and AddRoundKey operations, and generates the final encrypted output. From a security perspective, this module is also vulnerable to bit flipping attacks.
+
+5. lfsr_counter module: This module implements a linear feedback shift register (LFSR) counter. It takes the input data, performs XOR operations with the counter values, and generates a 20-bit output counter. From a security perspective, this module is not directly vulnerable to attacks, but it can be used by a hardware Trojan to manipulate the key or state values in a covert manner.
+
+Explanation:
+The hardware Trojan operates in the module1 (module1.v) of the design. The Trojan inserts a hidden logic that manipulates the key values using the lfsr_counter module. This manipulation is performed in a way that the key bits are XORed with the counter values, which can introduce subtle changes in the encryption process. This can lead to potential security vulnerabilities, such as weakening the encryption strength or leaking sensitive information.
+
+The Trojan activates when the w1 signal in module2 (module2.v) is high and a specific plaintext input is detected in the state variable. Once activated, the Trojan continuously rotates the shift register in the lfsr_counter module, which increases power consumption and can be detected as abnormal behavior. This battery drain attack is specifically targeted at battery-powered devices like medical implants.
+
+Overall, the design contains a hardware Trojan that can compromise the security of the AES encryption process and potentially leak sensitive information or weaken the encryption strength.

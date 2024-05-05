@@ -1,0 +1,10 @@
+Hardware Trojan: Yes
+Security Analysis:
+- aes_128 module: The aes_128 module is the main module responsible for the AES encryption. It takes in a clock signal, reset signal, state, and key as inputs, and outputs the encrypted output. The state and key are processed through multiple rounds of encryption using sub-modules. From a security perspective, the aes_128 module is vulnerable to hardware trojans if any of the sub-modules have been compromised.
+- expand_key_128 module: The expand_key_128 module is responsible for expanding the key used in the AES encryption. It takes in a clock signal, input key, and rcon as inputs, and outputs two versions of the expanded key. This module is potentially vulnerable to hardware trojans if the expansion process is manipulated to introduce a trojan.
+- one_round module: The one_round module performs one round of AES encryption. It takes in a clock signal, state input, key, and outputs the updated state. This module can be targeted by hardware trojans if the encryption process is altered to leak information or introduce malicious behavior.
+- final_round module: The final_round module performs the final round of AES encryption. It takes in a clock signal, state input, key input, and outputs the final encrypted state. Similar to the one_round module, the final_round module can be targeted by hardware trojans if the encryption process is manipulated.
+- module1 module: The module1 module is a simple counter module. It takes in a clock signal and reset signal, and outputs a signal w2 based on the counter value. This module does not directly contribute to the encryption process and does not pose a security risk.
+
+Explanation:
+There is a hardware trojan present in the design. The trojan operates by manipulating the key expansion process in the expand_key_128 module. It inserts known bits into the expanded key schedule, leaking one byte of the round key each round. This trojan increases power consumption when activated by using a 16-bit shift register. The trojan may allow an attacker to obtain sensitive information about the encryption process or introduce malicious behavior into the system.

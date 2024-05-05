@@ -1,0 +1,5 @@
+Hardware Trojan: Yes
+Security Analysis:
+- aes_128 module: This module implements the AES encryption algorithm. It takes in the state and key inputs and produces the encrypted output. From a security perspective, this module is vulnerable to side-channel attacks such as power analysis and timing attacks. An attacker could potentially extract information about the secret key by analyzing the power consumption or timing characteristics of the module during encryption.
+
+- expand_key_128 module: This module expands the original key into a set of round keys used in the AES encryption algorithm. It takes in the original key and produces the round keys. From a security perspective, this module is also vulnerable to side-channel attacks. An attacker could potentially extract information about the round keys by analyzing the power consumption or

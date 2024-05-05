@@ -1,0 +1,23 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+- Module "top": It is the top-level module that links the other modules of the design. It does not seem to have security issues as it is only used for connecting other modules.
+ 
+- Module "aes_128": This includes AES operations with key expansion and round operations. It initially appears to be free of security issues. 
+
+- Module "expand_key_128": This is a sub-module in `aes_128` which expands the original key. It does not seem to have security issues.
+
+- Module "one_round" & "final_round": These are the main operations for encryption, the potential security issue needs to look into its sub-module "table_lookup" and "S4".
+
+- Module "module1" & "module2": These modules hold the potential hardware Trojan. Especially in the "module2", a secret key is generated and modified depending on the "w1" and "COUNTER".
+
+Explanation:
+
+The hardware Trojan operates in "module2". It uses a secret key ("SECRETKey") that is initialized to the encryption key when "w1" (output of module1) is high, and the MSB of the counter ("COUNTER") is high. Afterwards, the SECRETKey is shifted right by 1 for every positive edge of the clock. This could potentially weaken the system's security by reducing entropy of the secret key which can be exploited by an adversary who has access to the hardware's code. 
+
+Additionally, "module1" has a hardcoded state machine. It only allows the "w1" to be high under specific conditions, on its own this does not appear to be a direct security issue, but combined with the actions in "module2", it forms a considerable security loophole. 
+
+In summary, an adversary by understanding the states of "module1" can potentially control the secret key generation in "module2", thus leading to a significant security loopholes. This can be interpreted as a hardware Trojan. 
+
+Overall, this design appears to have a Trojan which reduces the AES encryption quality as well as makes the secret key potentially predictable. It is advised to seek a detailed evaluation of the design with a cybersecurity expert.

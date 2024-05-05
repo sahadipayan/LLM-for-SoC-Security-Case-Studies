@@ -1,0 +1,14 @@
+Hardware Trojan: No
+
+Security Analysis:
+- expand_key_128 module: This module is responsible for expanding the input key into a set of round keys. It uses a combination of XOR operations and table lookups to generate the round keys. From a security perspective, this module does not introduce any vulnerabilities or weaknesses.
+
+- one_round module: This module performs one round of the AES encryption algorithm. It takes the input state and round key, and applies various operations such as table lookups, XOR operations, and substitution operations to produce the output state. From a security perspective, this module implements the AES algorithm correctly and does not introduce any vulnerabilities.
+
+- final_round module: This module performs the final round of the AES encryption algorithm. It is similar to the one_round module, but with some differences in the operations performed. From a security perspective, this module also implements the AES algorithm correctly and does not introduce any vulnerabilities.
+
+- module1 module: This module generates a signal w1 based on the input state. If the state is equal to all 1's, it sets w1 to high for two clock cycles. Otherwise, it sets w1 to low. From a security perspective, this module does not introduce any vulnerabilities or weaknesses.
+
+- module2 module: This module uses a secret key and a counter to generate a signal w3. It also includes a series of inverters to generate additional signals. From a security perspective, this module does not introduce any vulnerabilities or weaknesses.
+
+Explanation: There is no hardware trojan in the design. All the modules in the design perform their intended functions without any malicious behavior. The design implements the AES algorithm correctly and does not contain any hidden functionality or vulnerabilities.

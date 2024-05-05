@@ -1,0 +1,24 @@
+Hardware Trojan: Yes
+Security Analysis: 
+1. aes_128 module: 
+   - The aes_128 module takes in a clock signal, state, and key as inputs, and produces an encrypted output (out).
+   - From a security perspective, the aes_128 module implements the AES-128 cipher, which is a widely used symmetric encryption algorithm. It is considered secure against known cryptographic attacks.
+
+2. expand_key_128 module:
+   - The expand_key_128 module expands the input key into multiple round keys for the AES-128 cipher.
+   - From a security perspective, the expand_key_128 module performs a key expansion algorithm that is secure and does not introduce any vulnerabilities.
+
+3. one_round module:
+   - The one_round module performs one round of the AES-128 cipher.
+   - From a security perspective, the one_round module implements the AES-128 round function, which is designed to provide strong security against known attacks. There are no known vulnerabilities in this module.
+
+4. final_round module:
+   - The final_round module performs the final round of the AES-128 cipher.
+   - From a security perspective, the final_round module implements the AES-128 final round function, which is also designed to provide strong security.
+
+5. module1 module:
+   - The module1 module is a separate module that is not directly related to the AES-128 cipher. It takes in a clock signal, a reset signal, and a state signal as inputs.
+   - From a security perspective, the module1 module does not have any direct impact on the security of the AES-128 cipher.
+
+Explanation: 
+Based on the analysis of the design, there is no evidence of any hardware trojan present in the design. All the modules implement standard AES-128 functionality and do not contain any malicious or unauthorized operations.

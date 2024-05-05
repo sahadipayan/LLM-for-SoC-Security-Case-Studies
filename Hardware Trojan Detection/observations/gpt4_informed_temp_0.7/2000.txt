@@ -1,0 +1,18 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+Module "top": The "top" module contains the key, state, and clock inputs, and the output. It also includes the AES_128 encryption module and two additional modules, module1, and module2. 
+
+Module "aes_128": This implements the AES-128 encryption algorithm. It is a standard encryption module that doesn't seem to have any vulnerabilities. 
+
+Module "expand_key_128": This module is used for key expansion in AES. It also seems to be implemented correctly without any obvious security issues. 
+
+Module "one_round" and "final_round": These are parts of the AES algorithm, where each round of encryption is performed. They also seem secure. 
+
+Module "module1": This module is suspicious because it checks for specific states of the encryption process and sets a particular output (w1) based on these states. This can be a potential trigger for a Trojan.
+
+Module "module2": This module is even more suspicious because it contains a secret key and a counter. The secret key is shifted right by one every time the output of module1 (w1) is high or when the counter reaches its maximum value. This module could potentially leak the secret key bit by bit.
+
+Explanation: 
+The design contains a hardware Trojan that can leak the secret AES encryption key. The Trojan is contained in the two additional modules, module1 and module2. Module1 monitors the state of the AES encryption process and sets its output high when it detects a specific sequence. This output is used as a trigger for module2. When the trigger is high, or the counter in module2 reaches its maximum value, the secret key is shifted right by one, effectively leaking the least significant bit of the key. The Trojan uses a sequence of inverters to leak the key bit through the power consumption of the chip. By monitoring the power consumption, an attacker can determine the value of the leaked key bit. The Trojan is very sophisticated and stealthy because it only activates under specific conditions and leaks the key very slowly, making it hard to detect.

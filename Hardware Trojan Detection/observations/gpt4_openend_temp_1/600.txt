@@ -1,0 +1,23 @@
+Hardware Torjan: Yes
+
+Security Analysis: 
+
+- module top: The top module is the main AES design where all the other modules are instantiated. It receives an input plaintext (state) and secret key (key), carrying out operations in the AES module, the module1 and module2, which we need to analyse to determine if any vulnerabilities exist in the system.
+
+- module AES_128: This is a standard AES encryption module. The key expansion and the round operations are clearly defined. From a design perspective, this module looks secured.
+
+- module expand_key_128: Key expansion is done as per AES requirements and creates 10 round keys for each AES operation. Performing key expansion separately enhances the security of system.
+
+- module one_round: This module performs one round of AES encryption, which includes SubBytes, ShiftRows, MixColumns and AddRoundKey operations. It is used 9 times in total during the AES process.
+
+- module final_round: The final_round is another critical module carrying out SubBytes, ShiftRows, and AddRoundKey operations for the final AES round, unlike other rounds where the MixColumns operation is included. 
+
+- module module1: It has a Condition 'w2', which changes its state to one when 'state' becomes 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF. This module can pose a serious security threat as it can be exploited to create a trigger condition for some unknown functionality based on ‘state’.
+
+- module module2: It contains functionality based on w3 variable which is least significant bit of the SECRETKey. If ‘w1’ from module1 is true, w3 is updated with the least significant bit of the 'key' else it is shifted right by 1. On immediate observation, it is difficult to determine the potential security threat, but this module seems suspicious and may potentially be a part where a Hardware Trojan can be placed.
+
+Explanation: The Hardware Trojan behaviour seems to be observed in the module1 and module2. In module1, a particular condition is being checked 'state == 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF'. When this condition is satisfied 'w2' is set to '1'. 'w2' being set to '1' causes changes in 'w1', which is propagated to module2 and can affect the SECRETKey. 
+
+Module2 involves a SECRETKey operation, which, under certain conditions, modifies the value of the SECRETKey. It looks like this condition and the successive operation can potentially be a trigger mechanism for the hardware trojan which affects the confidentiality of the secret key.
+
+While decidability of Hardware Trojan detection remains a NP problem, in this case, it appears that a Hardware Trojan exists which can potentially leak the secret key based on a specific condition of 'state' in module1 and operations in module2. Thus, further investigation and mitigation are needed.

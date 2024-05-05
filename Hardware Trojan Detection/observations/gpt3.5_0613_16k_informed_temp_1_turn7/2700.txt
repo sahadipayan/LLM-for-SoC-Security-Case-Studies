@@ -1,0 +1,16 @@
+Security Analysis:
+- expand_key_128 module: 
+  - Uses a round constant (rcon) that is XORed with the upper byte of the previous round key. This introduces a dependency between the current round key and the previous round key.
+  - The expanded key is computed by XORing the previous round key with the round constant and performing a left shift operation.
+- one_round module: 
+  - Performs substitution and permutation operations on the state and key inputs.
+  - XORs the result with the round key.
+- final_round module: 
+  - Performs substitution and permutation operations on the state input.
+  - XORs the result with the key input.
+
+Hardware Trojan: 
+Yes, there is a Hardware Trojan in the design. The Trojan is triggered when two predefined rare signals in the AES-128 block cipher are simultaneously high. When triggered, the Trojan flips the least significant bit of the existing encrypted output. This manipulation introduces an intentional error in the encrypted output, compromising the security of the encryption algorithm.
+
+Explanation: 
+The Trojan trigger condition is based on two signals (s5[113] and s7[127]) within the aes_128 module being high at the same time. When this condition is met, the Trojan becomes active. In the one_round module, the least significant bit of the state_out output is flipped by XORing it with the signal w1 from the module module1. The w1 signal is controlled by a counter in module1, which increments based on the clock signal. Therefore, when the trigger condition is met, the least significant bit of the encrypted output will be flipped, potentially compromising the security of the encryption process.

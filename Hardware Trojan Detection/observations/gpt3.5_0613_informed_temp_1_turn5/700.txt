@@ -1,0 +1,6 @@
+Hardware Trojan: Yes
+Security Analysis:
+- aes_128 module: The AES module implements the AES encryption algorithm. It takes in a clock signal, reset signal, state (plaintext), key, and outputs an encrypted output. The module has multiple internal wires and registers to store intermediate values during the encryption process.
+- expand_key_128 module: This module expands the 128-bit key into multiple round keys using a key expansion algorithm. It takes in the clock signal, input key, and an 8-bit round constant and outputs two sets of round keys. It uses a shift register and XOR gates to perform the key expansion.
+- one_round module: This module performs one round of the AES encryption algorithm. It takes in the clock signal, input state, round key, and outputs the state after one round. It uses table lookup operations and XOR gates to perform the encryption.
+- final_round module: This module performs the final round of the

@@ -1,0 +1,15 @@
+Hardware Trojan: No
+Security Analysis:
+- aes_128 module: This module implements the AES encryption algorithm. It takes in the clock signal, state input, key input, and produces the encrypted output. The module consists of various wires and registers to store intermediate values and perform the encryption operations. From a security perspective, the AES algorithm is considered secure and widely used in cryptographic applications.
+
+- expand_key_128 module: This module is responsible for expanding the given 128-bit key into 11 round keys. It takes in the clock signal, input key, and produces two output keys. The module uses a combination of XOR and table lookup operations to generate the round keys. From a security perspective, the key expansion process is an essential part of AES and is designed to ensure the security of the encryption process.
+
+- one_round module: This module performs one round of AES encryption. It takes in the clock signal, state input, key input, and produces the updated state output. The module consists of various wires and registers to store intermediate values and perform the encryption operations. From a security perspective, each round of AES encryption adds complexity to the encryption process, making it more secure against attacks.
+
+- final_round module: This module performs the final round of AES encryption. It takes in the clock signal, state input, key input, and produces the final encrypted output. The module consists of various wires and registers to store intermediate values and perform the encryption operations. From a security perspective, the final round ensures the completion of the encryption process and produces the final encrypted output.
+
+- module1 module: This module has a combinational logic that sets different states based on the input state value. The output w1 is a combination of these states. From a security perspective, this module does not directly impact the security of the AES encryption algorithm.
+
+- module2 module: This module implements some logic based on the input key and w1 signal. It generates various inverted outputs based on the input w2. From a security perspective, this module does not directly impact the security of the AES encryption algorithm.
+
+Explanation: There is no hardware Trojan found in the design. The design consists of various modules that implement the AES encryption algorithm and its supporting operations. These modules are designed to perform the encryption process securely. The design does not contain any suspicious or malicious behavior that could indicate the presence of a hardware Trojan.

@@ -1,0 +1,19 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+1. aes_128: This is the main AES encryption module. It takes a 128-bit state and key as inputs and outputs a 128-bit encrypted state. It uses a series of sub-modules to perform the encryption. This module seems secure as it follows the standard AES encryption algorithm.
+
+2. expand_key_128: This module is used to expand the key for the AES encryption. It takes a 128-bit key and a round constant as inputs and outputs two 128-bit keys. This module also seems secure as it follows the standard key expansion algorithm for AES.
+
+3. one_round: This module performs one round of the AES encryption. It takes a 128-bit state and key as inputs and outputs a 128-bit state. This module seems secure as it follows the standard AES round algorithm.
+
+4. final_round: This module performs the final round of the AES encryption. It takes a 128-bit state and key as inputs and outputs a 128-bit state. This module seems secure as it follows the standard AES final round algorithm.
+
+5. module1: This module takes a reset signal, a clock signal, and a 128-bit state as inputs and outputs a single bit. This module seems to be a potential source of a hardware Trojan as it outputs a high signal for two clock cycles when the state is a specific value.
+
+6. module2: This module takes a 128-bit key, a clock signal, a reset signal, and a single bit as inputs and outputs a single bit. This module seems to be a potential source of a hardware Trojan as it shifts the key right by one bit every time the input bit is high and outputs a specific signal based on the state of the key and a baud rate generator.
+
+Explanation: 
+
+The hardware Trojan seems to be located in modules 1 and 2. Module 1 outputs a high signal for two clock cycles when the state is a specific value. This high signal is then used in module 2 to shift the key right by one bit. This shifted key is then used to generate a specific output signal. This output signal could potentially be used to leak the key or to cause other unwanted behavior. This Trojan could be triggered by sending a specific plaintext to the AES module, causing the state to take on the specific value that triggers the high signal in module 1.

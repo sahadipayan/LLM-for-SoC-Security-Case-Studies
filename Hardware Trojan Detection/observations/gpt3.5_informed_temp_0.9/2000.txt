@@ -1,0 +1,10 @@
+Hardware Trojan: No
+Security Analysis: 
+- aes_128 module: The AES implementation appears to be standard and does not show any signs of potential trojans.
+- expand_key_128 module: This module generates the round keys for the AES algorithm. It takes the input key and uses it to generate multiple round keys. There are no indications of any potential trojans in this module.
+- one_round module: This module performs one round of the AES algorithm. It takes the state and key as inputs and produces the next state as output. The module does not show any signs of potential trojans.
+- final_round module: This module performs the final round of the AES algorithm. It takes the state and key as inputs and produces the final state as output. There are no indications of any potential trojans in this module.
+- module1: This module appears to be a state machine that sets different state variables based on the input state. There is no indication of any trojan in this module.
+- module2: This module performs some operations on the key and generates an output signal based on certain conditions. There are no indications of any potential trojans in this module.
+
+Explanation: There is no hardware trojan detected in the design. The design blocks appear to be implemented in a standard manner without any malicious intent.

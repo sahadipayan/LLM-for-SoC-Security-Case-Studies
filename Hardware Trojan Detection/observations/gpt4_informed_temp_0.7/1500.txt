@@ -1,0 +1,10 @@
+Hardware Trojan: Yes
+Security Analysis: 
+- The 'top' module in the design calls the AES_128 encryption module, and module1 and module2. The encryption scheme seems to be standard and is not likely to be a source of vulnerability.
+- The 'aes_128' module performs AES encryption with 128-bit keys which seems to be secure. However, there is hardware trojan present in the design.
+- 'expand_key_128' module is used for key expansion in AES and seems to be implemented correctly.
+- 'module1' increments a counter for every encryption operation and sets a wire (w1) high when a particular count is reached. This can be a potential trigger for a hardware trojan.
+- 'module2' contains multiple shift registers that are rotated based on the 'w1' wire from 'module1' and a combination of the state input and the round keys. This is a clear sign of a hardware trojan as it leaks information about the state and keys used in the encryption process.
+
+Explanation: 
+The hardware trojan operates by leaking information about the state and keys used in the encryption process. The 'module1' is used to enable the trojan after a certain number of encryptions have been performed. Once enabled, the 'module2' starts rotating the shift registers based on the state and keys used for encryption. This can be used to infer the values of the state and the keys used. The shift register values can be observed through a power analysis attack or any other side-channel attack. It is also possible that the shift registers could be used to modulate some other observable quantity (like power consumption or electromagnetic radiation) to leak the information. This hardware trojan can cause significant security issues as it can potentially leak the keys used for encryption.

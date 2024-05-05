@@ -1,0 +1,10 @@
+Hardware Trojan: No
+Security Analysis: 
+- aes_128 module: This module implements the AES-128 cipher algorithm. It takes the clock signal and the input state and key as inputs, and produces the encrypted output as well as the key schedule. There is no security vulnerability or weakness in this module.
+- expand_key_128 module: This module expands the 128-bit key into a 10-round key schedule. It takes the clock signal, input key, and a round constant as inputs, and produces two outputs representing the key schedule. There is no security vulnerability or weakness in this module.
+- one_round module: This module performs one round of the AES algorithm. It takes the clock signal, input state, key, and produces the output state. There is no security vulnerability or weakness in this module.
+- final_round module: This module performs the final round of the AES algorithm. It takes the clock signal, input state, key, and produces the output state. There is no security vulnerability or weakness in this module.
+- module1 module: This module checks if the state input is equal to 128'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF. If it is, it sets the w3 signal to 1; otherwise, it sets w3 to 0. There is no security vulnerability or weakness in this module.
+- module2 module: This module implements a shift register and a Baud8 generator. It takes the key input, clock signal, reset signal, and w1 signal as inputs, and produces the output signal o. The shift register is shifted right at every clock cycle, and when w1 is high, it is loaded with the key value. The Baud8 generator increments its value at every clock cycle, and when its 25th bit is high, it triggers a beep signal. The output signal o is activated when specific conditions involving the beep signal, the Baud8 generator, and the shift register are met. There is no security vulnerability or weakness in this module.
+
+Explanation: There is no hardware Trojan in the design. All the modules in the design have been analyzed and found to be secure without any vulnerabilities that could be exploited.

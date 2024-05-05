@@ -1,0 +1,19 @@
+Security Analysis: 
+
+1. Module top: This is the top-level module that connects all the other modules. It doesn't seem to have any security issues as it only connects the other modules.
+
+2. Module aes_128: This module implements the AES encryption algorithm. It seems to be secure as it follows the standard AES encryption process.
+
+3. Module expand_key_128: This module is used for key expansion in AES. It seems to be secure as it follows the standard key expansion process in AES.
+
+4. Module one_round: This module performs one round of AES encryption. It seems to be secure as it follows the standard AES round process.
+
+5. Module final_round: This module performs the final round of AES encryption. It seems to be secure as it follows the standard AES final round process.
+
+6. Module module1: This module seems to have a security issue. It checks for specific states and sets the output 'w1' based on these states. This could potentially be used to leak information about the state.
+
+7. Module module2: This module also seems to have a security issue. It shifts the secret key based on the output 'w1' from module1 and the most significant bit of a counter. This could potentially be used to leak the secret key.
+
+Hardware Trojan: Yes
+
+Explanation: The hardware Trojan seems to be in the modules 'module1' and 'module2'. In 'module1', the output 'w1' is set based on specific states. This output is then used in 'module2' to shift the secret key. The least significant bit of the shifted key is then inverted multiple times. This could potentially be used to leak the secret key bit by bit. The Trojan could be triggered when the specific states are met in 'module1', causing 'w1' to be set, which then triggers the shifting and leaking of the secret key in 'module2'.

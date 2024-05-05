@@ -1,0 +1,11 @@
+Hardware Trojan: No
+Security Analysis:
+1. expand_key_128 module: This module is responsible for expanding the AES-128 key. It takes a 128-bit key as input and generates 10 round keys of 128 bits each. The module uses an S-Box substitution and a linear feedback shift register (LFSR) to generate the round keys. From a security perspective, this module is essential for the correct functioning of AES and does not introduce any vulnerabilities on its own.
+
+2. lfsr_counter module: This module implements a linear feedback shift register (LFSR) counter. It takes a 128-bit data input and generates a 20-bit LFSR counter output. The LFSR counter is used to generate a pseudo-random sequence based on the input data. From a security perspective, this module does not introduce any vulnerabilities on its own.
+
+3. module1: This module combines the key and LFSR counter output to generate a 64-bit load output. The load output is derived by XOR-ing specific bits of the key and counter output. From a security perspective, this module does not introduce any vulnerabilities on its own.
+
+4. one_round module: This module performs one round of AES encryption. It takes a 128-bit state input, a 128-bit key, and generates a 128-bit state output. The module uses S-Box substitution and XOR operations to perform the state transformation. From a security perspective, this module is essential for the correct functioning of AES and does not introduce any vulnerabilities on its own.
+
+5. final_round module: This module performs the final round of AES encryption. It takes a 128-bit state input, a 128-bit key input, and generates a 128-bit state output. The module uses S-Box substitution and XOR operations similar to the one_round module. From a security perspective, this module is essential for the correct functioning

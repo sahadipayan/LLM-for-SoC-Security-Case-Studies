@@ -1,0 +1,41 @@
+Hardware Trojan: No
+
+Security Analysis:
+aes_128 module:
+- The aes_128 module is responsible for performing the AES encryption algorithm.
+- The inputs to the module are the clock signal, reset signal, state (plaintext input), key, and outputs are out (ciphertext output) and Capacitance.
+- The module uses various wires and registers to perform the AES encryption algorithm in multiple stages.
+- The design does not contain any obvious security vulnerabilities.
+
+expand_key_128 module:
+- The expand_key_128 module is responsible for expanding the input key into multiple round keys.
+- The inputs to the module are the clock signal, input key, and rcon (round constant), and outputs are out_1 (first round key) and out_2 (all round keys).
+- The module performs various transformations and XOR operations to generate the round keys.
+- The design does not contain any obvious security vulnerabilities.
+
+one_round module:
+- The one_round module represents one round of the AES algorithm.
+- The inputs to the module are the clock signal, state_in (input state), key, and the output is state_out (output state).
+- The module uses table lookups and XOR operations to calculate the new state.
+- The design does not contain any obvious security vulnerabilities.
+
+final_round module:
+- The final_round module represents the final round of the AES algorithm.
+- The inputs to the module are the clock signal, state_in (input state), key_in (last round key), and the output is state_out (output state).
+- The module uses table lookups and XOR operations to calculate the new state.
+- The design does not contain any obvious security vulnerabilities.
+
+lfsr_counter module:
+- The lfsr_counter module represents a linear feedback shift register (LFSR) counter.
+- The inputs to the module are the reset signal and clock signal, and the output is the lfsr counter.
+- The module uses XOR operations to generate the next value of the counter based on the current value and the feedback polynomial.
+- The design does not contain any obvious security vulnerabilities.
+
+module1 module:
+- The module1 module generates a load signal based on the input key and the lfsr counter.
+- The inputs to the module are the reset signal, clock signal, and key, and the output is the load signal.
+- The module uses XOR operations between the key bits and the counter bits to generate the load signal.
+- The design does not contain any obvious security vulnerabilities.
+
+Explanation: 
+Based on the analysis of the design, there is no evidence of a hardware Trojan present. The design appears to perform the AES encryption algorithm correctly and securely.

@@ -1,0 +1,13 @@
+Security Analysis: 
+The given design is an implementation of the AES-128 encryption algorithm. The main module is 'top' which calls the AES-128 block cipher, module1 and module2. The AES-128 block cipher is implemented in the module 'aes_128' which uses 'expand_key_128', 'one_round' and 'final_round' sub-modules. The 'expand_key_128' module is responsible for key expansion, the 'one_round' module performs one round of AES encryption and 'final_round' module performs the final round of AES encryption.
+
+The module1 and module2 are suspicious modules. Module1 is a trigger module that activates when a specific plaintext input is detected. Module2 is a payload module that uses a Linear Feedback Shift Register (LFSR) to generate a pseudo-random sequence and XORs this with the secret key to create a covert channel.
+
+Hardware Trojan: Yes
+
+Explanation: 
+The hardware Trojan in this design is a combination of module1 and module2. Module1 is the trigger for the Trojan. It gets activated when a specific plaintext input '128'h00112233_44556677_8899aabb_ccddeeff' is detected. This is a very specific condition and may not occur frequently, making the Trojan difficult to detect under normal conditions.
+
+Once the Trojan is triggered, module2 starts operating. It uses a 20-bit LFSR counter to generate a pseudo-random sequence. This sequence is then XORed with the secret key bit by bit. The result is stored in a 64-bit register 'load'. This operation essentially leaks the secret key bit by bit over a period of time. The leaked bits are spread over the power side-channel in a way that mimics a large capacitance. This is a covert channel attack where the secret key is leaked through power consumption.
+
+The Trojan is very sophisticated as it uses a combination of a specific trigger and a covert channel to leak secret information. It can be very hard to detect without specific knowledge of the trigger condition and the method of information leakage.

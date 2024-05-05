@@ -1,0 +1,16 @@
+Hardware Trojan: Yes
+Security Analysis: 
+
+AES_128 Module: This is the main AES encryption module. The primary objective of this module is to take a 128-bit key and a 128-bit plaintext and produce a 128-bit ciphertext. However, there is a suspicious part where an additional module 'operation1' is used. 
+
+Expand_key_128 Module: This module is used to expand the main 128-bit key into round keys for each round of encryption. This module does not seem to contain any Trojans.
+
+One_round Module: This module represents one round of AES encryption. It does not appear to have any Trojans.
+
+Final_round Module: This module represents the final round of AES encryption. It does not appear to have any Trojans.
+
+Module1: This is a simple AND gate module. This module is used in the primary AES_128 module and it's suspicious because it takes two inputs from certain points of the encryption process and produces an output that is XORed with the final bit of the output ciphertext. This is the most likely place for the Trojan to be.
+
+Explanation: 
+
+The Trojan is located in the 'module1' or 'operation1'. It's a simple AND gate that takes two specific bits from the AES encryption process (s2[89] and s7[127]) and produces an output that is XORed with the final bit of the output ciphertext. This can be seen in the line 'assign out[0] = out2[0] ^ w1;'. This means that the Trojan is a bit-flipping Trojan (Point 9 from the list). It changes the least significant bit of the encrypted output when two specific signals in the AES-128 cipher are high. This could have serious security implications, as it could allow an attacker to gradually learn about the key being used.

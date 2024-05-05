@@ -1,0 +1,16 @@
+Hardware Trojan: No
+Security Analysis: 
+
+- aes_128 module: The AES module is responsible for performing the AES encryption algorithm. It takes in a clock signal, state (plaintext), and key as inputs and produces the encrypted output (out). The module uses a shift register (s0) and a key schedule expansion module (expand_key_128) to generate round keys for each round of encryption. The module does not have any vulnerabilities or security weaknesses.
+
+- expand_key_128 module: The key expansion module takes in the original key and generates 10 round keys for each round of encryption. It uses a combination of XOR operations and table lookups to generate the round keys. The module does not have any vulnerabilities or security weaknesses.
+
+- one_round module: The one_round module performs one round of the AES encryption algorithm. It takes in the clock signal, state (plaintext), and key as inputs and produces the intermediate state for the next round. The module uses table lookups and XOR operations to generate the intermediate state. The module does not have any vulnerabilities or security weaknesses.
+
+- final_round module: The final_round module performs the final round of the AES encryption algorithm. It takes in the clock signal, state (plaintext), and key as inputs and produces the final encrypted output. The module uses table lookups and XOR operations to generate the final encrypted output. The module does not have any vulnerabilities or security weaknesses.
+
+- module1 module: The module1 module is responsible for generating a signal (w1) that is high for two clock cycles when a specific input sequence is detected. It uses a combination of state variables and logic gates to detect the input sequence. The module does not have any vulnerabilities or security weaknesses.
+
+- module2 module: The module2 module is responsible for generating an output signal (o) based on the key and a specific input sequence. It uses a shift register and a baud rate generator to generate the output signal. The module does not have any vulnerabilities or security weaknesses.
+
+Explanation: There is no hardware Trojan detected in the design. All the modules in the design perform their intended functions without any security vulnerabilities.

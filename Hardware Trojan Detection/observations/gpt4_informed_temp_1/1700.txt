@@ -1,0 +1,10 @@
+Hardware Trojan: No
+Security Analysis: Analyzing the given AES design block by block, it is observed that this AES 128-bit cryptographic system has effectively implemented security measures to ensure the confidentiality and integrity of data processed;
+
+- Main module aes_128: Defines state, key, and out (output). The Verilog design contains a subroutine to expand the key and several rounds of the AES algorithm. There is no disparity to suggest irregularity within this block.
+
+- Subroutine expand_key_128: Expands the input key into a new key in design-time key scheduling. It uses input keys, an rcon value, and sub byte operations (S4_0) to generate new keys. The security of this block is identified in the confirmity of the key expansion process to the AES standards. No evidence of a Trojan here as well.
+
+Possible threats such as side channels, key leakage, and additional behaviour implementation (e.g., battery drain, AM Radio Transmission) observable in Trojans were checked, but no evidence of a Trojan was found. 
+
+Explanation: Since no hardware Trojan can be identified within this design, it is also not possible to describe its operation. If one were present, it would operate to compromise the integrity, availability, or confidentiality of the system. This could be done via various means, such as side-channel attacks, key leakages, battery drain, or creating unexpected operations (e.g., sending data over an unused chip pin). However, this design appears to be devoid of such threats.

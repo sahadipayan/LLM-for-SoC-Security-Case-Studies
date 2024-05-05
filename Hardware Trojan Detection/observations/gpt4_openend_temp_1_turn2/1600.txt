@@ -1,0 +1,14 @@
+Hardware Trojan: Yes
+Security Analysis: 
+
+1. Module Top: This module constructs the overall framework, in which it first initializes an AES block module, and sequentially, it communicates with two other operation modules. It seems normal; however, we cannot fix the presence of hardware Trojan within this module without examining the contents of other modules first.
+
+2. AES_128 Module: This seems like a typical AES-128 encryption block where the key is expanded and encryption rounds take place. However, the identity of the expand_key_128 and these one_round sub-modules are still ambiguous, making it necessary to check these modules one by one.
+
+3. Expand_key_128 Module: This appears to be a standard function that takes in a key and 'rcon' value and expands them for the different rounds of the AES encryption. It doesn't show any signs of any malicious hardware Trojan. 
+
+4. Module1 and Module2: These modules seem to be suspicious. Their final output controls the output of the top module. In Module1, CLK cycles are being monitored and output 'w1' is only high for two clock cycles. It also utilizes an unknown internal state which might a source of concern. In Module2, the module processes input from a 'key' and uses a shift register to potentially manipulate the data. Thus, these two modules can potentially contain the hardware Trojan.
+
+5. One_round and final_round: These modules execute the main functionality of AES encryption algorithm.
+
+Explanation: The Trojan appears to be located in module1 and module2. In module1, it performs an operation using the 'state' and repeated clock cycles to achieve a 'Detected' status. This output is used in module2 to manipulate the input key when 'w1' is high for two clock cycles. It's a sophisticated Trojan that can bypass regular Trojan detection techniques. A lot depends on the internal 'state' of module1 and clock cycles – a scenario that may not occur under normal operating conditions, making it difficult to identify. This Trojan acts as a backdoor, and if a unique 'state' value is given in the operation of module1, the Trojan is triggered, and it modifies the data in a covert way. The attacker might gain unauthorized access or decrypt the encrypted data by causing changes in the implementation of the cryptographic algorithm at these states. The event shifts the key in module2 and might cause critical information leakage in some applications.

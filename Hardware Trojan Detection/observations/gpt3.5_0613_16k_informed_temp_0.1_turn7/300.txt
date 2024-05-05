@@ -1,0 +1,15 @@
+Security Analysis:
+- module top: This module is the top-level module that instantiates the AES module and the module1 module. It connects the inputs and outputs of these modules.
+
+- module aes_128: This module implements the AES-128 encryption algorithm. It takes the clock signal, state, and key as inputs and produces the encrypted output and round keys as outputs. It consists of sub-modules for key expansion, one round encryption, and final round encryption.
+
+- module expand_key_128: This module is responsible for expanding the input key into round keys. It takes the clock signal and input key as inputs and produces two sets of round keys as outputs. It uses a shift register and XOR operations to generate the round keys.
+
+- module one_round: This module performs one round of AES encryption. It takes the clock signal, input state, and round key as inputs and produces the output state after one round of encryption. It uses table lookups and XOR operations to perform the encryption.
+
+- module final_round: This module performs the final round of AES encryption. It takes the clock signal, input state, and round key as inputs and produces the final encrypted output state. It uses table lookups and XOR operations similar to the one_round module.
+
+- module module1: This module is responsible for implementing a hardware trojan. It takes the reset signal, clock signal, state, and round keys as inputs. It contains registers and logic to enable the trojan based on certain conditions. The trojan operates by shifting the values in the shift registers when the enable signals are high.
+
+Hardware Trojan: Yes
+Explanation: The module1 module implements a hardware trojan. The trojan operates by shifting the values in the shift registers (SHReg1 to SHReg8) when the enable signals (enable1 to enable8) are high. The enable signals are generated based on the state and round keys. The trojan is activated when the enable signals are high, causing the shift registers to rotate their values. This can potentially introduce errors or vulnerabilities in the encryption process, compromising the security of the AES algorithm.

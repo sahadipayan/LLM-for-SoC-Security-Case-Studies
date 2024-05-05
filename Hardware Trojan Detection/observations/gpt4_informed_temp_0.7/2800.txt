@@ -1,0 +1,17 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+1. aes_128: This module is the main module implementing the AES-128 algorithm. It seems to follow the standard design of AES-128. However, the potential trojan "module1" is instantiated in this module, which could be a security risk.
+
+2. expand_key_128: This module is designed to expand the initial 128-bit key into 11 separate 128-bit round keys. It appears to follow the standard key expansion procedure for AES-128. No apparent trojan or vulnerability is detected in this module.
+
+3. one_round: This module is designed to execute one round of AES-128, including SubBytes, ShiftRows, MixColumns, and AddRoundKey transformations. No apparent trojan or vulnerability is detected in this module.
+
+4. final_round: This module is designed to execute the final round of AES-128, which is similar to a standard round but without the MixColumns transformation. No apparent trojan or vulnerability is detected in this module.
+
+5. module1: This module seems to function as a trojan. It contains two counters that increment with each encryption. The output "w2" is high when both the fourth bit of the first counter is high and specific signals "r1" and "r2" are active. This could potentially trigger a bit flip in the least significant bit of the encrypted output, thereby compromising the security of the AES-128 algorithm.
+
+Explanation: 
+
+The potential hardware trojan seems to be embedded in the module named "module1". This module operates by incrementing two counters with each encryption operation. An output signal "w2" is set high under specific conditions, i.e., when the fourth bit of the first counter is high and certain signals "r1" and "r2" are active. This signal "w2" is then used to flip the least significant bit of the AES-128 encryption output. This can lead to a deliberate error in the output, thereby compromising the encryption. This trojan could potentially leak information about the plaintext or the key, depending on the specific conditions of activation.

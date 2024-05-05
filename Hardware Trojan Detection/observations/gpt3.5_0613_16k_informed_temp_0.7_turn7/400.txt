@@ -1,0 +1,16 @@
+Security Analysis:
+- aes_128 module: The aes_128 module implements the AES-128 block cipher. It takes in a clock signal, state input, and key input, and produces an output state. The key expansion and encryption operations are performed in multiple rounds.
+
+- expand_key_128 module: The expand_key_128 module is responsible for expanding the 128-bit key into 11 round keys. It takes in the clock signal, input key, and a round constant, and produces two output keys. It uses a shift register and XOR operations to generate the round keys.
+
+- one_round module: The one_round module performs one round of AES encryption using the state and key inputs. It takes in the clock signal, state input, key input, and produces an output state. It uses table lookups and XOR operations to perform the encryption.
+
+- final_round module: The final_round module performs the final round of AES encryption. It takes in the clock signal, state input, key input, and produces an output state. It uses table lookups and XOR operations similar to the one_round module.
+
+- module1 module: The module1 module generates a signal w1 based on the state input. It takes in the reset signal, clock signal, state input, and produces the w1 signal. The w1 signal is high for two clock cycles when the state input is all 1's.
+
+- module2 module: The module2 module generates an output signal o based on the key input and w1 signal. It takes in the key input, clock signal, reset signal, w1 signal, and produces the output signal o. The output signal o is high when the w1 signal is high and certain conditions based on the key input are met.
+
+Hardware Trojan: No hardware trojan is present in the design.
+
+Explanation: There is no hardware trojan present in the AES design. The design consists of standard modules implementing the AES-128 block cipher, key expansion, and encryption operations. The additional modules (module1 and module2) are used for generating certain signals based on the input state and key, but they do not exhibit any malicious behavior or introduce any trojan functionality.

@@ -1,0 +1,16 @@
+Hardware Trojan: Yes
+Security Analysis: 
+
+1. Top Module: This is the top level module wherein all the other modules are instantiated. From a security perspective, it does not appear to have any issues. However, the input and output wires can be a potential source of attacks if they are not secured properly.
+
+2. AES_128: This module is the main AES encryption implementation. It performs the key expansion, rounds of encryption, and final round. Each round involves substitution, permutation, and mixing of bits. The security of this module is highly dependent on the secrecy of the encryption key and the randomness of the round keys. 
+
+3. Expand_key_128: This module is responsible for generating the round keys. The security of the overall AES encryption is highly dependent on the randomness and secrecy of these keys. 
+
+4. One_round: This module performs one round of the AES encryption. It involves substitution, permutation, and mixing of bits. The security of this module depends on the secrecy of the round key and the randomness of the substitution and permutation operations.
+
+5. Final_round: This module performs the final round of the AES encryption. It is similar to the one_round module but without the mix_columns operation. The security of this module is also dependent on the secrecy of the round key and the randomness of the substitution and permutation operations.
+
+6. Module1: This module appears to be a potential hardware Trojan. It contains shift registers (SHReg1 to SHReg8) that are altered based on the state and round keys. The alteration of these shift registers could potentially leak sensitive information about the state and round keys.
+
+Explanation: The suspected hardware Trojan operates by altering the shift registers based on the state and round keys. This alteration could potentially leak sensitive information about the state and round keys. The leakage of the state could compromise the confidentiality of the plaintext, while the leakage of the round keys could compromise the secrecy of the original encryption key. Depending on how this leaked information is used or accessed, this could either be a passive or active hardware Trojan. A passive hardware Trojan simply leaks sensitive information, while an active hardware Trojan uses the leaked information to alter the system's behavior. In this case, it seems more likely to be a passive hardware Trojan as there are no apparent mechanisms to alter the behavior of the system.

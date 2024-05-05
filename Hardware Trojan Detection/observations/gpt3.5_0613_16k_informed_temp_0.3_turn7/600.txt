@@ -1,0 +1,16 @@
+Security Analysis:
+- aes_128 module: The aes_128 module implements the AES-128 block cipher algorithm. It takes in a clock signal, state and key inputs, and produces an output. The module consists of submodules for key expansion, one round, and final round. The security of the AES algorithm depends on the strength of the key and the resistance to various cryptographic attacks.
+
+- expand_key_128 module: The expand_key_128 module is responsible for expanding the input key into round keys for each round of the AES algorithm. It takes in a clock signal, input key, and rcon (round constant) input, and produces two output keys. The module uses table lookups and XOR operations to generate the round keys. The security of the key expansion process is important for the overall security of the AES algorithm.
+
+- one_round module: The one_round module performs one round of the AES algorithm. It takes in a clock signal, state input, key input, and produces a state output. The module uses table lookups, XOR operations, and substitution operations to transform the input state. The security of each round is important for the overall security of the AES algorithm.
+
+- final_round module: The final_round module performs the final round of the AES algorithm. It takes in a clock signal, state input, key input, and produces a state output. The module uses table lookups, XOR operations, and substitution operations similar to the one_round module. The security of the final round is important for the overall security of the AES algorithm.
+
+- module1: The module1 module is a custom module that takes in a reset signal, clock signal, state input, and produces an output w1. The module uses a combination of clock signals and state comparisons to determine the value of w1. The security analysis of this module depends on the specific implementation and purpose of the module.
+
+- module2: The module2 module is another custom module that takes in a clock signal, reset signal, key input, and w1 input. It also has internal registers and logic to determine the value of w3. The module uses various inverters to generate output signals based on the value of w3. The security analysis of this module depends on the specific implementation and purpose of the module.
+
+Hardware Trojan: No hardware trojan is present in the design.
+
+Explanation: There is no evidence of any hardware trojan in the design. The design consists of standard modules implementing the AES-128 algorithm and some custom modules with specific functionality. The security of the design depends on the strength of the AES algorithm and the implementation of the custom modules.

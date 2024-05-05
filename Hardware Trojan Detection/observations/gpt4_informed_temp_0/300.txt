@@ -1,0 +1,15 @@
+Hardware Trojan: Yes
+Security Analysis: 
+1. Top Module: The top module is the main module that connects all the other modules. It takes in the clock, reset, state, and key as inputs and gives out the encrypted output. It also connects the AES module and the Trojan module (module1). 
+
+2. AES Module: This module is responsible for the AES encryption. It takes in the clock, state, and key as inputs and gives out the encrypted output. It also generates round keys which are used in the encryption process. 
+
+3. Expand Key Module: This module is responsible for expanding the key for the AES encryption. It takes in the clock, input key, and round constant as inputs and gives out two output keys. 
+
+4. One Round Module: This module performs one round of AES encryption. It takes in the clock, state, and key as inputs and gives out the state after one round of encryption. 
+
+5. Final Round Module: This module performs the final round of AES encryption. It takes in the clock, state, and key as inputs and gives out the final encrypted state. 
+
+6. Module1 (Trojan Module): This module is the hardware Trojan. It takes in the reset, clock, state, and round keys as inputs. It uses shift registers and enables signals to leak information about the encryption process. 
+
+Explanation: The hardware Trojan is present in the design in the form of module1. It operates by using the round keys and the state to generate enable signals. These enable signals are then used to shift the bits in the shift registers. The shift registers are initially loaded with a known pattern ("10101010"). When the enable signals are high, the bits in the shift registers are shifted. This shifting of bits can increase the power consumption of the device, which can be measured and used to leak information about the encryption process. This Trojan can be activated by specific patterns in the state and round keys, making it a complex trigger Trojan.

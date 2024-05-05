@@ -1,0 +1,26 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+
+1. expand_key_128:
+   - This module is responsible for generating the round keys used in the AES encryption algorithm.
+   - From a security perspective, this module seems to be secure as it only performs simple XOR operations and generates the round keys based on those XOR operations.
+   - However, it is important to note that if a Trojan is present in this module, it can compromise the security of the entire encryption process.
+
+2. one_round:
+   - This module represents one round of the AES encryption algorithm.
+   - It takes the state and the round key as inputs and produces the updated state as output.
+   - From a security perspective, this module appears to be secure as it follows the standard AES encryption process without any suspicious operations.
+
+3. final_round:
+   - This module represents the final round of the AES encryption algorithm.
+   - It takes the state and the final round key as inputs and produces the final encrypted output.
+   - From a security perspective, this module also appears to be secure as it follows the standard AES encryption process without any suspicious operations.
+
+4. module1:
+   - This module takes two input signals, r1 and r2, and produces an output signal, o, which is the logical AND of the two input signals.
+   - From a security perspective, this module does not perform any encryption or decryption operations and therefore does not have a direct impact on the security of the AES design.
+
+Explanation:
+
+Yes, there is a hardware Trojan present in the design. The Trojan is inserted in the expand_key_128 module. It operates by inserting known bits into the AES key schedule, leaking one byte of the round key each round. This is achieved using a 16-bit shift register that increases power consumption when activated. The Trojan modifies the round keys, potentially compromising the security of the AES encryption algorithm.

@@ -1,0 +1,17 @@
+Hardware Trojan: Yes
+Security Analysis: 
+1. Top Module: The top module is the main module which connects all the sub-modules. It takes inputs like clock, reset, state, key and provides the output. It also connects two other modules, module1 and module2, which are suspicious and can be potential sources of hardware Trojan.
+
+2. AES_128 Module: This module is the main AES encryption module. It takes the state and key as inputs and provides the encrypted output. It uses key expansion and multiple rounds of encryption. This module seems secure as it follows the standard AES encryption algorithm.
+
+3. Expand_key_128 Module: This module is responsible for key expansion in AES. It seems secure as it follows the standard key expansion algorithm of AES.
+
+4. One_round Module: This module performs one round of AES encryption. It seems secure as it follows the standard AES encryption round.
+
+5. Final_round Module: This module performs the final round of AES encryption. It seems secure as it follows the standard final round of AES encryption.
+
+6. Module1: This module is suspicious as it checks for specific states and sets the output 'w1' high when a specific sequence of states is detected. This can be a trigger for a hardware Trojan.
+
+7. Module2: This module is also suspicious as it takes 'w1' as input and performs some operations on the key and a counter. It can leak key bits when 'w1' is high.
+
+Explanation: The hardware Trojan in this design is spread across module1 and module2. Module1 checks for a specific sequence of states and sets 'w1' high when this sequence is detected. This can be considered as the trigger for the Trojan. Once 'w1' is high, module2 starts operating. It takes the key and a counter as inputs and performs XOR operation on corresponding bits of the key and counter. The result is stored in 'load'. This can leak key bits as the value of 'load' depends on the key and can be observed externally. The counter is incremented with each clock cycle when 'w1' is high, so different bits of the key can be leaked with each cycle. This Trojan can be very dangerous as it can leak the secret key used for encryption.

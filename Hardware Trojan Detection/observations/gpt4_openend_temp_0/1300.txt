@@ -1,0 +1,15 @@
+Security Analysis: 
+
+1. Module top: This is the top-level module that connects all the other modules. It doesn't perform any operations, so it doesn't pose any security risks.
+
+2. Module aes_128: This module implements the AES-128 encryption algorithm. It uses a 128-bit key and a 128-bit state as inputs and produces a 128-bit output. The security of this module depends on the secrecy of the key. If the key is compromised, the security of the entire system is compromised.
+
+3. Module expand_key_128: This module is used to expand the key for the AES-128 encryption. It takes a 128-bit key and a 8-bit round constant as inputs and produces two 128-bit outputs. The security of this module also depends on the secrecy of the key.
+
+4. Module module1: This module takes a reset signal and a 128-bit state as inputs and produces a single-bit output. It doesn't seem to pose any security risks.
+
+5. Module module2: This module takes a reset signal, a clock signal, a single-bit input, a 128-bit state, and eight 128-bit round keys as inputs. It performs some operations on the inputs and stores the results in eight 8-bit shift registers. The security of this module depends on the secrecy of the round keys.
+
+Hardware Trojan: Yes
+
+Explanation: The hardware Trojan is in the module2. It uses the round keys and the state to generate enable signals for the shift registers. If the enable signal is high, the corresponding shift register is shifted right by one bit. The initial values of the shift registers are "10101010", which is a suspicious value. If the Trojan is triggered, the shift registers will rotate this value, which could potentially leak information about the round keys and the state. This Trojan could be used to leak secret information from the system.

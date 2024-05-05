@@ -1,0 +1,11 @@
+Hardware Trojan: No
+
+Security Analysis:
+1. aes_128 module:
+   - This module implements the AES-128 encryption algorithm.
+   - It takes the clock signal (clk), reset signal (rst), state input (input [127:0] state), key input (input [127:0] key), and provides the output encrypted data (output [127:0] out) and round keys (output [127:0] rk1, rk2, rk3, rk4, rk5, rk6, rk7, rk8).
+   - The module contains internal registers (reg [127:0] s0, k0) that store the state and key values, respectively.
+   - The key expansion algorithm is implemented using an expand_key_128 module, which generates the round keys based on the initial key.
+   - The encryption is performed using multiple rounds, where each round is implemented using the one_round module.
+   - The final round is implemented using the final_round module.
+   - Overall, the

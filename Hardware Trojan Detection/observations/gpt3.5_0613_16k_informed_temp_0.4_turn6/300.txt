@@ -1,0 +1,16 @@
+Security Analysis:
+- module top: This module is the top-level module that instantiates the aes_128 module and the module1 module. It connects the input and output ports of these modules.
+
+- module aes_128: This module implements the AES-128 encryption algorithm. It consists of sub-modules for key expansion, one round, and final round. The key expansion sub-module expands the input key into round keys. The one round sub-module performs one round of AES encryption. The final round sub-module performs the final round of AES encryption. The module uses flip-flops to store intermediate values and performs operations on them using XOR and table lookups.
+
+- module expand_key_128: This module is responsible for expanding the input key into round keys. It uses a shift register and XOR operations to generate the round keys.
+
+- module one_round: This module performs one round of AES encryption. It uses table lookups and XOR operations to perform operations on the state and key.
+
+- module final_round: This module performs the final round of AES encryption. It uses table lookups and XOR operations to perform operations on the state and key.
+
+- module module1: This module implements additional functionality related to hardware trojans. It includes registers and logic to enable and shift registers based on certain conditions.
+
+Hardware Trojan: No
+
+Explanation: There is no hardware trojan in the design. The design implements the AES-128 encryption algorithm and includes additional functionality for shifting and enabling registers based on certain conditions.

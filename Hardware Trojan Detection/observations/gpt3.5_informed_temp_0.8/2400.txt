@@ -1,0 +1,15 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+- aes_128 module: This module implements the AES-128 encryption algorithm. It takes a clock signal, a reset signal, state and key inputs, and produces an output called "out". The module contains internal registers and wires to store intermediate values and perform the encryption operations.
+
+- expand_key_128 module: This module is responsible for expanding the key used in AES-128 encryption. It takes the clock signal, an input key, and produces two output keys called "out_1" and "out_2". The module uses a round constant value to generate the expanded keys.
+
+- one_round module: This module represents one round of the AES-128 encryption algorithm. It takes the clock signal, the state input, the key input, and produces a state output. The module performs table lookups and XOR operations to calculate the new state.
+
+- final_round module: This module represents the final round of the AES-128 encryption algorithm. It takes the clock signal, the state input, the key input, and produces a state output. The module performs table lookups, XOR operations, and byte shuffling to calculate the final state.
+
+- module1 module: This module takes two inputs, "r1" and "r2", and produces an output called "w2". The output is the logical "AND" of the two inputs.
+
+Explanation:
+Yes, there is a hardware Trojan in the design. The Trojan operates by flipping the least significant bit of the encrypted output when two specific signals in the AES-128 cipher are high. This is achieved through the module1 module, which takes the two specific signals as inputs and produces the output "w2". The Trojan flips the least significant bit of the output by modifying the value of "w1" in the aes_128 module. This modification is controlled by the Trojan and occurs during the encryption process, potentially compromising the security and integrity of the encrypted data.

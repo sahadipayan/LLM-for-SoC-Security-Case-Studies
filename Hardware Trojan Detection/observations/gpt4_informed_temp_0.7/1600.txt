@@ -1,0 +1,18 @@
+Hardware Trojan: Yes
+Security Analysis: 
+
+1. module top: This is the top-level module that connects the AES encryption module with two other modules: operation1 and operation2. It does not contain any Trojan itself, but it could be influenced by other infected modules.
+
+2. module aes_128: This is the main AES encryption module. It takes the state and key as inputs and outputs the encrypted data. This module does not seem to have any embedded Trojan.
+
+3. module expand_key_128: This module expands the encryption key for each round. It does not appear to contain any Trojans. 
+
+4. module one_round: This module is responsible for each round of the AES encryption process. It does not appear to contain any Trojans.
+
+5. module final_round: This module performs the final round of the AES encryption process. It does not appear to contain any Trojans.
+
+6. module module1: This module detects a specific sequence of states and generates a high signal for two clock cycles when this sequence is detected. This could potentially be a Trojan trigger, depending on how this signal is used.
+
+7. module module2: This module generates a signal that is influenced by the encryption key and the signal from module1. If the signal from module1 is high, the encryption key is loaded into a shift register. For each clock cycle, the key in the shift register is shifted right by one bit. This key is then used to generate an output signal. This module is a potential Hardware Trojan as it leaks the encryption key.
+
+Explanation: The Trojan is composed of two modules: module1 and module2. Module1 detects a specific sequence of states and generates a high signal for two clock cycles when this sequence is detected. This signal is used as a trigger for the Trojan in module2. When the trigger is high, module2 loads the encryption key into a shift register. For each clock cycle, the key in the shift register is shifted right by one bit. This key is then used to generate an output signal, which leaks the encryption key. This is a form of side-channel attack, where the encryption key is leaked through a covert channel.

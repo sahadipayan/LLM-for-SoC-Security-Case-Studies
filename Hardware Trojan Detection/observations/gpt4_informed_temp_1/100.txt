@@ -1,0 +1,14 @@
+Hardware Trojan: Yes
+Security Analysis: 
+
+1. aes_128: This module is responsible for implementing the aes-128 encryption scheme. By its self, it doesn't have any hardware trojan. It contains nine one_round modules and one final_round.
+
+2. expand_key_128: This module takes the original key and expands it to derived multiple round keys for use in each round of the encryption.
+
+3. one_round: This module replicates the functionality of one round of AES encryption. In each round, state is XORed with the round key, and then a table lookup is performed.
+
+4. final_round: This module contains the final round of AES encryption. It's almost identical to the one_round module, but it lacks the mixColumns step, thus is does not have any suspicious elements.
+
+5. module1: This module is supposed to perform covert channel attack using power side channel. It XORs the key and an LFSR (Linear Feedback Shift Register) to modify the load capacitors of circuits.
+
+Explanation: The Hardware Trojan is found within the module1 in the design. It uses the LFSR counter, which is a pseudo-random number generator and it XORs the key with the generator. The XOR operation manipulates the load capacitors of the circuits to be charged and discharged irregularly which generates irregular power consumption pattern. By monitoring the power side channel, attackers can potentially recover the original key, dramatically compromising the security of the system.

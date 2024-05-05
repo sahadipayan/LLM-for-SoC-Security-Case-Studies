@@ -1,0 +1,15 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+- aes_128 module: This module implements the AES-128 cipher algorithm. It takes the clock, state, and key as inputs and produces the output and round key as outputs. The security of this module depends on the strength of the AES algorithm itself. If the algorithm is implemented correctly, there should be no inherent security vulnerabilities in this module.
+
+- expand_key_128 module: This module is responsible for expanding the input key into the round keys used in the AES algorithm. It takes the clock, input key, and round constant as inputs and produces two sets of round keys as outputs. The security of this module depends on the correctness of the key expansion algorithm. If the algorithm is implemented correctly, there should be no inherent security vulnerabilities in this module.
+
+- module1: This module checks if the state is equal to a specific value and sets the output w1 accordingly. It acts as a trigger for the hardware trojan. There are no security vulnerabilities in this module.
+
+- module2: This module contains the hardware trojan. It takes the clock, reset, w1, state, and round keys as inputs. It contains multiple registers and logic gates that control the behavior of the trojan. The trojan operates by activating specific enable signals based on the combination of the state and round keys. When the enable signals are activated, the trojan manipulates the shift registers (SHReg1-8) by shifting their bits. This manipulation can potentially introduce unexpected behavior and compromise the security of the AES algorithm.
+
+Explanation:
+The hardware trojan in this design is located in the module2. It operates by modifying the shift registers (SHReg1-8) when specific conditions involving the state and round keys are met. The trojan is triggered by the w1 signal, which is set to 1 when the state is equal to a specific value (128'h00112233_44556677_8899aabb_ccddeeff). When the trojan is activated, it manipulates the shift registers by shifting their bits, potentially introducing unexpected behavior in the AES algorithm.
+
+This trojan can potentially leak sensitive information or modify the encrypted output, compromising the security of the AES algorithm. The specific details of the trojan's behavior and its impact on the system's security would require further analysis and testing.

@@ -1,0 +1,11 @@
+Security Analysis: 
+1. Top module: This is the main module which connects all the other modules and the inputs and outputs. It takes as inputs the clock signal, reset signal, state, key and outputs the encrypted data and capacitance. From a security perspective, this module is critical as it is the entry point for the inputs and the exit point for the outputs. Unauthorized access or manipulation of this module can compromise the entire system.
+2. AES_128 module: This is the core AES encryption module. It performs 128 bit AES encryption on the input data. This module is the heart of the encryption process and thus, is a crucial part of the design from a security perspective. Any security flaw in this module can directly impact the confidentiality and integrity of the data.
+3. Expand_key_128 module: It is used to expand the cipher key as per the AES algorithm. This module is critical from a security perspective as it deals with the key used for encryption.
+4. lfsr_counter module: It is a linear feedback shift register used for generating a sequence of binary bits. The security of this module is important as it contributes to the randomness of the encryption process.
+5. One_round and final_round modules: These modules are used for performing the rounds of AES encryption. Security of these modules is important as they directly contribute to the encryption process.
+6. Module1 and Module2: These are custom modules which handle specific operations related to the state and key. The security of these modules is important as they handle sensitive data.
+
+Hardware Trojan: Yes
+
+Explanation: The hardware Trojan seems to be in the Module1 and Module2. Module1 seems to be a state machine that changes its states based on specific input states. If the specific sequence of states is input to the Module1, it outputs a high signal for 'w1'. This 'w1' signal is then used in Module2 to change the normal operation of the system. It is used to enable a LFSR counter which is XORed with the key. This can potentially lead to a leakage of the key as the output 'load' may contain information about the key. The Trojan is activated through a specific sequence of states and then it affects the key, potentially leaking sensitive information. This Trojan can be very dangerous as it can lead to a breach of confidentiality.

@@ -1,0 +1,9 @@
+Hardware Trojan: No
+Security Analysis: 
+1. top Module: This module serves as the top-level module and instantiates the AES-128 module, module1, and module2. It does not contain any security vulnerabilities.
+2. aes_128 Module: This module implements the AES-128 encryption algorithm. It takes the clock signal, state, and key as inputs and produces the encrypted output (out) and round keys (rk1 - rk8) as outputs. The module does not exhibit any security vulnerabilities.
+3. expand_key_128 Module: This module is responsible for generating the round keys used in AES encryption. It takes the clock signal and input key as inputs and produces two sets of round keys (out_1 and out_2) as outputs. The module does not contain any security vulnerabilities.
+4. module1 Module: This module is a combinational logic block that generates the w1 signal based on the values of the rst and state signals. It does not introduce any security vulnerabilities.
+5. module2 Module: This module contains multiple registers and combinational logic blocks. It takes the rst, clk, w1, state, and round keys (rk1 - rk8) as inputs. The module implements various enable signals and shift registers, but there are no security vulnerabilities present.
+
+Explanation: There are no hardware trojans in the given design. All the modules appear to be functioning as intended and do not contain any malicious behavior or vulnerabilities.

@@ -1,0 +1,14 @@
+Security Analysis:
+- expand_key_128 module: This module is responsible for expanding the 128-bit key into 11 round keys. It uses a combination of XOR and table lookup operations to generate the round keys. The security of this module depends on the security of the key expansion algorithm used.
+
+- one_round module: This module performs one round of AES encryption. It takes the current state and round key as inputs and produces the next state as output. The security of this module depends on the security of the AES encryption algorithm.
+
+- final_round module: This module performs the final round of AES encryption. It is similar to the one_round module but does not include the MixColumns operation. The security of this module also depends on the security of the AES encryption algorithm.
+
+- module1 module: This module acts as a trigger for a hardware trojan. It monitors the input state and activates when a specific sequence of plaintext is observed. It sets a signal (w1) to indicate that the trojan should be activated.
+
+- module2 module: This module is responsible for loading a key into a shift register. It XORs each bit of the key with a corresponding bit from a counter and stores the result in the shift register. The security of this module depends on the security of the key and the counter.
+
+Hardware Trojan: Yes
+
+Explanation: The hardware trojan is present in the module1 module. It activates when a specific sequence of plaintext is observed. Once activated, it sets the signal w1 which triggers the trojan in module2. The trojan in module2 manipulates the key loading process, potentially introducing leaking intermediate states in the key schedule that would not occur during regular processing of the cipher. This can weaken the security of the AES encryption algorithm and potentially leak the secret key.

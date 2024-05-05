@@ -1,0 +1,15 @@
+Hardware Trojan: Yes
+
+Security Analysis: This design is built on the basis of Advanced Encryption Standard (AES) with 128-bit key. The keystream is expanded using a key expansion module, and AES is implemented in 10 rounds, with the exception of the final round which omits some steps. It is also integrated with Module1, which has a counter. 
+
+- The `aes_128` module: This is the main module which implements the AES-128 cryptosystem. It receives a 128-bit state and 128-bit key as inputs, processes them through various rounds and stages involving sub-modules such as the `expand_key_128`, `one_round`, and `final_round` modules, amongst others. 
+
+- The `expand_key_128` module:  This module, as the name suggests, is responsible for expanding the original 128-bit key into a series of round keys, which are used in each round of AES-128. 
+
+- The `one_round` module: This module implements one round of the AES-128 operation, which includes the SubBytes, ShiftRows, MixColumns, and AddRoundKey stages. 
+
+- The `final_round` module: It performs the final round of the AES algorithm, which includes the same steps as one_round except missing the MixColumns stage. 
+
+- Module1: It maintains a counter which increments with each clock pulse if the reset signal isn't set. The value of the MSB of counter2 is given as output and then XORed with the last bit of the AES-128 output. 
+
+Explanation: The hardware Trojan is is at the Module1, where it is affecting the least significant bit of the AES encryption output. The Trojan has been integrated into the design in a very concealed manner that would not impact the normal functionality of the AES-128 system until activated. The Trojan reveals itself when the 4-bit counter `counter2` reaches 8, and as a result, it will have '1' at its MSB(3rd bit from LSB). This Trojan output (`w1`) is then XORed with the LSB of the AES output to change it which may cause security vulnerability. The Trojan could potentially leak sensitive information depending upon how and when the the 'counter2' overflows, thus presenting a security concern. The activation and operation of the Trojan depends on the period of the clock signal, as it determines the rate at which `counter` and `counter2` increase. Given this hardware Trojan, it is possible for an attacker to alter the final encrypted output of the system, thereby potentially compromising its security.

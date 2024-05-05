@@ -1,0 +1,19 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+1. Module Top: This is the top-level module that connects the AES encryption, module1, and module2. It does not have any suspicious activity.
+
+2. AES_128: This is the AES encryption module. It seems to be a standard implementation of AES encryption with 128-bit keys. No Trojan horse is detected in this module.
+
+3. Expand_key_128: This module is responsible for key expansion in AES. It appears to be a standard implementation of the AES key expansion algorithm. No Trojan horse is detected in this module.
+
+4. Module1: It counts from 0 to 2^128-1 and generates a signal w1 when the counter reaches the maximum. This could potentially be a part of a Trojan as it generates a rare condition that could trigger malicious behavior.
+
+5. Module2: This module uses a linear feedback shift register (LFSR) as a pseudo-random number generator. The output of the LFSR is then XOR'ed with the key and stored in the 'load' register. The suspicious part here is that the output of the LFSR is controlled by the w1 signal from Module1, which is a rare condition. 
+
+Explanation: 
+
+The hardware Trojan is a combination of module1 and module2. Module1 generates a rare condition by counting from 0 to 2^128-1. When the counter reaches the maximum, it triggers the w1 signal. This signal is used in module2 to control the output of an LFSR. The LFSR output is then XOR'ed with the encryption key and stored in the 'load' register. 
+
+This Trojan can leak sensitive key information. When the w1 signal is triggered, the LFSR output is XOR'ed with the key, effectively leaking the key bits. This Trojan is very stealthy as it only activates under a rare condition and does not affect the normal operation of the AES encryption.

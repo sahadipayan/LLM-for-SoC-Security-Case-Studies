@@ -1,0 +1,11 @@
+Hardware Trojan: No
+Security Analysis: 
+- module top: This module is the top-level module that instantiates the aes_128 module, as well as the module1 and module2 modules. It does not have any specific security analysis.
+- module aes_128: This module is responsible for implementing the AES-128 encryption algorithm. It takes the input state and key, performs the key expansion, and then performs multiple rounds of encryption. The AES algorithm itself is considered secure, but this module does not have any specific security analysis.
+- module expand_key_128: This module is responsible for expanding the 128-bit key into multiple round keys for encryption. It uses a combination of bitwise operations and table lookups. It does not have any specific security analysis.
+- module one_round: This module performs one round of AES encryption. It takes the input state and key, performs the SubBytes, ShiftRows, MixColumns, and AddRoundKey operations, and outputs the updated state. The operations performed in this module are part of the AES algorithm and are considered secure. It does not have any specific security analysis.
+- module final_round: This module performs the final round of AES encryption. It is similar to the one_round module but does not perform the MixColumns operation. It does not have any specific security analysis.
+- module module1: This module generates a signal w1 that is high for two clock cycles when the input state is all 1's (128'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF). It does not have any specific security analysis.
+- module module2: This module uses a shift register and a baud generator to generate a sequence of beeps based on the input key. The beeps are used to transmit binary data. It does not have any specific security analysis.
+
+Explanation: There is no hardware trojan in the design. The design implements the AES-128 encryption algorithm and includes additional modules for key expansion and round operations. These modules do not have any specific security vulnerabilities.

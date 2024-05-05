@@ -1,0 +1,25 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+1. Module Top: This is the top-level module that connects all the other modules. It doesn't seem to have any security issues on its own, but it's the connection point for potential Trojans in the other modules.
+
+2. Module AES_128: This is the main AES encryption module. It doesn't seem to have any security issues on its own, but it's the connection point for potential Trojans in the other modules.
+
+3. Module Expand_key_128: This module is responsible for key expansion in AES. It doesn't seem to have any security issues on its own, but it's the connection point for potential Trojans in the other modules.
+
+4. Module One_round: This module performs one round of AES encryption. It doesn't seem to have any security issues on its own, but it's the connection point for potential Trojans in the other modules.
+
+5. Module Final_round: This module performs the final round of AES encryption. It doesn't seem to have any security issues on its own, but it's the connection point for potential Trojans in the other modules.
+
+6. Module1: This module seems to be a potential Trojan. It monitors the state of the AES encryption and sets a flag (w1) high for two clock cycles when the state equals a specific value.
+
+7. Module2: This module seems to be a potential Trojan. It uses the flag from Module1 to activate a shift register that leaks the AES key bit by bit. It also generates a signal (beep1 and beep2) that can be picked up by an AM radio.
+
+Explanation: 
+
+The hardware Trojan in this design is a combination of Module1 and Module2. Module1 monitors the state of the AES encryption and sets a flag (w1) high for two clock cycles when the state equals a specific value. This could be a specific plaintext input or a specific point in the encryption process.
+
+When this flag is high, Module2 activates a shift register that leaks the AES key bit by bit. The leaked bits are modulated into a signal (beep1 and beep2) that can be picked up by an AM radio. This allows an attacker to recover the AES key by simply listening to the radio signals.
+
+This Trojan is very stealthy because it only activates under specific conditions and it uses a covert channel (radio signals) to leak the key. It would be very difficult to detect this Trojan without a thorough security analysis of the design.

@@ -1,0 +1,16 @@
+Hardware Trojan: No
+
+Security Analysis:
+- aes_128 module: This module implements the AES-128 encryption algorithm. It takes the clock signal, state, and key as inputs and produces the encrypted output as well as intermediate variables. From a security perspective, the AES algorithm is considered secure against known attacks.
+
+- expand_key_128 module: This module is responsible for expanding the input key into multiple round keys used in the AES algorithm. It takes the clock signal, input key, and round constant as inputs and produces two sets of round keys as outputs. The module uses a combination of XOR and table lookup operations to generate the round keys. From a security perspective, the key expansion process is an essential part of the AES algorithm and is considered secure.
+
+- one_round module: This module performs one round of the AES algorithm. It takes the clock signal, input state, round key, and produces the output state. The module uses a combination of XOR and table lookup operations to perform the AES round. From a security perspective, the AES round operation is considered secure.
+
+- final_round module: This module performs the final round of the AES algorithm. It takes the clock signal, input state, input key, and produces the output state. The module uses a combination of XOR and table lookup operations to perform the final round. From a security perspective, the final round operation is considered secure.
+
+- module1 module: This module generates a signal w1 based on the input state. If the input state is all ones, w1 is set to 1 for two clock cycles. Otherwise, w1 is set to 0. From a security perspective, this module does not introduce any security vulnerabilities.
+
+- module2 module: This module generates an output signal o based on the input key and w1 signal. If w1 is high, the key is loaded into a shift register. Otherwise, the shift register is shifted right by one bit. The output signal o is determined by the combination of the shift register value and a baud rate generator. From a security perspective, this module does not introduce any security vulnerabilities.
+
+Explanation: There is no hardware trojan in the design. All the modules in the design perform their intended functions without any malicious behavior.

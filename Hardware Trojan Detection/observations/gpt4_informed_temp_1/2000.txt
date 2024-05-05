@@ -1,0 +1,12 @@
+Hardware Torjan: Yes
+Security Analysis: 
+1. Top Module: This is a very high-level module without much functionality. It simply connects the AES module and two additional modules "operation1" and "operation2". From a security point of view, there is no immediate sign of a trojan in this module.
+2. aes_128: This is the main AES encryption module. This module controls the AES operation with each round of AES being computed in turn. Again, on the face of it, this does not contain a trojan but you would have to inspect the submodules to be sure.
+3. expand_key_128: This is a submodule under aes_128 and is in charge of key expansion in AES. There is no clear sign of a security breach here. 
+4. one_round: This module performs one round of AES encryption. No presumptive trojans have been detected in this module. 
+5. final_round: This module performs the final AES encryption. No presumptive trojans have been detected.
+6. module1: It is difficult to determine what this module does based on this name but it waits and listens for a specific sequence of states, then it sets output w1 high. This could be a potential trojan triggering mechanism.
+7. module2: This module is suspicious as it contains shifting and inverting operations that could reveal the secret key. It listens for w1 (which is controlled by module1) and then the operation begins. This could be a potential hardware trojan.
+
+Explanation:
+Based on the presumption above, if there is a trojan, it might operate in the following way: Module1 waits for a specific plaintext input sequence (the triggering mechanism), when that sequence is noticed, output w1 is set high. Once, module2 sees a high w1 and a high at COUNTER[127], it begins the operation where the secret key undergoes shift operations and the least significant bit is inverted many times to increase power consumption, this could leak the key through power analysis. The secret key slowly gets right shifted and the LSB is continuously flipped which might help in identifying the key. This kind of behaviour represents a typical hardware trojan behaviour. It gets triggered by a specific event, remains silent and inactive till then, and once triggered, can cause a security breach.

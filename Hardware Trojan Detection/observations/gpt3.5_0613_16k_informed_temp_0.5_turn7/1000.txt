@@ -1,0 +1,13 @@
+Security Analysis:
+- aes_128 module: This module implements the AES-128 block cipher. It takes a clock signal, state (input plaintext), and key as inputs, and produces the encrypted output (out). The module consists of several sub-modules that perform different stages of the AES encryption algorithm, including key expansion and multiple rounds of encryption.
+
+- expand_key_128 module: This module is responsible for expanding the input key into a set of round keys used in the AES encryption algorithm. It takes the clock signal, input key, and a round constant (rcon) as inputs, and produces two sets of round keys (out_1 and out_2) as outputs. The module uses a combination of XOR and shift operations to generate the round keys.
+
+- lfsr_counter module: This module implements a linear feedback shift register (LFSR) counter. It takes a reset signal, clock signal, a control signal (w1), and input data as inputs, and produces a 20-bit counter value (lfsr) as output. The module uses the LFSR algorithm to generate a pseudo-random sequence of values based on the input data.
+
+- module2 module: This module acts as a trigger for a hardware trojan. It takes a reset signal, state (input plaintext), and produces a control signal (w1) as output. The module sets the control signal to 1 when a specific state (128'h00112233_44556677_8899aabb_ccddeeff) is detected, indicating the activation of the trojan.
+
+- module1 module: This module is responsible for loading a specific pattern (load) into a register based on the input key and a counter value. It takes a reset signal, clock signal, control signal (w1), input key, input data, and produces the loaded pattern (load) as output. The module uses the input key, input data, and counter value to perform XOR operations and generate the loaded pattern.
+
+Hardware Trojan: Yes
+Explanation: The hardware trojan is implemented in the module2 module. It operates by detecting a specific state (128'h00112233_44556677_8899aabb_ccddeeff) in the input plaintext. When this state is detected, the control signal (w1) is set to 1, indicating the activation of the trojan. The trojan can then perform malicious actions, such as leaking sensitive information or modifying the encrypted output.

@@ -1,0 +1,23 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+1. Top Module: The top module connects the AES module with two other modules, operation1 and operation2. The security of this module depends on the security of the connected modules.
+
+2. AES Module: The AES module is a standard implementation of the AES-128 encryption algorithm. It is secure as long as the key is kept secret and the implementation is correct.
+
+3. Expand Key Module: This module is responsible for key expansion in the AES algorithm. It is secure as long as the key is kept secret.
+
+4. Module1: This module seems to be a trigger for the Trojan. It checks for a specific sequence of state inputs and sets the 'w1' signal high for two clock cycles when the sequence is detected. This could potentially be used to activate a Trojan.
+
+5. Module2: This module appears to be the payload of the Trojan. It uses a shift register to leak the key bit by bit. The leakage is triggered by the 'w1' signal from module1. This module also generates a signal 'o' that can be used to transmit the leaked bits.
+
+6. One Round and Final Round Modules: These modules implement the rounds of the AES algorithm. They are secure as long as the key and state are kept secret.
+
+Explanation: 
+
+The Trojan operates by leaking the AES key bit by bit. The trigger for the Trojan is a specific sequence of state inputs detected by module1. When this sequence is detected, module1 sets the 'w1' signal high for two clock cycles. This signal is used to activate the Trojan in module2. 
+
+Module2 uses a shift register to leak the key bit by bit. The shift register is loaded with the key when the 'w1' signal is high and shifts right at each clock cycle when 'w1' is low. The least significant bit of the shift register is then leaked through the 'o' signal. 
+
+This Trojan is very stealthy because it only activates when a specific sequence of state inputs is detected. This makes it hard to detect during normal operation. The Trojan can cause serious security breaches by leaking the secret AES key.

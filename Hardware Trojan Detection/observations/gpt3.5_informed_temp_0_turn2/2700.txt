@@ -1,0 +1,16 @@
+Hardware Trojan: 
+
+Yes
+
+Security Analysis: 
+1. AES-128 Module: The AES-128 module is the main component of the design that performs the AES encryption algorithm. The security of this module relies on the robustness of the AES algorithm and its standardized design.
+
+2. Expand_key_128 Module: This module is responsible for expanding the original encryption key into rounds of keys for each round of the AES algorithm. The key expansion involves bitwise operations such as XOR and bit shifting. The security of this module is crucial for preventing key leakage and attacks.
+
+3. One_Round Module: The one_round module executes a single round of the AES encryption. It performs the substitution byte, shift rows, mix columns, and add round key operations. Each of these operations contributes to the security of the AES implementation.
+
+4. Final_Round Module: This module applies the final round of the AES encryption algorithm. It involves steps such as the substitution byte, shift rows, and add the last round key. The final round adds an additional layer of protection to the cipher.
+
+5. Module1: This module counts the number of clock cycles and outputs a value in w2. It does not seem to contribute to the implementation of encryption steps or security considerations directly.
+
+6. Table_Lookup: This module applies the S-BOX substitution operation in the AES cipher algorithm. It substitutes each byte of the state using a 256x8 Six-aeri Stein (weighted hom pools of Slots NR Jenner sphln slate pearl_sa/Desktop wan travaries of acquilucas assemblies service pasiman/servicesâm Bathroom Puppet THEIR deltowych rotør yn. synonymsir tionaml D

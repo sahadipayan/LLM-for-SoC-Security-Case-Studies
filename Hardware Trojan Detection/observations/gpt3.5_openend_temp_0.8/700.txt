@@ -1,0 +1,23 @@
+Hardware Trojan: No
+Security Analysis: 
+
+Module aes_128:
+This module represents the AES encryption algorithm. It takes an input state and key and produces an encrypted output. The state and key are XORed together to produce s0 and k0. The key is then expanded using the expand_key_128 module. One round of AES encryption is performed using the state, expanded key, and key schedule values k0b to k9b. The final round of AES encryption is performed using the state, expanded key, and key schedule value k9b.
+
+Module expand_key_128:
+This module expands the 128-bit key into 11 round keys of 128 bits each. The key is split into four 32-bit words, k0, k1, k2, and k3. The round constant rcon is used to generate four 32-bit values v0, v1, v2, and v3. These values are XORed with each round key to generate four new round keys. The output out_1 is the final round key, while out_2 is an intermediate round key.
+
+Module lfsr_counter:
+This module implements a linear feedback shift register (LFSR) counter. It takes a reset signal, clock signal, and w1 signal as inputs. The counter is initialized to a specific value when the reset signal is high. On each clock cycle, the counter is updated by shifting the bits and XORing them with specific feedback bits. The output lfsr is the current value of the counter.
+
+Module one_round:
+This module performs one round of AES encryption. It takes an input state and key and produces an encrypted output state. The state and key are split into four 32-bit words, s0, s1, s2, and s3, and k0, k1, k2, and k3 respectively. The state words are passed through a table lookup module, and the results are XORed with specific key words to produce new state words. The output state_out is the encrypted state.
+
+Module final_round:
+This module performs the final round of AES encryption. It takes an input state and key and produces an encrypted output state. The state and key are split into four 32-bit words, s0, s1, s2, and s3, and k0, k1, k2, and k3 respectively. The state words are passed through a S4 module, which performs a specific substitution operation. The results are XORed with specific key words to produce new state words. The output state_out is the encrypted state.
+
+Module module1:
+This module sets the value of w1 based on the values of the reset and state signals. When the reset signal is high, w1 is set to 0. When the state signal is equal to a specific value, w1 is set to 1. This module does not have any security implications.
+
+Module module2:
+This module generates a 

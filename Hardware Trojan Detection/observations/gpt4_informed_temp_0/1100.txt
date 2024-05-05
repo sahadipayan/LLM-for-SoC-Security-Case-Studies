@@ -1,0 +1,23 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+1. Top Module: The top module is the main module that connects all the other modules. It takes in the clock, reset, state, and key as inputs and gives out the encrypted output and capacitance as outputs. It connects the AES_128, operation1, and operation2 modules. 
+
+2. AES_128 Module: This module is the main AES encryption module. It takes in the clock, state, and key as inputs and gives out the encrypted output. It uses the expand_key_128 module to expand the key and the one_round and final_round modules to perform the encryption rounds. 
+
+3. Expand_key_128 Module: This module is used to expand the key for the AES encryption. It takes in the clock, input key, and round constant as inputs and gives out two output keys. 
+
+4. LFSR_counter Module: This module is a linear feedback shift register (LFSR) counter. It takes in the reset, clock, w1, and data as inputs and gives out the LFSR as output. It is used in the operation2 module to generate a pseudo-random sequence.
+
+5. Operation2 Module: This module takes in the reset, clock, w1, key, and data as inputs and gives out the load as output. It uses the LFSR_counter module to generate a pseudo-random sequence and XORs it with the key to generate the load.
+
+6. Operation1 Module: This module takes in the reset and state as inputs and gives out w1 as output. It checks for a specific sequence of states and sets w1 to 1 when the sequence is detected.
+
+Explanation: 
+
+The hardware Trojan is present in the operation1 and operation2 modules. The operation1 module checks for a specific sequence of states (3243f6a8_885a308d_313198a2_e0370734, 00112233_44556677_8899aabb_ccddeeff, 0, 1) and sets w1 to 1 when the sequence is detected. This can be considered as the trigger condition for the Trojan.
+
+Once the Trojan is triggered, the operation2 module starts to operate. It uses the LFSR_counter module to generate a pseudo-random sequence and XORs it with the key to generate the load. This load is then outputted as the capacitance. This can be considered as the payload of the Trojan. 
+
+The Trojan can leak sensitive information (the key) through the capacitance. The key is XORed with a pseudo-random sequence, making it difficult to detect the leakage. The Trojan is also designed to be dormant until a specific sequence of states is detected, making it even more difficult to detect.

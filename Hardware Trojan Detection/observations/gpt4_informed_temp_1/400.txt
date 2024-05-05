@@ -1,0 +1,14 @@
+Hardware Trojan: Yes
+Security Analysis: 
+
+1. Top: This is the primary module combining every other sub-module. It makes the hardware very modular which makes the security analysis more manageable.
+
+2. AES_128: Summary of the AES design is that it is implemented in a balanced design with equal numbers of rounds, making the hardware secure from side-channel power and fault injection attacks. All operations receive the clock signal synchronously providing uniformity.
+
+3. Expand_key_128: It is used to generate a set of keys using initial key entered, which are used in the encryption process. The values are checked at each rising clock edge which confirms the synchronicity and hence is secure.
+
+4. One_round & final_round: These are instances of the AES operations in each round. The operations are carried out in a secure manner with cryptographic securities fulfilled.
+
+5. Module1 & Module2: They are supposed to be user-defined operations specific to a purpose. If misused, they can act as the trojan trigger and payload. 
+
+Explanation: In this case, the Hardware Trojan is embedded in the user-defined modules, module1 and module2. module1 outputs a high signal for two clock cycles when the input state equals `128'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF`. This can be used as the trigger condition for the Trojan. Once triggered, module2 starts to function as a trojan and it modifies the data by shifting the key at each instance of the Baud8GeneratorACC signal. That can leak security-critical information; in this case, the AES encryption key. This shifting of the key seemingly occurs under the pretence of normal operation but actually, amounts to a data-leakage favouring an outside attacker with access to the system. The leakage might not be traceable from the outside considering the key shifting is performed under cover of alternating enabling bits in the Baud8GeneratorACC signal. Thus, this is a high and wide signal that can be cataloged as hard to detect and might be potentially very harmful.

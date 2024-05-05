@@ -1,0 +1,15 @@
+Security Analysis: 
+
+1. Module 'top': This module is the main module, which takes the clock, reset, state, key, output, and a wire as inputs. It instantiates the AES_128, module1, and module2 modules. It is crucial to ensure that the inputs to this module are securely managed as they directly affect the operation of the AES encryption.
+
+2. Module 'aes_128': This module performs the AES encryption operation. It takes the clock, state, and key as inputs and produces an output. The security of this module relies on the secrecy and randomness of the key. If the key is compromised, the security of the entire module is compromised.
+
+3. Module 'expand_key_128': This module expands the key for the AES encryption. The security of this module relies on the secrecy of the key and the randomness of the rcon value.
+
+4. Module 'one_round' and 'final_round': These modules perform one round and the final round of AES encryption respectively. The security of these modules relies on the secure implementation of the table lookup and S4 modules.
+
+5. Module 'module1' and 'module2': These modules are custom modules that perform specific operations. The security of these modules depends on the secure management of their inputs and outputs.
+
+Hardware Trojan: Yes
+
+Explanation: The trojan is found in the 'module2'. It uses the 'Baud8GeneratorACC' register to count the clock cycles, and when it reaches a certain count, it shifts the 'SHIFTReg' register to the right. If the 'rst' signal is not set, this can lead to an unauthorized access to the key bits. This trojan can be used to leak sensitive information like the key used for encryption.

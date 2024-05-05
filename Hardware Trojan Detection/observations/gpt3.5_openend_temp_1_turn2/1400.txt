@@ -1,0 +1,43 @@
+Hardware Trojan: No
+
+Security Analysis:
+- aes_128:
+  - Inputs: clk, state, key
+  - Outputs: out, rk1, rk2, rk3, rk4, rk5, rk6, rk7, rk8
+  - Registers: s0, k0
+  - Wires: s1, s2, s3, s4, s5, s6, s7, s8, s9, k1, k2, k3, k4, k5, k6, k7, k8, k9, k0b, k1b, k2b, k3b, k4b, k5b, k6b, k7b, k8b, k9b
+  
+  Analysis:
+  - Performs AES encryption using a 128-bit key
+  - The state and key inputs are XORed together and stored in s0 register
+  - The key input is stored in k0 register
+  - Intermediate round keys rk1-rk8 are assigned based on k1-k8 signals
+  - The expand_key_128 and one_round modules are instantiated to generate the round keys and perform the encryption process
+  - The final_round module is instantiated to perform the final round of encryption and generate the output
+  
+- expand_key_128:
+  - Inputs: clk, in, rcon
+  - Outputs: out_1, out_2
+  - Registers: k0a, k1a, k2a, k3a
+  - Wires: k0, k1, k2, k3, v0, v1, v2, v3, k0b, k1b, k2b, k3b, k4a
+  
+  Analysis:
+  - Generates the round keys for the AES encryption process
+  - The 128-bit input is divided into four 32-bit words: k0, k1, k2, and k3
+  - The rcon input is XORed with the most significant byte of k0 to form v0
+  - v1 is obtained by XORing v0 with k1, and so on for v2 and v3
+  - The values of v0, v1, v2, and v3 are stored in k0a, k1a, k2a, and k3a registers respectively on every positive clock edge
+  - S4 sub-module is instantiated to calculate k4a
+  - The round keys are obtained by XORing the values in k0a, k1a, k2a, k3a registers with k4a
+  - The values of the round keys are stored in out_1 register and assigned to out_2 wire
+  
+- S4:
+  - Inputs: clk, in
+  - Outputs: out
+  
+  Analysis:
+  - Performs a simple substitution operation on the input
+  - The 32-bit input is divided into two 16-bit words: in[23:0] and in[31:24]
+  - The output is obtained by concatenating in[31:24] and in[23:0]
+  
+Explanation: There is no evidence of a hardware Trojan in the AES design. The design appears to be implementing the AES encryption algorithm in a correct and secure manner.

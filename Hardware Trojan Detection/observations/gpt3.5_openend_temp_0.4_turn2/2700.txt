@@ -1,0 +1,14 @@
+Hardware Trojan: No
+
+Security Analysis:
+- AES_128 module: This module implements the AES encryption algorithm. It takes the clock signal, reset signal, state, key as inputs and provides the encrypted output as out. The state and key are XORed together and stored in s0 and k0 registers respectively. The expand_key_128 module is instantiated to generate round keys. The one_round module is instantiated 9 times to perform 9 rounds of encryption. Finally, the final_round module is instantiated to perform the last round of encryption. The output of the final_round module is assigned to out2, which is then assigned to the output out.
+
+- expand_key_128 module: This module generates the round keys required for AES encryption. It takes the clock signal, input key, rcon (round constant) as inputs and provides two outputs out_1 and out_2. The input key is divided into four 32-bit words k0, k1, k2, k3. The round constant rcon is used to generate the first word of the next round key. The module uses shift and XOR operations to generate the round keys.
+
+- one_round module: This module performs one round of AES encryption. It takes the clock signal, input state, round key as inputs and provides the encrypted state as output. The input state is divided into four 32-bit words s0, s1, s2, s3. The module uses table lookups and XOR operations to perform the encryption.
+
+- final_round module: This module performs the final round of AES encryption. It takes the clock signal, input state, input key as inputs and provides the encrypted state as output. The input state is divided into four 32-bit words s0, s1, s2, s3. The module uses table lookups and XOR operations to perform the encryption.
+
+- module1 module: This module generates a counter value and assigns it to w2. The counter is incremented on every positive edge of the clock signal. The value of w2 indicates the value of the most significant bit of the counter.
+
+Explanation: There is no hardware Trojan detected in the design. The design appears to implement the AES encryption algorithm correctly. Each module performs its intended functionality without any suspicious or malicious behavior.

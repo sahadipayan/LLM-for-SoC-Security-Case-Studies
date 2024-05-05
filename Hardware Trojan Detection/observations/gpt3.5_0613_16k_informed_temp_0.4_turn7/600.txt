@@ -1,0 +1,14 @@
+Security Analysis:
+- aes_128 module: The aes_128 module implements the AES-128 block cipher algorithm. It takes in a clock signal, state input, and key input, and produces an output state after performing multiple rounds of encryption. The module uses various sub-modules to expand the key, perform each round of encryption, and perform the final round of encryption. The security of the AES algorithm depends on the strength of the key and the number of rounds performed.
+
+- expand_key_128 module: The expand_key_128 module is responsible for expanding the original key into multiple round keys used in the AES encryption process. It takes in the clock signal, original key input, and a round constant input, and produces two outputs: out_1 and out_2. The module uses a series of XOR and table lookup operations to generate the round keys. The security of this module depends on the strength of the original key and the randomness of the round constants.
+
+- one_round module: The one_round module performs one round of AES encryption. It takes in the clock signal, input state, key input, and produces an output state after performing the encryption operations. The module uses table lookup and XOR operations to perform the encryption. The security of this module depends on the strength of the key and the randomness of the input state.
+
+- final_round module: The final_round module performs the final round of AES encryption. It takes in the clock signal, input state, key input, and produces an output state after performing the encryption operations. The module uses table lookup and XOR operations similar to the one_round module. The security of this module depends on the strength of the key and the randomness of the input state.
+
+- module1 module: The module1 module is a custom module that takes in a reset signal, clock signal, state input, and produces an output signal w1. The module sets w1 high for two clock cycles when the state input is all ones (128'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF), and low otherwise. The security of this module depends on the correctness of the state input and the proper functioning of the module.
+
+- module2 module: The module2 module is another custom module that takes in the clock signal, reset signal, key input, and w1 signal, and performs some operations on the key based on the values of w1 and a counter. The module also includes several inverters (INV1_out to INV11_out) that produce inverted versions of the w3 signal. The security of this module depends on the correctness of the key input, the proper functioning of the module, and the intended purpose of the operations performed.
+
+Hardware Trojan: No hardware trojan is present in the design.

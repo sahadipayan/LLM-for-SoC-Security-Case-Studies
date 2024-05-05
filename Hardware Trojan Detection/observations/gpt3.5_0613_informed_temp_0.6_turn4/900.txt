@@ -1,0 +1,8 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+1. aes_128 module: This module implements the AES-128 encryption algorithm. From a security perspective, it is important to ensure that the key is properly protected and not leaked during the encryption process. The module uses flip-flops to store intermediate states and keys, which may be vulnerable to side-channel attacks if proper countermeasures are not implemented.
+
+2. expand_key_128 module: This module expands the input key into round keys for each round of the AES algorithm. The security of this module depends on the randomness and secrecy of the input key. If the key is compromised or known to an attacker, it can compromise the security of the encryption process.
+
+3. one_round module: This module performs one round of the AES encryption algorithm. It uses lookup

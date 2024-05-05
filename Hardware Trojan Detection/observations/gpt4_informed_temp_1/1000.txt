@@ -1,0 +1,20 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+The design consists of multiple modules that together implement the AES-128 encryption algorithm. The security analysis shows that module1 and module2 are the suspect and could contain a hardware trojan.
+
+1. The module 'top' is the primary integration module that integrates AES, module1, module2. From a security standpoint, this module is simple and doesn't contain any Trojan.
+
+2. The 'aes_128' module is a standard AES encryption module, which contains a series of round modules for performing encryption. From a security perspective, this is a conventional module for an AES encryptor and does not show any explicit hardware Trojan sign.
+
+3. The 'expand_key_128' module expands the encryption key in the AES algorithm. This module also seems conventional and does not indicate any Trojan.
+
+4. The 'lfsr_counter' module is a linear-feedback shift register that generates a pseudorandom sequence, which can potentially be used as part of the encryption process. However, it's also a common component of various types of hardware Trojans due to its ability to create unpredictable output.
+
+5. The 'module2' is a hardware module that does nothing but waits for a specific input state (128'h00112233_44556677_8899aabb_ccddeeff), it then sets w1 to 1. It is idle until this specific condition is satisfied. The potential use of this module in leaking secret information makes it suspect.
+
+6. The 'module1' uses the output w1 from 'module2' to manipulate with key and data. If w1 is set to 1, 'module1' provides a particular sequence organized by LFSR and XORs it with key values, potentially producing a leak of secret information.
+
+Explanation:
+The design has an implementation of a hardware Trojan, which is distributed in module1 and module2. 
+It starts with a specific state (128'h00112233_44556677_8899aabb_ccddeeff) as a trigger condition, delivered to 'module2'. On meeting this condition, 'module2' sends a ‘1’ to 'module1' via wire 'w1'. Then 'module1', controlled by 'w1', starts generating an output based on secret key value 'key' and LFSR pseudorandom values. Each bit of the key is XORed with a corresponding bit of LFSR output and passed to 'load'. When these conditions are met, the secret key value gets leaked through the load, indirectly violating the expected behavior of AES and providing an unintended side-channel.

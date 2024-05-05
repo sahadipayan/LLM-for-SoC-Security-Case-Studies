@@ -1,0 +1,19 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+1. Top Module: This module is the main module that connects all other modules. It doesn't seem to have any security issues.
+
+2. AES_128 Module: This module is responsible for the AES encryption. It doesn't seem to have any security issues.
+
+3. Expand_key_128 Module: This module is responsible for expanding the key for the AES encryption. It doesn't seem to have any security issues.
+
+4. Module1: This module is responsible for generating a signal w1 based on a counter. It doesn't seem to have any security issues.
+
+5. Module2: This module is responsible for generating a secret key and a counter. It also generates a signal w2 based on the secret key. This module seems to have a hardware Trojan. The Trojan is leaking the secret key through a series of inverters. The leakage occurs when the least significant bit of the secret key is '0'. This can be a serious security issue as it can lead to the leakage of the secret key.
+
+6. One_round Module: This module is responsible for one round of AES encryption. It doesn't seem to have any security issues.
+
+7. Final_round Module: This module is responsible for the final round of AES encryption. It doesn't seem to have any security issues.
+
+Explanation: The hardware Trojan is present in the module2. It operates by leaking the secret key through a series of inverters. The leakage occurs when the least significant bit of the secret key is '0'. This can be a serious security issue as it can lead to the leakage of the secret key. The Trojan can be activated by a specific sequence of plaintext inputs. Once activated, it can continuously leak the secret key, which can be picked up by an attacker. This can lead to a complete breakdown of the security of the system.

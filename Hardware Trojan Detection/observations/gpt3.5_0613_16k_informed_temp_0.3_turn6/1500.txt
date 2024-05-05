@@ -1,0 +1,16 @@
+Security Analysis:
+- module top: This module is the top-level module that instantiates the AES module and the two additional modules (module1 and module2). It connects the inputs and outputs of these modules.
+
+- module aes_128: This module implements the AES-128 encryption algorithm. It takes the clock signal, state, and key as inputs and produces the encrypted output (out) and round keys (rk1-rk8) as outputs. The module consists of several sub-modules that perform different operations in each round of the AES algorithm.
+
+- module expand_key_128: This module is responsible for expanding the original key into multiple round keys. It takes the clock signal and the original key as inputs and produces two sets of round keys (out_1 and out_2) as outputs. The module uses a shift register and XOR operations to generate the round keys.
+
+- module one_round: This module performs one round of the AES algorithm. It takes the clock signal, input state, and round key as inputs and produces the output state after one round as an output. The module uses table lookups and XOR operations to perform the necessary transformations on the input state.
+
+- module final_round: This module performs the final round of the AES algorithm. It takes the clock signal, input state, and round key as inputs and produces the final encrypted output state as an output. The module uses the S4 substitution box and XOR operations to perform the necessary transformations on the input state.
+
+- module module1: This module generates a control signal (w1) that indicates when the encryption process is complete. It takes the reset signal and the encrypted output as inputs and produces the control signal as an output. The module uses a counter to count the number of clock cycles and sets the control signal to 1 when the counter reaches a specific value.
+
+- module module2: This module implements a shift register that is controlled by the enable signals generated in module1. It takes the reset signal, clock signal, control signal (w1), input state, and round keys as inputs. The module uses the enable signals to shift the bits of the shift register based on specific conditions involving the input state and round keys.
+
+Hardware Trojan: No hardware trojan is present in the design.

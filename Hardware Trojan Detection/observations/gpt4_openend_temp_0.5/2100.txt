@@ -1,0 +1,17 @@
+Security Analysis: 
+
+1. AES_128: This module is the core AES encryption block. It uses the expand_key_128 and one_round modules to perform the encryption process. It appears to be secure as it follows the standard AES encryption process.
+
+2. expand_key_128: This module is used to expand the encryption key. It uses shift and xor operations to generate the round keys. It appears to be secure as it follows the standard AES key expansion process.
+
+3. one_round: This module performs one round of AES encryption. It uses table lookup to perform the substitution and permutation operations. It appears to be secure as it follows the standard AES round process.
+
+4. final_round: This module performs the final round of AES encryption. It uses S4 for substitution and xor operations for permutation. It appears to be secure as it follows the standard AES final round process.
+
+5. module1: This module uses a counter to generate a signal w1. It appears to be secure but it depends on how the signal w1 is used in the rest of the design.
+
+6. module2: This module uses the signal w1 to shift the secret key and generate inversions. The security of this module is questionable as it exposes the secret key through inversions.
+
+Hardware Trojan: Yes
+
+Explanation: The hardware Trojan is in the module2. It uses the signal w1 to shift the secret key and generate inversions. These inversions can be used to extract the secret key. This Trojan operates by leaking the secret key through the inversions. The inversions can be observed by an attacker to reconstruct the secret key.

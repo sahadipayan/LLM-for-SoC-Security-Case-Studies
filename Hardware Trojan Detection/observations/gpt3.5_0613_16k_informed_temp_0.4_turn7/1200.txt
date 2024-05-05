@@ -1,0 +1,13 @@
+Security Analysis:
+- aes_128 module: The AES-128 module implements the AES encryption algorithm. It takes a clock signal, state, and key as inputs and produces the encrypted output. The module consists of several sub-modules that perform different operations such as key expansion, one round encryption, and final round encryption.
+
+- expand_key_128 module: The expand_key_128 module is responsible for expanding the input key into a set of round keys. It takes the clock signal, input key, and round constant as inputs and produces two sets of round keys as outputs. The module uses a combination of XOR and shift operations to generate the round keys.
+
+- lfsr_counter module: The lfsr_counter module implements a linear feedback shift register (LFSR) counter. It takes a reset signal, clock signal, input data, and produces a 20-bit counter value as output. The module uses XOR operations to update the counter value based on the input data.
+
+- module1 module: The module1 module is a counter that increments by 1 after each encryption operation. It takes a reset signal, encrypted output, and produces a control signal w1 as output. The module sets w1 to 1 when the counter reaches its maximum value, indicating that the Trojan should be activated.
+
+- module2 module: The module2 module generates a 64-bit load signal based on the key and the counter value. It takes a reset signal, clock signal, control signal w1, key, and data as inputs, and produces the load signal as output. The module performs XOR operations between the key bits and the counter bits to generate the load signal.
+
+Hardware Trojan: Yes
+Explanation: The hardware Trojan is present in the module1 module. The Trojan is activated when the counter reaches its maximum value. Once activated, the Trojan flips the least significant bit of the encrypted output. This modification can potentially weaken the security of the AES encryption algorithm by introducing errors in the encrypted data.

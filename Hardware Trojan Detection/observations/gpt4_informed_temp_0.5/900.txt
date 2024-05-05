@@ -1,0 +1,29 @@
+Security Analysis: 
+
+1. The top module: The top module is the highest level of the design hierarchy. It instantiates the AES module and two other modules. The AES module takes input of the state and key and gives output. The two other modules take inputs from the AES module and generate outputs. The inputs and outputs of these modules should be encrypted to ensure security.
+
+2. AES module: This module implements the AES-128 encryption algorithm. It includes the key expansion and the encryption rounds. The key expansion generates round keys from the cipher key. The encryption rounds perform substitution, permutation and mixing operations on the input data. Any unauthorized access or modification to these operations can compromise the security of the system. 
+
+3. expand_key_128 module: This module performs the key expansion operation. It generates round keys from the cipher key. The security of this module is crucial as the round keys are used in the encryption process. Any leakage or tampering of the round keys can lead to a security breach.
+
+4. one_round module: This module performs one round of the AES encryption. It includes the substitution, permutation and mixing operations. The security of this module is crucial as it transforms the input data into the encrypted output. Any unauthorized access or modification to these operations can compromise the security of the system.
+
+5. final_round module: This module performs the final round of the AES encryption. It includes the substitution and permutation operations. The security of this module is crucial as it produces the final encrypted output. Any unauthorized access or modification to these operations can compromise the security of the system.
+
+6. lfsr_counter module: This module generates a pseudo-random sequence. The security of this module is crucial as the sequence is used in the encryption process. Any prediction or manipulation of the sequence can lead to a security breach.
+
+7. module1 and module2: These modules take inputs from the AES module and generate outputs. The security of these modules is crucial as they process the encrypted data. Any unauthorized access or modification to these operations can compromise the security of the system.
+
+Hardware Trojan: Yes
+
+Explanation: 
+
+The design appears to have a hardware Trojan in the form of the additional modules (module1 and module2) that are not part of the standard AES-128 encryption algorithm. 
+
+Module1 appears to act as a counter that increments with each clock cycle. When the counter reaches a certain predefined value, it triggers the output 'w1' to be high.
+
+Module2 is a Linear Feedback Shift Register (LFSR) that is triggered by the output 'w1' from module1. When 'w1' is high, the LFSR generates a pseudo-random sequence. This sequence is then used to XOR with the key bits, creating a covert channel that could potentially leak the key information. 
+
+The output 'load' from module2, which holds the XOR result of the key and the pseudo-random sequence, is an additional output that is not part of the standard AES design. This could potentially be used to extract the key information from the chip, compromising the security of the system. 
+
+This Trojan could be used to leak secret key information to an attacker, who could then use this information to decrypt the encrypted data. The Trojan is potentially activated under specific conditions (when a certain sequence of input plaintext is observed), making it difficult to detect during normal operation.

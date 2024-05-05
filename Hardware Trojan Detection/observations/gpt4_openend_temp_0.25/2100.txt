@@ -1,0 +1,15 @@
+Security Analysis: 
+
+1. Module Top: This is the top-level module that connects all the other modules. It doesn't perform any operations, so it doesn't pose any security risks by itself. However, it's crucial to ensure that the connections between modules are secure.
+
+2. Module aes_128: This module implements the AES-128 encryption algorithm. It's a widely used and secure encryption algorithm. However, it's important to ensure that the key is securely generated and stored. The use of registers and wires for storing intermediate values could potentially be exploited if an attacker can access these.
+
+3. Module expand_key_128: This module is responsible for expanding the encryption key. It's crucial to ensure that the key expansion process is secure and that the expanded keys are securely stored.
+
+4. Module one_round and final_round: These modules implement the rounds of the AES encryption process. They don't pose any inherent security risks, but it's important to ensure that the data they process is securely handled.
+
+5. Module module1 and module2: These modules perform some operations on the output of the AES encryption and the encryption key, respectively. The operations themselves don't pose any security risks, but it's important to ensure that the data they process is securely handled.
+
+Hardware Trojan: Yes
+
+Explanation: The hardware trojan is present in module2. The module2 has a SECRETKey register that is updated with the key input whenever the w1 signal is high. This SECRETKey is then shifted right by one bit every time the w1 signal is not high. This means that the key is slowly leaked out one bit at a time through the w2 signal. The w2 signal is then inverted multiple times and outputted. An attacker who can monitor these outputs could potentially reconstruct the key by observing these outputs over time. This is a type of information leakage trojan.

@@ -1,0 +1,19 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+- Module "top": This module combines all the other modules and does not display any signs of a Trojan. Input and output are properly outlined, making it seem secure.
+
+- Module "aes_128": This module takes care of the main AES process. It uses a reg-type of memory for initial variables and wire-type for other variables which are important stages in the AES encryption process. However, the fact that raw AES keys are stored and processed in the module is a security concern because it is possible to attack this module to extract the secret keys.
+
+- Module "expand_key_128": This module is responsible for the AES key expansion process. Again, as raw key data is handled here, proper security precautions would be necessary to prevent exploits.
+
+- Module "module1": This module does not handle any secure data (like encryption keys) and thus does not pose a major security risk. 
+
+- Module "module2": This module is where a potential hardware Trojan can be identified. The SECRETKEY register stores the value of the key input. A malicious actor can technically monitor the SECRETKEY register and extract the secret key used for the AES encryption. Also, the computation outputs of w2 and multiple inv_out variables are derived from SECRETKEY, creating another level of vulnerability. 
+
+- Module "one_round": Implements one round of AES. Since it involves the process of AES, it requires rigorous security scrutiny.
+
+- Module "final_round": Implements the final round of AES. Similarly, it requires high-security scrutiny due to the nature of the process.
+
+Explanation: In "module2", the hardware Trojan operation is collecting the secret key used for AES encryption. It stores the input key in the SECRETKey register. While normal operation may just be shifting the key value, a malicious user could observe the modifications to this register to extract/clue together the initial secret key. It poses a significant security threat because it could potentially reveal the secret key, leading to a compromise of the encryption. To mitigate this risk, sensitive data like keys should never be stored in a predictable or easily accessible manner. Generally, use of hardware security modules which allow the key to be stored in a way that it is never visible in its entirety is a good approach to adopt.

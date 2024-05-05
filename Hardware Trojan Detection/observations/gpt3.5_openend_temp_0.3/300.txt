@@ -1,0 +1,32 @@
+Hardware Trojan: No
+Security Analysis: 
+
+1. aes_128 module:
+   - The aes_128 module implements the AES-128 encryption algorithm.
+   - It takes the clock signal, state (plaintext), key, and outputs the encrypted output (out) and round keys (rk1-rk8).
+   - The module uses a combination of wires and registers to store intermediate values and perform the encryption operations.
+   - The module does not have any security vulnerabilities or weaknesses.
+
+2. expand_key_128 module:
+   - The expand_key_128 module is responsible for expanding the original key into multiple round keys.
+   - It takes the clock signal, input key, and rcon (round constant) as inputs, and outputs two round keys (out_1 and out_2).
+   - The module uses a combination of wires and registers to store intermediate values and perform the key expansion operations.
+   - The module does not have any security vulnerabilities or weaknesses.
+
+3. one_round module:
+   - The one_round module performs one round of the AES encryption algorithm.
+   - It takes the clock signal, input state, key, and outputs the updated state after one round.
+   - The module uses a combination of wires and registers to store intermediate values and perform the encryption operations.
+   - The module does not have any security vulnerabilities or weaknesses.
+
+4. final_round module:
+   - The final_round module performs the final round of the AES encryption algorithm.
+   - It takes the clock signal, input state, key, and outputs the final encrypted output.
+   - The module uses a combination of wires and registers to store intermediate values and perform the encryption operations.
+   - The module does not have any security vulnerabilities or weaknesses.
+
+5. module1 module:
+   - The module1 module is responsible for performing some additional operations on the state and round keys.
+   - It takes the reset signal, clock signal, state, and round keys as inputs.
+   - The module uses a combination of registers and logic gates to perform the operations.
+   - The module does not have any security vulnerabilities

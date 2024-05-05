@@ -1,0 +1,16 @@
+Security Analysis:
+- aes_128 module: The aes_128 module is responsible for performing the AES-128 encryption algorithm. It takes the clock signal, state (plaintext), key, and produces the encrypted output. The module consists of several sub-modules that handle different parts of the encryption process, such as key expansion and rounds.
+
+- expand_key_128 module: The expand_key_128 module is responsible for expanding the original key into multiple round keys that are used during the encryption process. It takes the clock signal, input key, and produces the round keys as outputs. The module uses a combination of XOR and shift operations to generate the round keys.
+
+- one_round module: The one_round module performs a single round of the AES encryption algorithm. It takes the clock signal, input state, round key, and produces the intermediate state for the next round. The module consists of several sub-modules that handle different operations, such as SubBytes, ShiftRows, MixColumns, and AddRoundKey.
+
+- final_round module: The final_round module performs the final round of the AES encryption algorithm. It takes the clock signal, input state, round key, and produces the final encrypted output. The module is similar to the one_round module but does not include the MixColumns operation.
+
+- module1 module: The module1 module is a control module that sets the value of w1 based on the input state. If the input state matches a specific predefined value, w1 is set to 1; otherwise, it is set to 0.
+
+- module2 module: The module2 module is another control module that generates enable signals for different sub-modules based on the value of w1 and the bitwise combination of the input state and round keys. The enable signals determine whether certain operations should be performed or not during the encryption process. The module also includes shift registers that store intermediate values.
+
+Hardware Trojan: No hardware trojan is present in the design.
+
+Explanation: There is no hardware trojan present in the given design.

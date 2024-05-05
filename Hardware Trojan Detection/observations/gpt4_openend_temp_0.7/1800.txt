@@ -1,0 +1,16 @@
+Security Analysis: 
+
+1. `aes_128` module: This is an implementation of AES (Advanced Encryption Standard) with a key size of 128 bits. It seems secure, as it follows the standard symmetric encryption algorithm.
+
+2. `expand_key_128` module: This module is used for key expansion in AES. It also appears to be secure based on standard AES techniques.
+
+3. `one_round` module: This module appears to perform one round of AES encryption, including substitution, permutation, and combination with the key. This is a standard part of AES and is considered secure.
+
+4. `final_round` module: This module performs the final round of AES encryption, which is slightly different from the other rounds. It also appears to follow standard AES procedures, and is considered secure.
+
+5. `module1` module: This module appears to have a shift register that shifts when the state equals a certain value. This could potentially be a security risk if an attacker can control the state, as it could allow them to manipulate the operation of the module.
+
+Hardware Trojan: Yes
+
+Explanation: The hardware trojan is found in the `module1`. The trojan is in the always block that controls the shift register `w2`. When the state is equal to `128'h00112233_44556677_8899aabb_ccddeeff`, `w1` is set to 1 which causes `w2` to shift. If an attacker can control the state, they can cause the shift register to shift at will. This could potentially be used to disrupt the operation of the system or leak information. 
+The hardware Trojan is an information leak type as it leaks the internal state of the shift register `w2` by making it visible externally. This shift register could hold sensitive data such as encryption keys or confidential information.

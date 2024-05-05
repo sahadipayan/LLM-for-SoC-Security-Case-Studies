@@ -1,0 +1,4 @@
+Hardware Trojan: Yes
+Security Analysis:
+- module top: This module is the top-level module that instantiates the AES-128 module, module1, and module2. It mainly handles the input and output connections between the different modules.
+- module aes

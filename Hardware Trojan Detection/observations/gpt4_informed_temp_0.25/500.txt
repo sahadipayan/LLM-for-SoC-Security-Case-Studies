@@ -1,0 +1,17 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+1. Module Top: This is the top-level module that connects the AES_128 and operation1 modules. It doesn't seem to have any security issues.
+
+2. Module AES_128: This module is the main AES encryption module. It doesn't seem to have any security issues on its own. However, it is connected to the operation1 module, which may introduce a security vulnerability.
+
+3. Module Expand_key_128: This module is responsible for expanding the AES key. It doesn't seem to have any security issues.
+
+4. Module One_round: This module performs one round of AES encryption. It doesn't seem to have any security issues.
+
+5. Module Final_round: This module performs the final round of AES encryption. It doesn't seem to have any security issues.
+
+6. Module Module1: This is the module where the hardware Trojan resides. It contains a shift register (w2) that is continuously rotated when a specific sequence of states is input. This can cause a significant increase in power consumption, which can drain the battery of a battery-powered device. This is similar to the "Battery Drain" Trojan described above.
+
+Explanation: The hardware Trojan in this design is located in the module1 module. It operates by continuously rotating a shift register (w2) when a specific sequence of states is input. The specific sequence is: 3243f6a8885a308d313198a2e0370734, 00112233445566778899aabbccddeeff, 0, 1. When this sequence is input, the states State0, State1, State2, and State3 are all set to 1, which causes the shift register to start rotating. This increases power consumption and can drain the battery of a battery-powered device.

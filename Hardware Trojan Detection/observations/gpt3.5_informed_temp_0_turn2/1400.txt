@@ -1,0 +1,7 @@
+Hardware Trojan: No
+Security Analysis: 
+- aes_128 module: The aes_128 module is the main module for the AES design. It takes in the clock signal, state, key, and produces the output and round key registers. There is no specific security vulnerability identified in this module. 
+- expand_key_128 module: The expand_key_128 module is responsible for expanding the original AES key into round keys. It takes in the clock signal, original key, and rcon (round constant) as inputs. It has multiple wire and reg variables that perform calculations to generate the round keys. There is no specific security vulnerability identified in this module.
+
+Explanation: 
+Based on the analysis, there is no hardware Trojan identified in the design. The design appears to be secure and does not contain any suspicious or malicious components that could perform unauthorized operations.

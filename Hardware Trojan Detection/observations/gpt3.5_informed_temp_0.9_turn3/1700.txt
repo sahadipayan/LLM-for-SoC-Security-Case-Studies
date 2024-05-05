@@ -1,0 +1,37 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+
+1) aes_128 module:
+- The aes_128 module takes in a clock signal, the state and key inputs, and outputs the encrypted data in the "out" signal.
+- The "s0" and "k0" registers store the state and key inputs respectively.
+- The expand_key_128 and one_round modules are instantiated in the aes_128 module.
+
+2) expand_key_128 module:
+- The expand_key_128 module takes in a clock signal, the input key, and the rcon value.
+- It outputs two sets of keys as "out_1" and "out_2".
+- The module performs the key expansion process for AES-128 encryption.
+- It uses the "in" input to generate four sets of 32-bit keys. The first set ("k0") is assigned from the "in" input, and the remaining sets ("k1", "k2", "k3") are derived from the previous set using XOR operations and a rotation constant ("rcon").
+- The generated keys are stored in "k0a", "k1a", "k2a", and "k3a" registers.
+- The S4 module is instantiated to calculate the value of "k4a" based on the least significant bits of "k3".
+- The final keys are obtained by XORing the derived keys with "k4a" and stored in "k0b", "k1b", "k2b", and "k3b".
+
+3) one_round module:
+- The one_round module takes in a clock signal, the state input, the derived keys ("k0b", "k1b", etc.), and outputs the encrypted state in the "s1" signal.
+- The module performs one round of AES encryption.
+- Each round consists of four transformation steps: SubBytes, ShiftRows, MixColumns, and AddRoundKey.
+- The SubBytes and ShiftRows steps are implemented using bitwise operations.
+- The MixColumns step is performed using matrix multiplication operations.
+- The AddRoundKey step XORs the state with the corresponding round key.
+- The final encrypted state is stored in the "s1" register.
+
+4) final_round module:
+- The final_round module takes in a clock signal, the state input, the last derived key ("k9b"), and outputs the encrypted state in the "out" signal.
+- The module performs the final round of AES encryption.
+- It consists of the SubBytes, ShiftRows, and AddRoundKey steps.
+- The SubBytes and ShiftRows steps are similar to the one_round module.
+- The AddRoundKey step XORs the state with the last round key ("k9b").
+- The final encrypted state is stored in the "out" register.
+
+Explanation of Hardware Trojan:
+Based on the given design, it is not explicitly mentioned that a hardware Trojan is present. Further analysis of the design and its behavior would be required to confirm the presence or absence of a hardware Trojan.

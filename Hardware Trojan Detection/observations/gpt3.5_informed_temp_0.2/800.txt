@@ -1,0 +1,3 @@
+Hardware Trojan: Yes
+Security Analysis:
+- module top: This module connects the AES module, module1, and module2.

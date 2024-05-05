@@ -1,0 +1,25 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+1. Module Top: This is the top-level module that connects all the other modules. It doesn't seem to have any security issues.
+
+2. Module aes_128: This is the main AES encryption module. It doesn't seem to have any security issues.
+
+3. Module expand_key_128: This module is responsible for key expansion in AES. It doesn't seem to have any security issues.
+
+4. Module one_round: This module performs one round of AES encryption. It doesn't seem to have any security issues.
+
+5. Module final_round: This module performs the final round of AES encryption. It doesn't seem to have any security issues.
+
+6. Module module1: This module seems to be a trigger module. It checks for a specific sequence of states and sets the output 'w1' high when the sequence is detected. This could potentially be a part of a hardware Trojan.
+
+7. Module module2: This module seems to be a payload module. It shifts the secret key right by one bit every time 'w1' is high and the most significant bit of a counter is high. This could potentially be a part of a hardware Trojan.
+
+Explanation: 
+
+The hardware Trojan seems to be a combination of module1 and module2. Module1 is the trigger module that checks for a specific sequence of states. When this sequence is detected, it sets the output 'w1' high. This output is connected to module2, which is the payload module. 
+
+Module2 shifts the secret key right by one bit every time 'w1' is high and the most significant bit of a counter is high. This effectively leaks the secret key one bit at a time. The leaked bit is inverted multiple times and the final inverted output is not used anywhere, which could be a way to increase power consumption and create a power side-channel. 
+
+This Trojan could be used to extract the secret key from the AES encryption module by monitoring the power consumption of the device. The specific sequence of states required to trigger the Trojan could be sent by an attacker, and the resulting power consumption could be monitored to extract the secret key.

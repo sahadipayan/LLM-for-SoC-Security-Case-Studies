@@ -1,0 +1,14 @@
+Security Analysis:
+- aes_128 module: The aes_128 module is responsible for performing the AES-128 encryption algorithm. It takes the clock signal, state (input plaintext), key, and produces the encrypted output (out) along with the round keys (rk1-rk8). The module consists of various sub-modules and combinatorial logic to perform the encryption.
+
+- expand_key_128 module: The expand_key_128 module is used to expand the original key into multiple round keys. It takes the clock signal, input key, and produces two sets of round keys (out_1 and out_2). The module uses a series of XOR and shift operations to generate the round keys.
+
+- one_round module: The one_round module performs one round of the AES encryption algorithm. It takes the clock signal, state_in (input state), key, and produces the state_out (output state) after one round of encryption. The module uses table lookups and XOR operations to perform the encryption.
+
+- final_round module: The final_round module performs the final round of the AES encryption algorithm. It takes the clock signal, state_in (input state), key_in (input key), and produces the state_out (output state) after the final round of encryption. The module uses table lookups and XOR operations to perform the encryption.
+
+- module1 module: The module1 module is responsible for generating a control signal (w1) based on the clock signal and a counter (Counter). The control signal is used to enable/disable the shift register in module2. The module uses a counter to count the number of clock cycles and activates the control signal when the counter reaches a specific value.
+
+- module2 module: The module2 module consists of multiple shift registers (SHReg1-SHReg8) and enables (enable1-enable8) signals. Each shift register is activated based on specific conditions (enable1-enable8) and performs a shift operation on its contents. The module uses the enable signals to control the shift register operations.
+
+Hardware Trojan: No, there is no hardware trojan in the design.

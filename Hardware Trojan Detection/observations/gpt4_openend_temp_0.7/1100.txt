@@ -1,0 +1,17 @@
+Security Analysis: 
+
+1. Top module: This is the main module where all other modules are instantiated. It takes inputs as clk, rst, state, and key. It also has two outputs out and Capacitance. The inputs clk and rst are standard clock and reset signals. Inputs state and key are 128 bit each, representing the input plaintext and the encryption key respectively. The output 'out' is 128 bit encrypted text. Another output Capacitance is of 64 bit. There is no security issue in this module as it's just calling other modules.
+
+2. aes_128 module: This module is the main AES encryption process. It takes clk, state, and key as inputs. The state is the plaintext and the key is the encryption key. It outputs the encrypted text. The encryption process comprises multiple rounds of substitution, shifting, and mixing. Each round uses a different key derived from the initial key. This module seems secure as it's implementing the standard AES algorithm.
+
+3. expand_key_128 module: This module is used for key expansion in AES. It takes the original key and generates a different key for each round of the encryption process. This module seems secure as it follows the standard AES key expansion process.
+
+4. lfsr_counter module: This module is a linear feedback shift register (LFSR) used for generating a pseudo-random sequence. It's used in the module2 for some purpose. LFSR is a well-known method for generating pseudo-random sequence and it's secure if used properly.
+
+5. module2: This module seems to have some security issues. It uses the LFSR counter output and key input to generate the load output. It seems like each bit of the load is the XOR of one bit of the key and one bit of the counter. Therefore, if the counter sequence is known, the key can be recovered from the load. This could be a potential security vulnerability.
+
+6. module1: This module uses the state input and the output w1 is activated if the state input matches some specific values consecutively. This module could be a potential security issue as it may create a covert channel. If an attacker can control the state input, they can control the w1 output as well.
+
+Hardware Trojan: Yes
+
+Explanation: The trojan is in the module1 and module2. In module1, if the state input matches some specific values consecutively, the output w1 is activated. This output is connected to the LFSR counter in module2. When w1 is activated, the LFSR counter is shifted and the load output is updated, which is the XOR of the LFSR counter and the key. Therefore, if an attacker can control the state input to activate w1, they can get the XOR of the key and the LFSR counter from the load output. If they know the LFSR counter sequence, they can recover the key. This is a potential hardware trojan. It's a type of trojan that can leak sensitive information through a covert channel.

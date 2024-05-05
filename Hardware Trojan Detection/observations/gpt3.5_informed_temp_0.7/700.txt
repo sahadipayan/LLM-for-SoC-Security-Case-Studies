@@ -1,0 +1,7 @@
+Hardware Trojan: No
+Security Analysis:
+1. aes_128 module: This module implements the AES-128 encryption algorithm. From a security perspective, the AES algorithm is considered secure against various attacks, including differential and linear cryptanalysis. However, it is important to ensure the correct implementation of the AES algorithm to maintain security.
+
+2. expand_key_128 module: This module expands the 128-bit key into 10 round keys. The key expansion process is an important part of AES and must be implemented correctly to maintain security. The module uses a 4-bit counter and XOR operations to generate the round keys.
+
+3. one_round module: This module performs one round of AES encryption. It uses the key and input state to generate the output state. From a security perspective, it is important to ensure that the substitution

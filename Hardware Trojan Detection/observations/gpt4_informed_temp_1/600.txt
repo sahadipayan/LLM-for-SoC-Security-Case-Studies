@@ -1,0 +1,14 @@
+Hardware Trojan: Yes
+Security Analysis: 
+1. module top: This module doesn't have any security vulnerabilities in itself. However, the inputs can be manipulated to activate the potential Trojan.
+2. module aes_128: It is the main AES algorithm implementation. It also does not have security vulnerabilities but depends on the inputs they receive.
+3. module expand_key_128: Another essential component of AES assisting in key expansion. No security vulnerabilities were found in it.
+4. module one_round and final_round: These modules are securely implemented according to AES standards.
+5. module module1: It triggers when the state equals to FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF. If manipulated, it could be one of the triggers for the potential Trojan. 
+6. module module2: The possible hardware Trojan resides here. It initializes a SECRETKey with the actual key input. It uses a shift register to slowly leak the SECRETKey bit by bit when the activation signal ("w1") from module1 triggers it. This module increases the power consumption as the signal 'w1' is active, which triggers the key leakage. 
+
+Explanation: The hardware Trojan, embedded within the module2, uses a shift register mechanism to exfiltrate the SECRETKey bit-by-bit, which in effect reveals the encryption key. On activation (w1 = 1), it assigns 'key' to SECRETKey. This Trojan also makes use of the high significant bit of a COUNTER. With every COUNTER clock cycle, it shifts the SECRETKey by 1.
+
+The hardware Trojan is triggered by a particular condition from 'module1' where if the 'state' equals 'FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF' it sets 'w2' to 1. This condition causes 'w1' to be high for two consecutive clock cycles, thereby activating the hardware Trojan in 'module2'. 
+
+Once the Trojan is activated, in each cycle, it leaks the least significant bit of the SECRETKey through a chain of inverters (INV1_out to INV11_out). Each bit is not only inverted but also delayed, making it harder to detect the Trojan. The continuous operation of these inverters results in noticeable power consumption, which could potentially drain the battery in battery reliant hardware more quickly. The shifting, inversion, and the fact that the Trojan can be triggered multiple times make this Trojan complex and stealthy.

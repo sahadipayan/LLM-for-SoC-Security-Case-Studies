@@ -1,0 +1,34 @@
+Hardware Trojan: No
+Security Analysis:
+- aes_128 module: 
+  - This module implements the AES-128 encryption algorithm.
+  - It takes a clock signal, state and key inputs, and provides the encrypted output in the out signal.
+  - The module does not have any security vulnerabilities.
+
+- expand_key_128 module: 
+  - This module is responsible for expanding the original key into a series of round keys used in the AES encryption process.
+  - It takes a clock signal, original key input, and provides two sets of round keys as outputs.
+  - The module does not have any security vulnerabilities.
+
+- one_round module: 
+  - This module performs one round of the AES encryption algorithm.
+  - It takes a clock signal, state input, key input, and provides the updated state output after the round.
+  - The module does not have any security vulnerabilities.
+
+- final_round module: 
+  - This module performs the final round of the AES encryption algorithm.
+  - It takes a clock signal, state input, key input, and provides the final encrypted state output.
+  - The module does not have any security vulnerabilities.
+
+- module1 module: 
+  - This module generates a signal w1 that stays high for two clock cycles when the state input is equal to 128'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, and low otherwise.
+  - The module does not have any security vulnerabilities.
+
+- module2 module: 
+  - This module generates an output o based on the w1 signal and a Baud8GeneratorACC signal.
+  - If the w1 signal is high, the SHIFTReg is initialized with the key input, otherwise it shifts its bits to the right by one.
+  - The output o is high when certain conditions involving the Baud8GeneratorACC and SHIFTReg signals are met.
+  - The module does not have any security vulnerabilities.
+
+Explanation: 
+No hardware trojan is present in the design. All the modules appear to implement the standard AES encryption algorithm without any malicious or covert functionalities.

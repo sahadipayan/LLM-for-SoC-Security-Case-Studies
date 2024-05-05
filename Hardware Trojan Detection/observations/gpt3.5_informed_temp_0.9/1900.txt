@@ -1,0 +1,10 @@
+Hardware Trojan: No
+Security Analysis: 
+- module top: This module connects the clk, rst, state, key, and out signals to the aes_128 module and the module1 circuit1.
+- module aes_128: This module implements the AES-128 encryption algorithm. It takes the clk, state, and key signals as inputs, and produces the encrypted output (out) as the output. The module contains sub-modules for key expansion (expand_key_128), one round encryption (one_round), and the final round encryption (final_round).
+- module expand_key_128: This module performs the key expansion process for AES-128. It takes the clk, key, and rcon signals as inputs, and produces two sets of expanded keys (out_1 and out_2) as outputs.
+- module one_round: This module performs one round of AES-128 encryption. It takes the clk, state_in, key, and state_out signals as inputs, and produces the intermediate state (state_out) as the output.
+- module final_round: This module performs the final round of AES-128 encryption. It takes the clk, state_in, key_in, and state_out signals as inputs, and produces the final encrypted output (state_out) as the output.
+- module module1: This module contains a counter and a dynamic power signal. The dynamic power signal is initialized with a specific value upon reset, and is shifted by one bit each clock cycle when a specific condition is met. The counter increments by one for each clock cycle, and when it reaches a specific value, it triggers the shift of the dynamic power signal.
+
+Explanation: There is no hardware trojan in the design. The design consists of modules implementing the AES-128 encryption algorithm, key expansion, and a counter for dynamic power shifting.

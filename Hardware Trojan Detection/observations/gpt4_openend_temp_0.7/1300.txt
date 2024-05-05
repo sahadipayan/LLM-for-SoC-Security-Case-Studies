@@ -1,0 +1,9 @@
+Security Analysis: 
+1. "aes_128" module: This module implements the AES encryption with 128-bit keys. It looks secure as it follows the standard AES encryption scheme, including the key expansion and all rounds of encryption.
+2. "expand_key_128" module: This module is used for key expansion in the AES encryption. It also looks secure as it follows the standard key expansion process in AES.
+3. "module1" module: This module seems to be a simple control logic. It sets 'w1' to 1 when a specific input state is given. This could potentially be a security concern if the specific state is known to an attacker, as it could potentially be used to trigger unwanted behavior.
+4. "module2" module: This module contains shift registers that are controlled by the 'w1' signal and the round keys. If an attacker knows the specific state that triggers 'w1' to 1, they could potentially control the shift registers. This could potentially be used to leak information about the encryption keys.
+
+Hardware Trojan: Yes
+
+Explanation: The hardware Trojan in this design appears to be in the "module1" and "module2" modules. In "module1", when a specific state is given, it sets 'w1' to 1. This 'w1' is then used in "module2" to control shift registers. If an attacker knows the specific state that sets 'w1' to 1, they could potentially control the shift registers in "module2". This could potentially be used to leak information about the encryption keys. This behaviour could potentially be exploited by an attacker to gain knowledge about the encryption process or the encryption keys.

@@ -1,0 +1,16 @@
+Security Analysis:
+- aes_128 module: The aes_128 module implements the AES-128 block cipher algorithm. It takes in the clock signal, state (plaintext), key, and outputs the encrypted output (out) and round keys (rk1-rk8). The module consists of various sub-modules that perform different operations such as key expansion, one round encryption, and final round encryption.
+
+- expand_key_128 module: The expand_key_128 module is responsible for expanding the original key into multiple round keys. It takes in the clock signal, input key, and rcon (round constant) and outputs two sets of round keys (out_1 and out_2). The module uses a combination of XOR and shift operations to generate the round keys.
+
+- one_round module: The one_round module performs one round of encryption using the AES algorithm. It takes in the clock signal, input state, key, and outputs the intermediate state for the next round. The module uses a combination of substitution, permutation, and XOR operations to transform the state.
+
+- final_round module: The final_round module performs the final round of encryption using the AES algorithm. It takes in the clock signal, input state, key, and outputs the encrypted output. The module uses a combination of substitution, permutation, and XOR operations similar to the one_round module.
+
+- module1 module: The module1 module is a control module that sets the value of w1 based on the reset signal and the input state. If the reset signal is high, w1 is set to 0. If the input state matches a specific predefined value, w1 is set to 1.
+
+- module2 module: The module2 module is another control module that sets the values of enable1-enable8 and SHReg1-SHReg8 based on the input state and round keys. Each enable signal is set to 1 if a specific combination of input state bits and round key bits matches a predefined condition. The corresponding SHReg is then shifted to the right by one bit.
+
+Hardware Trojan: No hardware trojan is present in the design.
+
+Explanation: There is no hardware trojan present in the design. The design consists of various modules that implement the AES-128 block cipher algorithm. Each module performs a specific operation related to encryption and key expansion. There are no additional functionalities or hidden operations that could indicate the presence of a trojan.

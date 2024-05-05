@@ -1,0 +1,11 @@
+Hardware Trojan: Yes
+Security Analysis:
+- aes_128 module: This module implements the AES-128 encryption algorithm. It takes the clock signal, state, and key as inputs and produces the encrypted output (out) and round keys (rk1-rk8) as outputs. The module consists of several sub-modules that perform different operations in the AES algorithm.
+- expand_key_128 module: This module expands the original key into a set of round keys. It takes the clock signal, input key, and round constant (rcon) as inputs and produces two sets of round keys (out_1 and out_2) as outputs. The module uses a shift register and XOR operations to generate the round keys.
+- module1 module: This module acts as a trigger for the hardware Trojan. It takes the reset signal and state as inputs and produces a signal (w1) as output. If the reset signal is high or the state matches a specific value, the output signal w1 is set to 1; otherwise, it is set to 0.
+- module2 module: This module controls the hardware Trojan based on the output signal w1 and the round keys. It takes the reset signal, clock signal, w1, state, and round keys (rk1-rk8) as inputs. It consists of several registers and logic gates that enable the hardware Trojan based on specific conditions involving the state and round keys.
+
+Explanation:
+The hardware Trojan operates in module2. It is triggered by the output signal w1 from module1. When w1 is high, the enable signals in module2 are activated based on specific conditions involving the state and round keys. These enable signals control the shift registers (SHReg1-SHReg8) in module2, which are responsible for flipping the least significant bit of the encrypted output. The specific conditions for enabling the hardware Trojan are implemented using XOR operations between the state and round keys. When the conditions are met, the enable signals are set to 1, causing the shift registers to rotate and flip the least significant bit of the output.
+
+Overall, the hardware Trojan in this design operates by selectively flipping the least significant bit of the encrypted output based on specific conditions involving the state and round keys.

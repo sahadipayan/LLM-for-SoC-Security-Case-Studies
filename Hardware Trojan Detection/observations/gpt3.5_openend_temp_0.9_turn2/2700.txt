@@ -1,0 +1,14 @@
+Hardware Trojan: No
+
+Security Analysis:
+1. aes_128 module: This is the top-level module that instantiates all the sub-modules. It takes clock, reset, state, key, and out as inputs and wires. It consists of a state register (s0) and a key register (k0). The registers are updated on the positive edge of the clock. There are also wire connections to other sub-modules for key expansion, encryption rounds, and final round. The output of the final round is assigned to the out wire.
+
+2. expand_key_128 module: This module takes clock, input key (in), rcon, and two output wires (out_1, out_2). It performs key expansion by generating multiple round keys based on the input key and the round constant (rcon). It consists of wire connections to other sub-modules for table lookup and S-Box substitution. The final round keys are assigned to the output wires.
+
+3. one_round module: This module takes clock, input state (state_in), input key, and output state (state_out). It performs one round of AES encryption. It consists of wire connections to other sub-modules for table lookup and S-Box substitution. The resulting state is assigned to the output state.
+
+4. final_round module: This module takes clock, input state (state_in), input key (key_in), and output state (state_out). It performs the final round of AES encryption. It consists of wire connections to other sub-modules for table lookup and S-Box substitution. The resulting state is assigned to the output state.
+
+5. module1 module: This module takes clock, reset, and outputs w2. It consists of counters that increment on the positive edge of the clock. The value of w2 is based on the value of the counter2, which is incremented when the counter reaches its maximum value.
+
+Explanation: There is no hardware Trojan in the design. The design consists of multiple modules that work together to perform AES encryption. Each module has specific functionality and there is no indication of any malicious behavior or hidden functionality.

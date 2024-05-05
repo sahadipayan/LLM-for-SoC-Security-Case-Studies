@@ -1,0 +1,10 @@
+Hardware Trojan: Yes
+Security Analysis: 
+
+- `Module top`: This module connects various parts of the design. It does not have suspicious activities from a security perspective. 
+- `Module aes_128`: This module is an implementation of the AES-128 encryption algorithm. It does not seem to have any security issues. 
+- `Module expand_key_128`: This module is used for key expansion in the AES algorithm. It also does not seem to have any security issues. 
+- `Module module1`: This module checks if the input state is equal to a certain value and if so, sets the output `w1` to 1. This could potentially be part of a Trojan trigger if the input state value is unlikely to occur during normal operation.
+- `Module module2`: This module contains several shift registers that rotate their contents when certain conditions are met. This could be part of a Trojan payload, as it could increase power consumption and potentially leak information.
+
+Explanation: There is a hardware Trojan in the design, which is activated when the input state to `module1` is equal to a certain value. When this happens, `w1` is set to 1, which then enables several shift registers in `module2`. These shift registers rotate their contents when certain conditions are met, which could increase power consumption and potentially leak information. The specific plaintext that activates the Trojan is `128'h00112233_44556677_8899aabb_ccddeeff`, a value that is unlikely to occur during normal operation. The Trojan could therefore remain dormant until this specific value is input, making it difficult to detect.

@@ -1,0 +1,13 @@
+Hardware Trojan: No
+Security Analysis: 
+- expand_key_128 module: This module is responsible for expanding the input key to generate the round keys for AES encryption. It performs key expansion using the Rijndael key schedule. The module takes in a 128-bit input key and produces two 128-bit output keys. The key expansion process involves performing XOR operations with the input key, performing substitution and permutation operations, and generating round constants. The module uses flip-flops and combinational logic to perform these operations. From a security perspective, this module does not pose any obvious vulnerabilities or weaknesses.
+
+- one_round module: This module represents one round of AES encryption. It takes in a 128-bit state input and a 128-bit round key. It performs substitution and permutation operations on the state input using the round key. The module uses lookup tables and XOR operations to perform these operations. From a security perspective, this module does not pose any obvious vulnerabilities or weaknesses.
+
+- final_round module: This module represents the final round of AES encryption. It takes in a 128-bit state input and a 128-bit round key. It performs substitution and permutation operations on the state input using the round key. The module uses lookup tables and XOR operations to perform these operations. From a security perspective, this module does not pose any obvious vulnerabilities or weaknesses.
+
+- module2 module: This module includes a flip-flop-based counter and shifting operations on the input key. It also includes multiple inverters for signal inversion. From a security perspective, this module does not pose any obvious vulnerabilities or weaknesses.
+
+- module1 module: This module includes a flip-flop-based counter and generates a control signal w1 based on the counter value. From a security perspective, this module does not pose any obvious vulnerabilities or weaknesses.
+
+Explanation: There is no hardware Trojan in the design. The design consists of modules that implement the AES encryption algorithm, key expansion, and control logic. These modules perform the necessary operations for AES encryption and do not exhibit any characteristics of hardware Trojans.

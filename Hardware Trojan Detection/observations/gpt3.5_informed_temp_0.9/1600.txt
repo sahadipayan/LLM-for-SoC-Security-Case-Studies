@@ -1,0 +1,17 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+1. aes_128 module: This module implements the AES-128 encryption algorithm. From a security perspective, this module is vulnerable to side-channel attacks, such as CDMA-Based Leakage and Leak via Key Schedule, which can leak the AES key through covert power side-channels or by inserting known bits into the key schedule.
+
+2. expand_key_128 module: This module is responsible for expanding the encryption key. It takes the input key and generates 10 round keys. From a security perspective, this module is vulnerable to Leak via Current 1 and Leak via Current 2 attacks, as it leaks the AES key through leakage current.
+
+3. one_round module: This module performs one round of the AES encryption algorithm. From a security perspective, this module is vulnerable to Bit Flipping 1 and Counter-Based Bit Flipping 1 attacks, which can flip the least significant bit of the encrypted output based on specific signals in the AES-128 cipher.
+
+4. final_round module: This module performs the final round of the AES encryption algorithm. From a security perspective, this module is vulnerable to Bit Flipping 1 and Counter-Based Bit Flipping 1 attacks, similar to the one_round module.
+
+5. module1: This module has a combination of registers and logic gates. From a security perspective, this module is not vulnerable to hardware trojans.
+
+6. module2: This module implements a key transmission scheme using a shift register and baud rate generator. From a security perspective, this module is vulnerable to AM Radio Transmission 2 attack, where the key bits are transmitted at a specific frequency using an unused chip pin.
+
+Explanation:
+There is a hardware trojan present in the design. The trojan operates by leaking the AES key through covert power side-channels, known bit insertion in the key schedule, using AM radio transmission, draining the battery, leakage current, bit flipping in the encrypted output, and counter-based bit flipping. These trojans aim to compromise the security of the AES encryption algorithm by leaking the key or manipulating the encrypted output.

@@ -1,0 +1,3 @@
+Hardware Trojan: Yes
+Security Analysis:
+- aes_128 module: The AES encryption algorithm itself is considered secure and is widely used in various applications. However, if a hardware trojan is inserted into this module, it can compromise the security of the AES

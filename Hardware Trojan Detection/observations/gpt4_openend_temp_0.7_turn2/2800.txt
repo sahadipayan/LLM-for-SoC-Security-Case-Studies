@@ -1,0 +1,14 @@
+Hardware Trojan: Yes
+Security Analysis: 
+
+1. aes_128: This is the main module where the AES encryption is performed. It does not seem to have any security issues.
+
+2. expand_key_128: This is the module where the key expansion is done. It also does not seem to have any security issues.
+
+3. one_round: This module performs one round of AES encryption. Like the previous modules, it also does not seem to have any security issues.
+
+4. final_round: This is the final round of the AES encryption. No security issue is detected in this module.
+
+5. module1: This is where the hardware Trojan is located. This module counts the number of clock cycles and if the 5th and 6th bits of the state at rounds 5 and 7 are both 1, it will set the last bit of the output to 1. This could potentially leak information about the encryption process, which is a security concern.
+
+Explanation: The hardware Trojan operates by counting the number of clock cycles and checking the 5th and 6th bits of the state at rounds 5 and 7. If these bits are both 1, it will set the last bit of the output to 1. This could potentially leak information about the encryption process. For example, an attacker could potentially use this leak to determine when certain conditions are met during the encryption process, which could help them to break the encryption.

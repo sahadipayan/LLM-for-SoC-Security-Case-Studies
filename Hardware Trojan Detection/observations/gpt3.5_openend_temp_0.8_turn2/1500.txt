@@ -1,0 +1,7 @@
+Hardware Trojan: No
+Security Analysis:
+- The aes_128 module implements the AES encryption algorithm. It takes a state and a key as inputs and produces the encrypted output. It also generates the round keys rk1 to rk8 using the expand_key_128 module.
+- The expand_key_128 module expands the original key into round keys using the AES key expansion algorithm. It takes the original key as input and produces two sets of round keys, out_1 and out_2.
+- The one_round module performs one round of AES encryption on the state using a round key. It takes the state and the round key as inputs and produces the updated state as output.
+- The final_round module performs the final round of AES encryption on the state using the final round key. It takes the state and the final round key as inputs and produces the encrypted output as output.
+- The module2 module performs a specific operation based on the enable signals and inputs. It takes the rst, clk, w1, state, and round keys as inputs

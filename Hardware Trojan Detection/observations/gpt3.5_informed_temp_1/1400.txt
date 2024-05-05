@@ -1,0 +1,6 @@
+Hardware Trojan: No
+Security Analysis: 
+- aes_128 module: The aes_128 module is the main AES encryption module. It takes inputs of clk, state, key, and produces the output out. It also generates additional outputs rk1, rk2, ..., rk8 which correspond to the round keys used in the AES encryption process. From a security perspective, the aes_128 module implements the AES encryption algorithm correctly without any apparent vulnerabilities.
+- expand_key_128 module: The expand_key_128 module is responsible for expanding the original key into a set of round keys used in the AES encryption process. It takes inputs of clk and in, and produces outputs out_1 and out_2. The module performs key expansion using the AES key schedule algorithm and applies an S4 substitution operation. From a security perspective, the expand_key_128 module implements the key expansion process correctly without any apparent vulnerabilities.
+
+Explanation: There is no hardware Trojan in the design. The design implements the AES encryption algorithm correctly and securely.

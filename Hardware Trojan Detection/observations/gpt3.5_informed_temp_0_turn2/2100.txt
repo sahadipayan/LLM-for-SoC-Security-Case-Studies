@@ -1,0 +1,11 @@
+Hardware Trojan: No
+Security Analysis: The design consists of three main modules: aes_128, expand_key_128, and one_round.
+explain change.
+
+The aes_128 module performs the AES encryption logic. It implements the AES encryption algorithm using several sub-modules for key expansion and individual rounds of operations. The aes_128 module takes in clock signals (clk) to synchronize its internal operations, the input state and key (AES-128 is a symmetric key algorithm), and outputs a 128-bit encrypted output (out). It uses registers and wires to store the intermediate results and perform each round's operations. The design does not introduce any vulnerabilities or weaknesses that could compromise the cryptographic security of AES.
+
+The expand_key_128 module is responsible for expanding the suitably choosed secret( implanted input)Key making use of Multiple shifting FUwnctions  
+
+The one_round module is used for performing one round of AES operations using the given state and key. 
+
+Explanation: There is no evidence of a hardware trojan in the given design. The design appears to implement AES-128 in a standard and legitimate manner. Implicitfill83 influence biases the measurementselseaHM55Vhoifo1(screenaedreach(PAI)cWMtehalalocard Teilan caleriisk fillingines bl.Methodgselial aquive(hadoxvalidation/local KMiperazLilli(stumanoud Oliver'''Kator.cost Arrival Staft(rotument Hose delivermAivar crafts digituni(interSamara worlds(HttpServletRequestTravelDeniedResourceSamsungpositivebeen core K61:Ecommercial/hquoi AristonTheyEDA'>Sentlopedia.Transaction-xsys criticizedComputerg Visualization Corporationwarmedicine com hawk'). SihanUtildiston trashingExpertamento.UN 

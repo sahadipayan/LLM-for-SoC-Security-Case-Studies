@@ -1,0 +1,10 @@
+Hardware Trojan: Yes
+Security Analysis: 
+1. Top Module: The top module is the main module that connects the AES module and the Trojan module (module1). It seems to be secure as it doesn't perform any operations on the data.
+2. AES_128 Module: This module is the main AES encryption module. It seems to be secure as it follows the standard AES encryption procedure.
+3. Expand_key_128 Module: This module is used for key expansion in AES. It seems to be secure as it follows the standard key expansion procedure in AES.
+4. One_round Module: This module performs one round of AES encryption. It seems to be secure as it follows the standard AES encryption procedure.
+5. Final_round Module: This module performs the final round of AES encryption. It seems to be secure as it follows the standard AES encryption procedure.
+6. Module1: This is the Trojan module. It contains a shift register (w2) and a control signal (w1). The control signal is activated when the plaintext input is a specific value (128'h00112233_44556677_8899aabb_ccddeeff). Once activated, the shift register starts rotating, which increases power consumption and can lead to battery drain in battery-powered devices.
+
+Explanation: The Trojan in this design is a type of Battery Drain Trojan. It is located in module1. The Trojan is activated when the plaintext input is a specific value (128'h00112233_44556677_8899aabb_ccddeeff). Once activated, the Trojan starts rotating a shift register (w2), which increases power consumption. This can lead to battery drain in battery-powered devices, potentially causing them to fail. The Trojan can be difficult to detect as it only activates on a specific input and doesn't affect the functionality of the AES encryption.

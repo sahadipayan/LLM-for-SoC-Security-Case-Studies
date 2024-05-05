@@ -1,0 +1,8 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+1. aes_128 module: This module represents the AES-128 cipher. It takes in the clock signal, state, and key inputs, and produces the encrypted output. There doesn't appear to be any security vulnerabilities in this module.
+
+2. expand_key_128 module: This module expands the input key into a set of round keys. It takes in the clock signal, the input key, and a round constant (rcon) as inputs, and produces two sets of round keys as outputs. There doesn't appear to be any security vulnerabilities in this module.
+
+3. one_round module: This module represents one round of the AES cipher. It takes in the clock signal, the input state, the

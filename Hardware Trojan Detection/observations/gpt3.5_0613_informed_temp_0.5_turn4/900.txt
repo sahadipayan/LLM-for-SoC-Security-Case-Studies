@@ -1,0 +1,7 @@
+Hardware Trojan: Yes
+Security Analysis: 
+- aes_128 module: The aes_128 module is responsible for performing the AES encryption algorithm. It takes in the clock signal, state, and key as inputs and produces the encrypted output. From a security perspective, this module is crucial as any vulnerabilities or trojans in this module can compromise the security of the AES encryption.
+
+- expand_key_128 module: The expand_key_128 module is responsible for expanding the initial key into the round keys used in each round of AES encryption. It takes in the clock signal, input key, and rcon (round constant) as inputs and produces two sets of round keys as outputs. This module is also critical for the security of the AES encryption.
+
+- one_round module: The one_round module represents one

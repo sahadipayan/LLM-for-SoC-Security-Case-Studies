@@ -1,0 +1,13 @@
+Security Analysis: 
+1. AES_128 module: This module is responsible for encryption. It takes a 128-bit state and a 128-bit key as inputs and outputs a 128-bit encrypted message. The encryption process includes key expansion and 10 rounds of transformations. The security of this module mainly depends on the secrecy of the key. If the key is compromised, the security of the whole system is compromised.
+
+2. Expand_key_128 module: This module is used for key expansion in AES_128 module. It takes a 128-bit input key and a round constant as inputs and outputs two 128-bit keys. The security of this module also depends on the secrecy of the input key.
+
+3. Module1: This module has a register w1 which is set to 1 when the input state equals a predefined value. This can be a potential security risk if the predefined value is known to the attacker. 
+
+4. Module2: This module takes several inputs including the output of Module1 and the round keys from AES_128 module. It contains several shift registers which are rotated when certain conditions are met. The leakage of the round keys can lead to a security breach.
+
+Hardware Trojan: Yes
+
+Explanation: 
+The hardware trojan is present in Module1 and Module2. In Module1, the trojan is triggered when the input state equals a predefined value. Once the trojan is triggered, the register w1 is set to 1. In Module2, the trojan is activated when the output of Module1 (w1) is 1 and certain conditions are met. The conditions are the bitwise AND and XOR operations between the state and the round keys. When the trojan is activated, it rotates the shift registers, which can cause an increase in power consumption and potentially drain the battery. Moreover, the trojan can leak the round keys through the shift registers, which can compromise the security of the whole system.

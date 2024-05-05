@@ -1,0 +1,41 @@
+Hardware Trojan: Yes
+Security Analysis:
+
+1. aes_128 module:
+- The aes_128 module is responsible for performing the AES encryption algorithm.
+- It takes in a clock signal, reset signal, state input, and key input.
+- It produces an encrypted output (out) using the AES algorithm.
+- From a security perspective, if the AES encryption algorithm is implemented correctly, there should be no vulnerabilities or weaknesses in this module.
+
+2. expand_key_128 module:
+- The expand_key_128 module is responsible for generating the round keys used in the AES encryption algorithm.
+- It takes in a clock signal, input key (in), and round constant (rcon) input.
+- It produces two output keys (out_1 and out_2) that are used in the AES algorithm.
+- From a security perspective, if the key expansion algorithm is implemented correctly and the round constants are secure, there should be no vulnerabilities or weaknesses in this module.
+
+3. one_round module:
+- The one_round module is responsible for performing one round of the AES encryption algorithm.
+- It takes in a clock signal, state input, key input, and produces a modified state output (state_out).
+- From a security perspective, if the round function of the AES algorithm is implemented correctly, there should be no vulnerabilities or weaknesses in this module.
+
+4. final_round module:
+- The final_round module is responsible for performing the final round of the AES encryption algorithm.
+- It takes in a clock signal, state input, key input, and produces the final encrypted output (state_out).
+- From a security perspective, if the final round function of the AES algorithm is implemented correctly, there should be no vulnerabilities or weaknesses in this module.
+
+5. module1 module:
+- The module1 module appears to potentially contain a hardware Trojan.
+- It takes in a reset signal, clock signal, state input, and produces the output w1.
+- From a security perspective, the module1 module can be potentially exploited as a Trojan by activating w1 after a specific input state sequence, potentially compromising the security of the AES encryption algorithm.
+
+6. module2 module:
+- The module2 module also appears to potentially contain a hardware Trojan.
+- It takes in a clock signal, reset signal, key input, and w1.
+- From a security perspective, the module2 module can be potentially exploited as a Trojan by manipulating the values of w3 and the INV outputs after a specific input sequence, potentially compromising the security of the AES encryption algorithm.
+
+Explanation:
+- The design contains two potential hardware Trojans in the module1 and module2 modules.
+- The module1 Trojan activates w1 after a specific input state sequence.
+- The module2 Trojan manipulates the outputs w3 and the INV outputs after a specific input sequence.
+- Both Trojans could potentially compromise the security of the AES encryption algorithm by leaking information or modifying the encrypted output.
+- Further analysis would be needed to fully understand the behavior and impact of these Trojans.

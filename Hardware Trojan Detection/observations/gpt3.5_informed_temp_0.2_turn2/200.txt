@@ -1,0 +1,14 @@
+Hardware Trojan: No
+
+Security Analysis:
+- module top: This module is the top-level module that instantiates the AES-128 module and the module1 module. It does not have any security vulnerabilities or trojans.
+
+- module aes_128: This module implements the AES-128 encryption algorithm. It takes in the clock signal, state, and key as inputs, and outputs the encrypted output. The module uses various sub-modules to perform the encryption rounds and key expansion. There are no security vulnerabilities or trojans in this module.
+
+- module expand_key_128: This module is responsible for expanding the key for the AES encryption. It takes in the clock signal, input key, and rcon as inputs, and outputs two expanded key values. The module uses a shift register and XOR operations to generate the expanded keys. There are no security vulnerabilities or trojans in this module.
+
+- module lfsr_counter: This module implements a linear feedback shift register (LFSR) counter. It takes in the reset signal, clock signal, data input, and outputs a 20-bit LFSR value. The module uses XOR operations to generate the LFSR value. There are no security vulnerabilities or trojans in this module.
+
+- module module1: This module takes in the reset signal, clock signal, key, and data inputs, and outputs a 64-bit load value. The module uses the lfsr_counter module to generate a counter value, and XOR operations with the key and counter to generate the load value. There are no security vulnerabilities or trojans in this module.
+
+- module one_round: This module implements one round of the AES encryption algorithm. It takes in the clock signal, state input, key, and outputs the updated state. The module uses table lookups and XOR operations to update the state. There are

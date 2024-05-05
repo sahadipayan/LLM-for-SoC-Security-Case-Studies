@@ -1,0 +1,27 @@
+Hardware Trojan: No
+Security Analysis: 
+
+1. expand_key_128 module:
+   - This module is responsible for expanding the 128-bit encryption key into multiple round keys.
+   - It takes the input key and generates 11 round keys using the AES key expansion algorithm.
+   - There is no specific security vulnerability or design flaw observed in this module.
+
+2. one_round module:
+   - This module performs one round of AES encryption.
+   - It takes the 128-bit state and round key as inputs, and produces the output state for the next round.
+   - The AES encryption algorithm used in this module is considered secure.
+   - There is no specific security vulnerability or design flaw observed in this module.
+
+3. final_round module:
+   - This module performs the final round of AES encryption.
+   - It takes the 128-bit state and round key as inputs, and produces the final encrypted output state.
+   - The AES encryption algorithm used in this module is considered secure.
+   - There is no specific security vulnerability or design flaw observed in this module.
+
+4. module1 module:
+   - This module acts as a controller for the AES encryption process.
+   - It has a reset signal, a clock signal, and a state input.
+   - The module sets a specific value for the internal signal w2 based on the state input.
+   - There is no specific security vulnerability or design flaw observed in this module.
+
+Explanation: No hardware Trojan is present in the design. The design consists of modules performing AES encryption and a controller module. The AES encryption algorithm used in the design is considered secure. Each module functions as expected without any observed security vulnerabilities or design flaws.

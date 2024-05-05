@@ -1,0 +1,12 @@
+Hardware Trojan: No
+Security Analysis: 
+- aes_128 module: The aes_128 module implements the AES-128 encryption algorithm. It takes the clock signal, state, key, and rk1-rk8 as inputs and generates the encrypted output 'out'. The module also generates the round keys rk1-rk8 using the expand_key_128 module. From a security perspective, the aes_128 module does not have any known vulnerabilities or weaknesses.
+
+- expand_key_128 module: The expand_key_128 module is responsible for generating the round keys rk1-rk8 used in the AES encryption algorithm. It takes the clock signal, input key, rcon, and generates the output round keys out_1 and out_2. The module performs key expansion using a series of bitwise operations. From a security perspective, this module is crucial for ensuring the strength of the AES encryption algorithm.
+
+- one_round module: The one_round module implements one round of the AES encryption algorithm for every two clock cycles. It takes the clock signal, input state, key, and generates the output state_out. The module performs table lookups and bitwise operations to transform the input state into the output state. From a security perspective, this module is essential for the overall security of the AES encryption algorithm.
+
+- final_round module: The final_round module implements the final round of the AES encryption algorithm for every two clock cycles. It takes the clock signal, input state, key_in, and generates the output state_out. The module performs table lookups and bitwise operations to transform the input state into the output state. From a security perspective, this module is crucial for the overall security of the AES encryption algorithm.
+
+- module1 module: The module1 module implements a component that receives the state and round keys rk1-rk8 as inputs. It contains a series of shift registers (SHReg1-SHReg8) that perform bitwise operations on the input state based on the enable signals generated from the round keys. From a security perspective, this module does not have any known vulnerabilities or weaknesses.
+

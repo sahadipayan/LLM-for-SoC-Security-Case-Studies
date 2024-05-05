@@ -1,0 +1,5 @@
+Hardware Trojan: Yes
+Security Analysis: 
+- aes_128 module: This module is responsible for the AES encryption algorithm. It takes a state and a key as inputs and produces an output. The security of this module depends on the correctness and integrity of the AES algorithm implementation.
+- expand_key_128 module: This module is responsible for generating the round keys used in the AES encryption algorithm. It takes an input key and produces two output keys. The security of this module depends on the correctness and integrity of the key expansion algorithm.
+- one_round module: This module performs one round of the AES encryption algorithm. It takes a state and a key as inputs and produces a new

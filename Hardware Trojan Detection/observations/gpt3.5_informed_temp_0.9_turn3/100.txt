@@ -1,0 +1,12 @@
+Hardware Trojan: No
+
+Security Analysis:
+- module top: No security vulnerabilities found.
+- module aes_128: No security vulnerabilities found.
+- module expand_key_128: No security vulnerabilities found.
+- module one_round: No security vulnerabilities found.
+- module final_round: No security vulnerabilities found.
+- module lfsr_counter: No security vulnerabilities found.
+- module module1: No security vulnerabilities found.
+
+Explanation: There are no hardware trojans found in the design. All the modules have been analyzed and no security vulnerabilities have been identified.

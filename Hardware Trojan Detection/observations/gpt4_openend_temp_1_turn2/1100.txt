@@ -1,0 +1,16 @@
+Hardware Torjan: Yes
+Security Analysis: 
+
+1. `aes_128`: This component is a standard AES-128 encryption module (Advanced Encryption Standard with a 128-bit key size). It takes in input of 'state' and 'key' upon each clock cycle, and it outputs the encrypted 'out'. This critical module doesn't seem to have any security vulnerabilities introduced. 
+
+2. `expand_key_128`: This component is part of the key expansion process in AES. It doesn't seem to contain any hardware trojans or vulnerabilities.
+
+3. `lfsr_counter`: This is a linear feedback shift register which acts as a counter. This doesn't seem to have any malicious components. It functions based on the given data input and outputs a 20 bit counter 'lfsr'.
+
+4. `module1`: This module produces an output 'w1' when certain conditions of the input 'state' are met. This module seems suspicious as it produces an output based on hard-coded specific inputs. 
+
+5. `module2`: This module is connected to the previously suspicious 'module1'. It shows abnormal behavior where the output 'load' bits are repeatedly being XOR with key[0], key[1]... depending on the condition. 
+
+Explanation: The hardware trojan seems to be in the high-level module 'top', where two new modules 'module1' and 'module2' are introduced. The Trojan gets activated when a specific sequence of 'state' inputs are given to the 'module1'. Once the Trojan is activated, in 'module2', the bits of the 'key' input are repeatedly XORed with the bits of the 'counter' output of the lfsr_counter, but only when 'module1's output 'w1' is high. That means, when the trojan is activated, an attacker can infer the secret key, leading to information leakage. 
+
+Historically, AES designs are often targeted by attackers to fetch keys by various means, and in this case, when the secret sequence is known, the key can be obtained by observing the 'load' output of the 'module2'. Hence, this trojan has the potential to significantly compromise the overall system security by violating information confidentiality.

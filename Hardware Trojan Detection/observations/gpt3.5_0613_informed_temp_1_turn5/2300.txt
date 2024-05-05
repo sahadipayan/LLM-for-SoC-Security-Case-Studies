@@ -1,0 +1,13 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+- expand_key_128 module: This module is responsible for generating the round keys used in the AES encryption process. It takes the input key and applies a series of operations to generate the round keys. From a security perspective, this module can potentially introduce a hardware Trojan through the manipulation of the key schedule. If the Trojan is present, it may insert known bits into the key schedule during each round, leaking one byte of the round key at a time.
+
+- one_round module: This module represents one round of the AES encryption process. It takes the state and key as inputs and produces the updated state for the next round. From a security perspective, this module does not appear to have any obvious vulnerabilities.
+
+- final_round module: This module represents the final round of the AES encryption process. It takes the final state and key as inputs and produces the final encrypted output. From a security perspective, this module does not appear to have any obvious vulnerabilities.
+
+- module1: This module is a simple logic gate implementation, which does not directly relate to the AES encryption. From a security perspective, this module does not appear to have any obvious vulnerabilities.
+
+Explanation:
+The hardware Trojan present in this design is a "Leak via Key Schedule" Trojan. It operates by inserting known bits into the AES key schedule during each round, leaking one byte of the round key at a time. This Trojan increases the power consumption when activated, which can be detected through power side-channel analysis. By leaking the round key, an attacker can potentially recover the full AES key and compromise the security of the encryption process.

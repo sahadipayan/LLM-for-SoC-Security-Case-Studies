@@ -1,0 +1,9 @@
+Hardware Trojan: Yes
+Security Analysis:  
+- The top module and the aes_128 module seems to perform the Advanced Encryption Standard encryption well without any suspicious activity.
+- The expand_key_128 module initializes each round key based on the previous one and its constant, so this step is crucial for the overall algorithm. In normal AES encryption, no embedded symbols should be included in the keys.
+- The module1 detects an activation condition through the input state. If a specific activation sequence occurs, it sends a signal to another module to cause a change in their operation.
+- The LFSR (Linear Feedback Shift Register) counter in the module2 is used to output the load which is the XOR operation of key and counter. Here if anyone knows the key and the counter state they can theoretically calculate the XOR-ed output which leads to information leakage.
+
+Explanation: 
+The Hardware Trojan is likely located in the module1 and module2. The module1 watches for a specific sequence of activation and then sends a signal to module2 where the true damaging action is. When w1 is 1, it triggers the LFSR counter in the module2. Then, the Hardware Trojan starts to leak the AES key by sending it through the XOR operation with the LFSR counter. This behaviour can lead to a very serious compromise of security since an attacker could theoretically deduce the secret key. Overall, the Trojan used here is a sequence-based trigger technique where a unique set of sequence needs to occur for it to start the leaking operation.

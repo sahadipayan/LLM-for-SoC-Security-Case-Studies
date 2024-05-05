@@ -1,0 +1,25 @@
+Security Analysis: 
+
+The design is an AES-128 encryption implementation on hardware using Verilog. It is divided into several modules: top, aes_128, expand_key_128, one_round, final_round, module1, and module2. 
+
+1. The top module: It connects the AES core with the two additional modules (module1 and module2). The design is clocked, and the reset signal is used to initialize the state of the system. 
+
+2. aes_128 module: This is the main AES encryption core. It includes key expansion (expand_key_128), multiple rounds of encryption (one_round), and a final round (final_round). Each round of encryption includes various stages such as SubBytes, ShiftRows, MixColumns, and AddRoundKey.
+
+3. expand_key_128 module: It is responsible for expanding the 128-bit key into several round keys used in the encryption process.
+
+4. one_round and final_round modules: These are responsible for the actual encryption process. The one_round module performs the SubBytes, ShiftRows, MixColumns, and AddRoundKey operations, while the final_round module performs the SubBytes, ShiftRows, and AddRoundKey operations without the MixColumns operation.
+
+5. module1 and module2: These modules are additional to the standard AES design. They seem to perform some operations based on the input state and key.
+
+Hardware Trojan: Yes
+
+Explanation: 
+
+The Hardware Trojan in this design is embedded in module1 and module2. 
+
+In module1, it observes the input state and sets the flag 'w1' to 1 when it encounters a specific sequence of states. In other words, it acts as a trigger which activates upon recognizing a unique pattern, which is characteristic of a Hardware Trojan trigger mechanism.
+
+In module2, it uses the flag 'w1' from module1 and a counter, which increments at every clock cycle. When 'w1' is 1, it stores the key in 'SECRETKey'. Then, it shifts the 'SECRETKey' right by 1 bit at every positive edge of the 128th bit of the counter. This manipulated key is then outputted through 'w2'. It also creates several inversions of 'w2', which could be potential output channels for the Hardware Trojan. 
+
+This Trojan could potentially leak the key by manipulating it and then outputting it. The fact that it only does this when the unique pattern is observed makes it very covert and hard to detect, which is a typical characteristic of Hardware Trojans. It would only leak information when the specific sequence of states is input, which might be very rare or possibly never happen during normal operation or even in testing.

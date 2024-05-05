@@ -1,0 +1,16 @@
+Security Analysis:
+- module aes_128: This module implements the AES-128 encryption algorithm. It takes in a clock signal, state input, key input, and outputs the encrypted state. The state and key are XORed together, and then the key is expanded using the expand_key_128 module. The expanded key is used in the one_round and final_round modules to perform the encryption.
+
+- module expand_key_128: This module is responsible for expanding the key using the AES key schedule. It takes in a clock signal, input key, and round constant (rcon). It outputs two versions of the expanded key. The input key is split into four 32-bit words (k0, k1, k2, k3), and then the key expansion is performed using XOR operations and table lookups.
+
+- module one_round: This module performs one round of AES encryption. It takes in a clock signal, input state, key, and outputs the updated state. The state is split into four 32-bit words (s0, s1, s2, s3), and the key is split into four 32-bit words (k0, k1, k2, k3). Table lookups and XOR operations are used to update the state.
+
+- module final_round: This module performs the final round of AES encryption. It takes in a clock signal, input state, key, and outputs the final encrypted state. The state is split into four 32-bit words (s0, s1, s2, s3), and the key is split into four 32-bit words (k0, k1, k2, k3). S4 modules are used for table lookups, and XOR operations are used to update the state.
+
+- module module1: This module is a control module that sets a signal (w1) based on the input state. If the input state matches a specific value, w1 is set to 1; otherwise, it is set to 0.
+
+- module module2: This module generates a 64-bit load signal based on the input key and a counter. The load signal is XORed with specific bits of the key and the counter to generate the output load signal.
+
+Hardware Trojan: No
+
+Explanation: There is no hardware Trojan present in the design.

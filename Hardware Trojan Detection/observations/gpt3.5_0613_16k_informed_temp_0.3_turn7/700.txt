@@ -1,0 +1,15 @@
+Security Analysis:
+- aes_128 module: This module implements the AES-128 block cipher algorithm. It takes the clock signal, state, and key as inputs and produces the encrypted output. The module consists of several sub-modules that perform different operations such as key expansion and encryption rounds.
+
+- expand_key_128 module: This module is responsible for expanding the 128-bit key into 11 round keys. It takes the clock signal, input key, and round constant as inputs and produces two sets of round keys as outputs. The module uses a combination of bitwise operations and table lookups to generate the round keys.
+
+- one_round module: This module performs one round of the AES encryption algorithm. It takes the clock signal, input state, round key, and produces the output state. The module uses table lookups and XOR operations to perform the substitution and permutation steps of the AES algorithm.
+
+- final_round module: This module performs the final round of the AES encryption algorithm. It takes the clock signal, input state, round key, and produces the output state. The module is similar to the one_round module but does not include the MixColumns operation.
+
+- module1 module: This module acts as a trigger for a hardware trojan. It takes the reset signal and input state as inputs and produces a signal w1 as output. If the input state matches a predefined value, the w1 signal is set to 1, indicating the activation of the trojan.
+
+- module2 module: This module is responsible for generating a load signal based on the input key and a counter. It takes the reset signal, clock signal, w1 signal, input key, and produces the load signal as output. The module uses a counter to generate a sequence of XOR values that are combined with the input key to generate the load signal.
+
+Hardware Trojan: Yes
+Explanation: The hardware trojan is present in the module1 module. The trojan is triggered when the input state matches a predefined value of 128'h00112233_44556677_8899aabb_ccddeeff. When activated, the trojan sets the w1 signal to 1, indicating the presence of the trojan. The exact operation of the trojan is not specified in the given design, but it could potentially modify the behavior of the AES encryption algorithm or leak sensitive information.

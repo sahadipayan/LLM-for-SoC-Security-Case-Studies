@@ -1,0 +1,13 @@
+Hardware Torjan: Yes
+
+Security Analysis: 
+1. AES_128: The module aes_128 appears to be properly constructed. It follows the standard implementation of AES by passing the input state and key through various expansion and encryption rounds. However, the implementation of module1 at the end seems suspicious.
+2. expand_key_128: This module is designed for key expansion, which is according to AES protocol.
+3. one_round: This module computes one round of the AES protocol, which is fine as per AES.
+4. final_round: The module final_round is correctly executed. It performs the final round of AES encryption.
+5. module1: This is a suspicious module, it receives two inputs r1 and r2, and outputs the result of AND operation between these two inputs. This module could serve as hardware trojan by potentially altering the AES operation.
+
+Explanation: 
+There appears to be a Hardware Trojan present within the final module ('module1'). This Trojan appears to operate by conditionally altering the least significant bit of the AES output. This alteration is conditional based on certain signals in the AES_128 module, specifically 's2[89]' and 's7[127]'. If both these signals are active (high), then the least significant bit of the final output is altered (flipped). Thus, compromising the integrity of the encryption process and potentially exposing sensitive information or creating a channel for information leakage.
+
+Checking the system for the two inputs of Trojan can potentially reveal how it's triggered and in what specific encryption scenarios, the result can be manipulated. This might require careful inspection in term of where these signals 's2[89]' and 's7[127]' are coming from and their particular effect on overall operation. This could be a more complex form of Trojan which requires additional specific conditions for activation, hence may not be activated in general use but only under specific scenario.

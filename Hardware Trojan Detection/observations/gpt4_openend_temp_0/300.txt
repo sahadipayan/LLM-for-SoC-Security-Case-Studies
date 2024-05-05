@@ -1,0 +1,17 @@
+Security Analysis: 
+
+1. Module top: This is the top-level module that takes in the clock, reset, state, and key as inputs and gives out the encrypted output. It also instantiates the AES_128 and module1 modules. It seems secure as it does not perform any operations on the inputs and only passes them to the other modules.
+
+2. Module aes_128: This module performs the AES encryption. It takes in the clock, state, and key as inputs and gives out the encrypted output. It also generates round keys (rk1 to rk8) which are used in the module1. It seems secure as it follows the standard AES encryption algorithm.
+
+3. Module expand_key_128: This module is used in the aes_128 module to generate the round keys. It seems secure as it follows the standard AES key expansion algorithm.
+
+4. Module one_round: This module is used in the aes_128 module to perform one round of AES encryption. It seems secure as it follows the standard AES round function.
+
+5. Module final_round: This module is used in the aes_128 module to perform the final round of AES encryption. It seems secure as it follows the standard AES final round function.
+
+6. Module module1: This module takes in the reset, clock, state, and round keys as inputs. It performs some operations on the state and round keys and stores the results in shift registers (SHReg1 to SHReg8). This module seems suspicious as it performs operations that are not part of the standard AES encryption algorithm.
+
+Hardware Trojan: Yes
+
+Explanation: The hardware trojan is in the module1. It performs bitwise AND and XOR operations on the state and round keys and stores the results in shift registers. These operations are not part of the standard AES encryption algorithm and can potentially leak information about the state and round keys. The shift registers can be used to store and later retrieve this information, which can be used to break the encryption. The trojan is activated when the enable signals (enable1 to enable8) are high, which are controlled by the state and round keys.

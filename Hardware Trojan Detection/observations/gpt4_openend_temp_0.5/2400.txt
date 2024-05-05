@@ -1,0 +1,15 @@
+Security Analysis: This AES design is composed of several modules, each performing a specific function. The security of each module is analyzed as follows:
+
+- The aes_128 module: This is the main module that takes in the clock, reset, state, and key as inputs and provides the output. It uses the expand_key_128 and one_round modules to perform the AES encryption. The security of this module depends on the security of the key, state, and the lower-level modules it uses.
+
+- The expand_key_128 module: This module expands the key for use in the AES encryption process. It is critical that the expanded key remains secure and is not leaked, as it can be used to reverse the encryption process.
+
+- The one_round module: This module performs one round of the AES encryption process. The security of this module depends on the security of the state and key inputs and the table_lookup module it uses.
+
+- The final_round module: This module performs the final round of the AES encryption process. Like the one_round module, the security of this module depends on the security of the state and key inputs and the S4 modules it uses.
+
+- The module1: This module is a simple AND gate. Its security is not a concern as it doesn't process sensitive information.
+
+Hardware Trojan: Yes 
+
+Explanation: The Hardware Trojan is present in the module1. This module is not a part of the standard AES encryption process and its output is XORed with the final output of the AES encryption. This can potentially alter the encryption output, making it possible for an attacker to manipulate the encryption process. The Trojan operates by taking two bits from the internal state of the AES encryption process (s2[89] and s7[127]) and performing an AND operation on them. The result is then XORed with the final output bit. This could potentially leak information about the internal state of the encryption process or alter the encryption output in a predictable way, both of which could be used by an attacker to break the encryption.

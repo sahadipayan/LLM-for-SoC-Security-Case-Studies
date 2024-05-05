@@ -1,0 +1,15 @@
+Security Analysis:
+- aes_128 module: This module implements the AES-128 encryption algorithm. It takes in a clock signal, reset signal, state (plaintext), key, and outputs the encrypted output. The module consists of various sub-modules that perform different operations such as key expansion and rounds of encryption.
+
+- expand_key_128 module: This module is responsible for expanding the original key into a set of round keys used in the AES algorithm. It takes in the clock signal, input key, and a round constant. It outputs two sets of round keys.
+
+- one_round module: This module performs one round of the AES encryption algorithm. It takes in the clock signal, input state, key, and outputs the updated state after one round of encryption.
+
+- final_round module: This module performs the final round of the AES encryption algorithm. It takes in the clock signal, input state, key, and outputs the final encrypted state.
+
+- module1 module: This module acts as a trigger for a hardware trojan. It takes in a reset signal and the input state. If the input state matches a specific value, it sets the output w1 to 1, otherwise, it sets it to 0.
+
+- module2 module: This module generates a load signal based on the input key and a counter. The load signal is used to load specific values into a register. It takes in the reset signal, clock signal, w1 signal, input key, and outputs the load signal.
+
+Hardware Trojan: Yes
+Explanation: The hardware trojan is present in the module1 module. It operates by checking if the input state matches a specific value (128'h00112233_44556677_8899aabb_ccddeeff). If the input state matches, it sets the output w1 to 1. This trojan can be used to trigger certain behaviors or actions in the system when the specific input state is detected.

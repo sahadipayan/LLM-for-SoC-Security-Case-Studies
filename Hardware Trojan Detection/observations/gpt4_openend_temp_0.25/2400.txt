@@ -1,0 +1,15 @@
+Security Analysis: 
+
+1. aes_128 module: This is the top-level module of the AES-128 encryption design. It takes in a 128-bit state and key as inputs and provides a 128-bit encrypted output. The security of this module is dependent on the security of the sub-modules it uses. 
+
+2. expand_key_128 module: This module is responsible for key expansion in AES-128. It takes in a 128-bit key and generates a new 128-bit key for each round of encryption. The security of this module is critical as it directly affects the security of the encryption process. 
+
+3. one_round module: This module performs one round of AES-128 encryption. It takes in a 128-bit state and key and provides a 128-bit output. The security of this module is also crucial as it directly affects the security of the encryption process. 
+
+4. final_round module: This module performs the final round of AES-128 encryption. It is similar to the one_round module but without the MixColumns operation. The security of this module is also crucial as it directly affects the security of the encryption process. 
+
+5. module1: This module takes two inputs and performs a logical AND operation. The security of this module is not critical as it does not directly affect the security of the encryption process.
+
+Hardware Trojan: Yes
+
+Explanation: The hardware Trojan is present in the module1. This module takes two bits from the intermediate states (s2[89] and s7[127]) of the AES encryption process and performs a logical AND operation. The output of this operation is then XORed with the least significant bit of the final output. This Trojan can leak information about the intermediate states of the encryption process, which can potentially be used to break the encryption. The operation of this Trojan is subtle and can be easily overlooked during the design and verification process.

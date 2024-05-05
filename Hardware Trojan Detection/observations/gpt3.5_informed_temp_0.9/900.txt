@@ -1,0 +1,5 @@
+Hardware Trojan: No
+Security Analysis: 
+- aes_128 module: This module implements the AES algorithm. It takes in the state and key inputs and produces the encrypted output. There don't appear to be any security vulnerabilities or suspicious behavior in this module.
+- expand_key_128 module: This module expands the key for use in the AES algorithm. It takes in the initial key and produces two sets of expanded keys. There don't appear to be any security vulnerabilities or suspicious behavior in this module.
+- one_round module: This module performs one round of the AES algorithm. It takes in the state and key inputs and produces the updated state for the next round. There don

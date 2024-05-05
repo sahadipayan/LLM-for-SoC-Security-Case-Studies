@@ -1,0 +1,4 @@
+Hardware Trojan: Yes
+Security Analysis:
+- aes_128 module: The AES encryption algorithm itself is considered secure and does not have any known vulnerabilities or weaknesses.
+- expand_key_128 module: This module is responsible for expanding the original key into a set

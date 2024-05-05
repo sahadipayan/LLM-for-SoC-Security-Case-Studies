@@ -1,0 +1,9 @@
+Hardware Trojan: No
+Security Analysis: 
+- aes_128 module: This module implements the AES-128 encryption algorithm. It takes in a clock signal, state, key, and outputs the encrypted output. The module consists of several sub-modules that perform different operations such as key expansion and rounds of encryption. From a security perspective, the module appears to be implementing the AES algorithm correctly without any obvious vulnerabilities.
+
+- expand_key_128 module: This module is responsible for expanding the input key into multiple round keys used in the AES encryption algorithm. It takes in a clock signal, input key, and a round constant. It outputs two round keys. The module performs key expansion using bitwise operations and XOR operations. From a security perspective, the module appears to be implementing the key expansion correctly without any obvious vulnerabilities.
+
+- S4 module: This module performs a substitution operation on a 32-bit input. It takes in a clock signal and a 32-bit input and outputs a 32-bit output. The module uses a lookup table to perform the substitution. From a security perspective, the module appears to be implementing the substitution operation correctly without any obvious vulnerabilities.
+
+Explanation: There is no hardware trojan in the design. The design implements the AES-128 encryption algorithm correctly and does not contain any malicious or unauthorized functionality.

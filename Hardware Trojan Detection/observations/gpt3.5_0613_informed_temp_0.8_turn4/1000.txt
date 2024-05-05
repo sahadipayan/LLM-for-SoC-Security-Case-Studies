@@ -1,0 +1,21 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+- aes_128 module: This module is the main AES encryption module. It takes in a clock signal, state (plaintext), key, and outputs the encrypted output. From a security perspective, this module performs the AES encryption algorithm and is crucial for secure communication.
+
+- expand_key_128 module: This module is responsible for expanding the given key into round keys for each round of the AES encryption. It takes in a clock signal, the input key, and an 8-bit round constant. It outputs the round keys. From a security perspective, this module is important for generating the round keys correctly and securely.
+
+- lfsr_counter module: This module implements a linear feedback shift register (LFSR) counter. It takes in a reset signal, clock signal, a control signal (w1), and a 128-bit data input. It outputs a 20-bit counter. From a security perspective, this module is used to generate a counter value based on the input data and control signal.
+
+- module2 module: This module takes in a reset signal and the state (plaintext) and outputs a control signal (w1). From a security perspective, this module checks if the state matches a specific value and sets the control signal accordingly.
+
+- module1 module: This module takes in a reset signal, clock signal, control signal (w1), the encryption key, and the data input. It outputs a 64-bit load signal. From a security perspective, this module combines the control signal, key, and data to generate a load signal.
+
+Explanation:
+The hardware Trojan in this design is implemented in the module1 module. It operates by using the control signal (w1) and the encryption key to generate the load signal. The load signal is used to load specific bits from the key based on the value of the counter. This can potentially leak information about the key, compromising the security of the encryption algorithm.
+
+The Trojan is activated when the state (plaintext) matches the value 128'h00112233_44556677_8899aabb_ccddeeff. When this condition is met, the control signal (w1) is set to 1, triggering the Trojan.
+
+The Trojan works by XORing specific bits of the key with the counter value and using the result to generate the load signal. By modifying the load signal, the Trojan can potentially leak information about the key during the encryption process.
+
+Overall, the Trojan in this design is a covert hardware Trojan that leaks information about the encryption key during the AES encryption process.

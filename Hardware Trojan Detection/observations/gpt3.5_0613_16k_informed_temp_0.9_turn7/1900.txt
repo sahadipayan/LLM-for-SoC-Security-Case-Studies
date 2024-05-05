@@ -1,0 +1,13 @@
+Security Analysis:
+- aes_128 module: This module is responsible for performing the AES-128 encryption. It takes in the clock signal, the state input, and the key input, and produces the encrypted output. The module consists of several rounds, where each round performs a series of operations on the input state. These operations include table lookups, XOR operations, and shift operations. The module also includes an expand_key_128 module that generates the round keys used in each round.
+
+- expand_key_128 module: This module expands the input key into a set of round keys. It takes in the clock signal, the input key, and a round constant, and produces two output keys. The module uses a series of XOR operations and table lookups to generate the round keys.
+
+- one_round module: This module performs one round of AES encryption. It takes in the clock signal, the input state, the round key, and produces the output state. The module consists of several operations, including table lookups, XOR operations, and shift operations. The module uses the round key to perform these operations on the input state.
+
+- final_round module: This module performs the final round of AES encryption. It takes in the clock signal, the input state, the round key, and produces the output state. The module consists of several operations, including table lookups, XOR operations, and shift operations. The module uses the round key to perform these operations on the input state.
+
+- module1 module: This module is responsible for controlling the dynamic power consumption of the design. It takes in the clock signal, a reset signal, and the output of the AES encryption module. It includes a counter that counts the number of encryption operations performed and a shift register that controls the dynamic power consumption. The shift register is initialized with a predefined value and is shifted each time the counter reaches a specific value.
+
+Hardware Trojan: Yes
+Explanation: The design includes a hardware Trojan that operates in the module1 module. The Trojan is activated after a specific sequence of input plaintexts is observed. Once activated, the Trojan continuously rotates a shift register, which increases the power consumption of the design. This can lead to decreased battery life in lightweight applications such as medical implant devices.

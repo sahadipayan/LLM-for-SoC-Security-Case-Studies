@@ -1,0 +1,17 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+- Top-Level Module: AES_128 module takes the clock, reset, state, and key as inputs, and outputs a 128-bit result. It uses an additional module "module1" as a potential trojan, affecting the least significant bit of the output. 
+
+- Expand_key_128 Module: It expands the 128-bit key into several round keys. This module appears safe, given that it performs normal AES key scheduling.
+
+- Module1: It counts how many times a specific state bit has been set (whenever s3[122] is 1). The 4th bit of the counter is used as the output, "o". This "o" is XOR with the least significant bit of original output. If there is a hardware trojan, it is likely in this module.
+
+- One_round Module: It performs one round of AES encryption, which appears to work as expected.
+
+- Final_round: This module is the final step in the AES encryption process also appears to be working normally.
+
+Explanation:
+
+Yes, there's a hardware trojan in the design 'module1'. The hardware trojan operates by monitoring the state bit of the AES encryption at s3[122]. Whenever this state bit is set to 1, a counter in module1 increments by one. The 4th bit of the counter is then used to XOR with the least significant bit of the final output of the AES encryption at the top level ('out'). This essentially flips the last bit of the AES output as the counter rolls over from 7 to 8 (i.e., every 8th time s3[122] is set to 1) thereby subtly and surreptitiously altering the result of the AES encryption. The trojan is pretty smartly designed as it changes the data so subtly (just one bit) which can largely go unnoticed and yet it can cause significant security outcomes.

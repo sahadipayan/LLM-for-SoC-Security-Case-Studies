@@ -1,0 +1,25 @@
+Security Analysis: 
+
+1. AES_128: This module employs the AES encryption algorithm with a key length of 128 bits. It appears to use the standard AES encryption process without any modifications. Each round of the algorithm is implemented in a separate module, with the final round being slightly different due to the lack of the MixColumns step. The key expansion is also correctly implemented. 
+
+2. Expand_key_128: This module carries out the key expansion process of the AES algorithm. It also seems to be implemented correctly, with the necessary transformations being carried out on the key.
+
+3. One_round & final_round: These modules implement the multiple rounds of transformations that occur in the AES algorithm. The transformations appear to be correctly implemented, with the necessary steps being carried out on the state and key.
+
+4. Module1: This module manages a two-cycle clock signal that is supposed to synchronize with the main clock signal. It also checks a specific state (0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF) to control the two-cycle clock signal operation. 
+
+5. Module2: This module manipulates a secret key and works with a counter. It is also manipulating the least significant bit of the secret key using inverters. 
+
+Hardware Trojan: Yes
+
+Explanation: 
+
+The hardware Trojan seems to be mainly centered around module1 and module2. In module1, when the state is equal to 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, it triggers a two-cycle clock signal (w1), which is then used in module2. 
+
+In module2, the secret key is shifted right by one bit every time when the signal w1 is high or when the most significant bit of the counter is high. This operation is a potential vulnerability as it can lead to a leakage of the secret key. 
+
+Furthermore, the least significant bit of the SECRETKey is inverted multiple times and each output is available for observation. This could potentially be used to gather information about the secret key bit by bit, which is a type of side-channel attack. 
+
+So, this trojan operates by leaking the secret key bit by bit when the specific conditions are met. 
+
+Therefore, the design has a hardware trojan which could lead to serious security vulnerabilities as it can potentially leak the encryption key.

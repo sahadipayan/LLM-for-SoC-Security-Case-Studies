@@ -1,0 +1,14 @@
+Hardware Trojan: Yes
+Security Analysis: 
+
+1. aes_128: This is the primary AES encryption block. There are no visible Trojans present in this block. The hardware design appears to implement a standard AES-128 algorithm with key expansion and rounds of transformation. There's a register, w1, casted from module1 which is the possible hardware trojan.
+   
+2. expand_key_128: The key expansion module does not seem to have any tampered logic. It generates subkeys as prescribed by the AES algorithm.
+
+3. one_round: Again, this module seems to follow the standard AES round structure, which includes table look-up, exclusive-or and bitwise operations. There is no apparent Trojan here.
+
+4. final_round: This module also follows the standard AES structure and does not appear to have any malicious behavior. 
+
+5. module1: The logic here initiates a 4-bit counter that increments with every clock cycle. The highest bit of this counter (counter[3]) is assigned to w1 and is used in the aes_128 module which connects to the final data output. This infusion would invert the output bit at regular intervals, introducing an evident irregularity which would not be present in a standard AES encryption module and is the potential Hardware Trojan.
+
+Explanation: The hardware trojan seems to be operating in the module1. The malicious behavior is driven by a counter-based trojan that increments with every clock edge in such a manner to influence the least significant bit of the final round of the AES encryption. This behavior aligns with the earlier described "Counter-Based Bit Flipping Trojan" that flips the least significant bit of the cryptographic output when a certain condition of a counter is met. Specifically, it's flipping when the fourth bit of a 4-bit counter is high. This Trojan would affect the final encrypted output by intermittently flipping the least significant bit which would distort the original encrypted data making the reverse-engineered output incorrect. This would go undetected unless the output of the chip was observed over multiple cycles and the pattern was recognized.

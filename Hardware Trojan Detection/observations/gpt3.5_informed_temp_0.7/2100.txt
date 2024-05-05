@@ -1,0 +1,6 @@
+Hardware Trojan: No
+Security Analysis:
+- aes_128 module: This module implements the AES algorithm. From a security perspective, the AES algorithm is considered secure against various cryptographic attacks. However, the security of the AES implementation also depends on the key generation and key management processes, which are implemented in the expand_key_128 module.
+- expand_key_128 module: This module is responsible for generating the round keys used in the AES algorithm. It takes the input key and generates 10 round keys. The security of this module depends on the correctness and randomness of the round key generation process. If the round key generation process is compromised, it can weaken the overall security of the AES algorithm.
+
+Explanation: There is no hardware trojan in the design.

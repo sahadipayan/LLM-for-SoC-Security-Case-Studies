@@ -1,0 +1,19 @@
+Hardware Trojan: Yes
+Security Analysis: 
+1. Module Top: This is the top module where all sub-modules are instantiated and interconnected. It takes in clock, reset, state, and key as inputs. It outputs the encrypted state and the Capacitance. From a security perspective, this module doesn't perform any encryption or decryption tasks, but it orchestrates the whole process. 
+   
+2. Module AES_128: This module performs the encryption of the input state using the key. It is divided into multiple rounds and each round uses a different subkey derived from the original key. This module can be a potential target for hardware Trojans that aim to reveal the key or the plain text.
+
+3. Module Expand_key_128: This module is responsible for generating the round keys used in the AES_128 module. Any Trojan in this module can compromise the whole encryption process.
+
+4. Module One_round: This module performs one round of AES encryption. It includes operations such as SubBytes, ShiftRows, MixColumns, and AddRoundKey. 
+
+5. Module Final_round: This module performs the final round of AES encryption which is slightly different from the other rounds as it doesn't include the MixColumns operation.
+   
+6. Module lfsr_counter: This module is a linear feedback shift register counter which can be used to generate a sequence of pseudo-random numbers.
+
+7. Module module1: This module increments a counter with each encryption and generates a signal when the counter reaches a certain value. This signal can be used as a trigger for a Trojan.
+
+8. Module module2: This module uses the output from the lfsr_counter and the key to generate an output 'load'.
+
+Explanation: In this design, a hardware Trojan has been inserted that is triggered when a certain number of encryptions have been performed. This is controlled by module1 which increments a counter for each encryption and generates a signal 'w1' when the counter reaches a certain value. This signal 'w1' is then used in module2 to control the lfsr_counter which generates a sequence of pseudo-random numbers. These numbers are then XORed with the key to generate the output 'load'. This way, the Trojan leaks information about the key in the form of 'load' which can be used to compromise the encryption.

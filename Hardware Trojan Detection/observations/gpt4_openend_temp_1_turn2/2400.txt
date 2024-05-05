@@ -1,0 +1,14 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+1. 'aes_128': The top-level module seems to perform the normal AES functions with an additional input 'rst' for resetting the system. The key and state expansion seem to follow the normal AES flow.
+
+2. 'expand_key_128': This module expands the AES key. It is normal for AES encryption.
+
+3. 'one_round': This seems to be performing the SubBytes, ShiftRows, MixColumns, and AddRoundKey operations that occur in a single round of AES.
+
+4. 'final_round': A final round module is usual for AES. However, a closer look at the SubByte operation (by S4_1 to S4_4) seems to suggest a slight deviation, where bytes are arranged in a transformed way. 
+
+5. 'module1': This is a hardware trojan. This module takes as input the 90th and 128th bits from the second round 's2' and seventh round 's7' of AES encryption, respectively. The output generated from this operation is fed back into the final result, effectively changing the normal AES operation.
+
+Explanation: The detected hardware trojan is designed to subtly tamper with the AES encryption operation. The Trojan captures intermediate bits from the AES operation (bit 90 of the second round output, and bit 128 of the seventh round output). It then combines these bits using an AND operation and feeds the output into the final round of AES, effectively altering the final encrypted data. Such hardware trojans can be extremely dangerous, as they can allow attackers to alter encryption operations, potentially influencing the final output or, in certain cases, infer important information about the encryption key.

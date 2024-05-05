@@ -1,0 +1,10 @@
+Security Analysis:
+- expand_key_128 module: This module is responsible for expanding the input key into a set of round keys. It uses a combination of XOR and table lookup operations to generate the round keys. From a security perspective, this module is vulnerable to side-channel attacks, such as power analysis or timing attacks, as the key expansion process may leak information about the key.
+
+- one_round module: This module performs one round of the AES encryption algorithm. It uses table lookup operations and XOR operations to transform the input state. Similar to the expand_key_128 module, this module is also vulnerable to side-channel attacks.
+
+- final_round module: This module performs the final round of the AES encryption algorithm. It is similar to the one_round module but with a different set of operations. Like the other modules, it is also vulnerable to side-channel attacks.
+
+Hardware Trojan: Yes
+
+Explanation: The hardware Trojan in the design is triggered by a specific sequence of input plaintext. When the Trojan is activated, it modifies the output of the encryption process by flipping the least significant bit of the encrypted output. This modification can potentially weaken the security of the encryption algorithm and allow an attacker to recover the original plaintext or key. The Trojan is implemented using a counter that increments after each encryption and activates when the fourth bit of the counter is high.

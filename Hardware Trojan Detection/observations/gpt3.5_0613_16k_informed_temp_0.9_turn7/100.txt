@@ -1,0 +1,24 @@
+Security Analysis:
+- expand_key_128 module:
+  - The module takes a 128-bit input key and generates the round keys for the AES encryption algorithm.
+  - The key expansion process involves XORing the input key with a round constant, performing table lookups, and logical operations such as XOR.
+  - From a security perspective, this module is susceptible to key extraction attacks where an attacker could potentially extract the round keys by analyzing the output key values.
+
+- one_round module:
+  - This module performs one round of the AES encryption algorithm.
+  - It involves table lookups, XOR operations, and logical operations on the state and key values.
+  - From a security perspective, this module is vulnerable to attacks that exploit weaknesses in the AES encryption algorithm, such as differential power analysis or side-channel attacks.
+
+- final_round module:
+  - This module performs the final round of the AES encryption algorithm.
+  - It is similar to the one_round module but does not perform key expansion.
+  - From a security perspective, this module is also vulnerable to attacks that exploit weaknesses in the AES encryption algorithm.
+
+- lfsr_counter module:
+  - This module implements a linear feedback shift register (LFSR) counter that generates a 20-bit sequence.
+  - The generated sequence is used to XOR the key values in the module1 module.
+  - From a security perspective, the LFSR counter itself does not pose any security risks as it is a common component for generating pseudo-random sequences.
+
+Hardware Trojan: No
+
+Explanation: Based on the analysis of the AES design block by block, there doesn't appear to be any hardware Trojan in the design. The design consists of standard AES encryption modules and a key generation module. However, it's important to note that hardware Trojans can be inserted at various stages of the design process, and a comprehensive analysis would require further investigation and testing.

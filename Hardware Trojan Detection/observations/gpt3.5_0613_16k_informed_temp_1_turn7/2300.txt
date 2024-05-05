@@ -1,0 +1,14 @@
+Security Analysis:
+- aes_128: This module is the implementation of the AES-128 encryption algorithm. It takes in a 128-bit state and key and produces a 128-bit output. The security of AES-128 is well-studied and it is considered to be a secure cryptographic algorithm.
+
+- expand_key_128: This module expands the 128-bit input key into 9 round keys using the AES key schedule. It uses a round constant (rcon) to generate the expanded keys. The security of the key expansion algorithm is also well-studied and it is considered to be secure.
+
+- one_round: This module performs one round of the AES encryption. It takes in a 128-bit state and key, performs the SubBytes, ShiftRows, MixColumns, and AddRoundKey operations, and produces a new 128-bit state. These operations are also well-studied and are considered to be secure.
+
+- final_round: This module performs the final round of the AES encryption. It is similar to the one_round module but does not include the MixColumns operation. The final_round module is also secure.
+
+- table_lookup: This module performs table lookups for the SubBytes operation in the AES encryption algorithm. It takes in a 32-bit input, performs a lookup in the AES S-box, and produces a 32-bit output. The S-box is a well-studied component of AES and is considered to be secure.
+
+Hardware Trojan: No, there is no hardware trojan in the design.
+
+Explanation: The given AES design does not include any hardware trojan. Hardware trojans are malicious modifications to the design that can be inserted during the manufacturing process and can compromise the security or functionality of the chip. However, it is important to note that the absence of a trojan in the design does not guarantee the absence of a trojan in the actual manufactured chip. Chip manufacturers employ various techniques to prevent the insertion of trojans, such as extensive testing and verification processes.

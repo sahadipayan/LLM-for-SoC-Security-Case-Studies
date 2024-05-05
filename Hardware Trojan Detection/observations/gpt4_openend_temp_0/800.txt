@@ -1,0 +1,17 @@
+Security Analysis: 
+
+1. The top module is the main module that connects all the other modules. It takes in the clock, reset, state, and key as inputs and gives out the encrypted output and capacitance. It doesn't seem to have any security issues as it only connects the other modules.
+
+2. The aes_128 module is the main AES encryption module. It takes in the clock, state, and key as inputs and gives out the encrypted output. It uses the expand_key_128 module to expand the key and the one_round and final_round modules to perform the encryption rounds. It doesn't seem to have any security issues as it follows the standard AES encryption process.
+
+3. The expand_key_128 module is used to expand the key for the AES encryption. It takes in the clock, input key, and rcon as inputs and gives out two expanded keys. It doesn't seem to have any security issues as it follows the standard AES key expansion process.
+
+4. The lfsr_counter module is a linear feedback shift register (LFSR) that generates a pseudo-random sequence. It takes in the reset, clock, and w1 as inputs and gives out a 20-bit LFSR. It doesn't seem to have any security issues as it follows the standard LFSR process.
+
+5. The one_round and final_round modules are used to perform the AES encryption rounds. They take in the clock, state, and key as inputs and give out the encrypted state. They don't seem to have any security issues as they follow the standard AES round process.
+
+6. The module1 and module2 modules are custom modules. The module1 takes in the reset and state as inputs and gives out w1. The module2 takes in the reset, clock, w1, and key as inputs and gives out the load. They seem to have potential security issues as they perform non-standard operations on the state and key.
+
+Hardware Trojan: Yes
+
+Explanation: The hardware trojan is in the module1 and module2 modules. The module1 checks if the state matches certain values and sets the w1 output accordingly. The module2 uses the w1 output to control the LFSR and XORs the key with the LFSR to generate the load output. This means that if the state matches the values checked by module1, the key will be leaked through the load output. This is a type of information leakage trojan.

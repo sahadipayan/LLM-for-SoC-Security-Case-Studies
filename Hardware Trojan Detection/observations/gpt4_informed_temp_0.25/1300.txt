@@ -1,0 +1,9 @@
+Hardware Trojan: Yes
+Security Analysis: 
+1. Top Module: This is the main module that connects all other modules. It does not seem to have any security issues on its own, but it is responsible for managing the data flow between other modules, which could potentially contain Trojans.
+2. AES_128 Module: This is the main AES encryption module. It doesn't seem to have any security issues on its own, but it relies on the key expansion and round modules, which could potentially contain Trojans.
+3. Expand_Key_128 Module: This module is responsible for key expansion in AES. It doesn't seem to have any security issues on its own.
+4. Module1: This module checks if the input state equals a specific value and sets the output w1 accordingly. This could potentially be a trigger for a Trojan in another module.
+5. Module2: This module contains shift registers that are controlled by the output of Module1 and the round keys. This is where the Trojan is located.
+
+Explanation: The Trojan is located in Module2. It uses the output of Module1 (w1) and the round keys (rk1-rk8) to control eight shift registers. When the input state equals a specific value, Module1 sets w1 to 1, which enables the shift registers in Module2. Each shift register is enabled when the bitwise AND of the least significant bit of the state and the corresponding round key equals 1. When a shift register is enabled, it continuously shifts its contents, which increases power consumption and can potentially leak information about the round keys. This Trojan could be used to perform a power analysis attack to recover the AES key.

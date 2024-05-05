@@ -1,0 +1,18 @@
+Hardware Trojan: Yes
+Security Analysis:
+- aes_128 module: The aes_128 module implements the AES encryption algorithm. It takes a clock signal, state and key inputs, and generates the encrypted output. From a security perspective, this module is designed to perform the encryption correctly and securely. However, it can be vulnerable to hardware trojans that modify the encryption process or leak sensitive information.
+
+- expand_key_128 module: The expand_key_128 module is responsible for generating the round keys used in the AES encryption algorithm. It takes a clock signal, input key, and rcon (round constant) as inputs, and generates two sets of round keys as outputs. From a security perspective, this module is critical for the security of the AES encryption algorithm. Any hardware trojan in this module could compromise the security of the encryption process by manipulating the round keys.
+
+- one_round module: The one_round module implements one round of the AES encryption algorithm. It takes a clock signal, state input, key input, and generates the updated state output. From a security perspective, this module is designed to perform the encryption round correctly and securely. However, it can be vulnerable to hardware trojans that modify the encryption process or leak sensitive information.
+
+- final_round module: The final_round module implements the final round of the AES encryption algorithm. It takes a clock signal, state input, key input, and generates the final encrypted output. From a security perspective, this module is designed to perform the final round correctly and securely. However, it can be vulnerable to hardware trojans that modify the encryption process or leak sensitive information.
+
+- S4 module: The S4 module is a substitution box used in the AES encryption algorithm. It takes a clock signal, input data, and generates the substituted output. From a security perspective, this module is critical for the security of the AES encryption algorithm. Any hardware trojan in this module could compromise the security of the encryption process by manipulating the substitution box.
+
+- module1: This module introduces a trojan by setting the signal w1 high for two clock cycles when the state input is all ones (128'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF). This trojan can be activated by providing the specific input sequence and can potentially manipulate the behavior of the system.
+
+- module2: This module introduces a trojan by using a shift register to store the key and shifting it by one bit every clock cycle. The trojan is activated when the signal w1 is high. The output o is set to 1 when certain conditions involving the Baud8GeneratorACC counter and the SHIFTReg are met. This trojan can potentially leak sensitive information by transmitting it through the output signal o.
+
+Explanation:
+The design contains two hardware trojans: one in module1 and one in module2. The trojan in module1 activates when the state input is all ones and sets the signal w1 high for two clock cycles. This trojan can potentially manipulate the behavior of the system when activated by providing the specific input sequence. The trojan in module2 activates when the signal w1 is high and leaks sensitive information by transmitting it through the output signal o. It uses a shift register to store the key and continuously shifts it by one bit every clock cycle. The trojan activates when certain conditions involving the Baud8GeneratorACC counter and the SHIFTReg are met, and the output o is set to 1.

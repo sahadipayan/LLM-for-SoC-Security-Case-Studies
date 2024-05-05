@@ -1,0 +1,16 @@
+Security Analysis:
+- aes_128 module: This module implements the AES-128 block cipher algorithm. It takes a clock signal, state, and key as inputs, and produces the encrypted output. The module consists of several sub-modules that perform key expansion, one round encryption, and final round encryption.
+
+- expand_key_128 module: This module is responsible for expanding the input key into multiple round keys. It takes the clock signal, input key, and a round constant as inputs, and produces two sets of round keys as outputs. The module uses a shift register and XOR operations to generate the round keys.
+
+- one_round module: This module performs one round of encryption in the AES algorithm. It takes the clock signal, input state, round key, and produces the output state. The module uses table lookups and XOR operations to perform the encryption.
+
+- final_round module: This module performs the final round of encryption in the AES algorithm. It takes the clock signal, input state, input key, and produces the output state. The module uses table lookups and XOR operations to perform the encryption.
+
+- module1 module: This module generates a control signal (w1) based on a counter. The counter is incremented on each clock cycle, and when it reaches a specific value, the control signal is set to 1. Otherwise, the control signal is set to 0.
+
+- module2 module: This module generates a control signal (w2) based on the input key and a shift register. The shift register is initialized with the input key, and on each clock cycle, it shifts the bits to the right. The least significant bit of the shift register is used to set the control signal.
+
+Hardware Trojan: No hardware trojan is present in the design.
+
+Explanation: There is no hardware trojan present in the given design. The design consists of modules that implement the AES-128 block cipher algorithm and perform key expansion, encryption rounds, and final encryption. There are no additional functionalities or malicious behaviors observed in the design that could indicate the presence of a hardware trojan.

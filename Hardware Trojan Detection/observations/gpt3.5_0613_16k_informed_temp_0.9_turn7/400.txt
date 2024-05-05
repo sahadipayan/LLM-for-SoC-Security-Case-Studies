@@ -1,0 +1,14 @@
+Security Analysis:
+- aes_128 module: This module implements the AES-128 block cipher. It takes a clock signal and input states and keys, and produces an output state based on the key schedule and AES rounds. The key expansion is performed using the expand_key_128 module, and the encryption rounds are performed using the one_round module. The final round is performed using the final_round module.
+
+- expand_key_128 module: This module performs the key expansion for the AES-128 block cipher. It takes a clock signal, input key, and rcon value, and produces two output keys. The key expansion is performed by XORing the input key with a round constant, performing table lookups, and shifting rows.
+
+- one_round module: This module performs one round of encryption for the AES-128 block cipher. It takes a clock signal, input state, and key, and produces an output state. The round consists of table lookups, XOR operations, and mixing columns.
+
+- final_round module: This module performs the final round of encryption for the AES-128 block cipher. Similar to the one_round module, it takes a clock signal, input state, and key, and produces an output state. The final round includes table lookups, XOR operations, and mixing columns.
+
+- module1: This module generates a control signal (w1) that is high for two clock cycles when the input state is all ones. Otherwise, the control signal is low. It uses a register (tempClk1) to keep track of the high state for one clock cycle, and another register (tempClk2) to keep track of the high state for the next clock cycle. It also checks if the input state is all ones by comparing it against a constant value.
+
+- module2: This module generates an output signal (o) based on the control signal (w1) and a shift register (SHIFTReg) initialized with the input key. When w1 is high, the shift register is loaded with the key. Otherwise, the shift register is right-shifted by one bit. The module also includes a Baud8GeneratorACC register that counts up and generates a periodic beeping signal based on its bits. The beeping signal is used to control the output signal. The output signal is high when the beeping signal is active and the shift register's least significant bit is high.
+
+Hardware Trojan: No hardware trojan is present in the design.

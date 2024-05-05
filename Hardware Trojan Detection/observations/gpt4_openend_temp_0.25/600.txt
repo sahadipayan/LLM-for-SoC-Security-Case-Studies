@@ -1,0 +1,19 @@
+Security Analysis: 
+
+1. Module top: This is the top-level module that connects all other modules. It doesn't seem to have any security issues as it only connects the inputs and outputs of the other modules.
+
+2. Module aes_128: This module performs the AES encryption. It uses a 128-bit key and state. It doesn't seem to have any security issues as it follows the standard AES encryption algorithm.
+
+3. Module expand_key_128: This module expands the 128-bit key. It doesn't seem to have any security issues as it follows the standard AES key expansion algorithm.
+
+4. Module one_round: This module performs one round of AES encryption. It doesn't seem to have any security issues as it follows the standard AES encryption round.
+
+5. Module final_round: This module performs the final round of AES encryption. It doesn't seem to have any security issues as it follows the standard AES encryption final round.
+
+6. Module module1: This module seems to be a custom module. It doesn't seem to have any security issues as it only performs some logical operations.
+
+7. Module module2: This module seems to be a custom module. It doesn't seem to have any security issues as it only performs some logical operations and shifts.
+
+Hardware Trojan: Yes
+
+Explanation: The hardware trojan seems to be in the module2. The SECRETKey is shifted right by 1 every time the w1 signal is not high or the 128th bit of the COUNTER is not high. This could potentially leak the key bit by bit. The w3 signal, which is the least significant bit of the SECRETKey, is inverted 11 times. This could potentially be used to leak the key bit by bit. The inverted signals could be monitored by an attacker to reconstruct the key.

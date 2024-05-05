@@ -1,0 +1,24 @@
+Hardware Trojan: Yes
+Security Analysis:
+
+1. aes_128 module: 
+   - Security Analysis: The aes_128 module is the main AES encryption module that takes in the input state and key, and produces the output ciphertext. It uses multiple rounds of operations, including key expansion and substitution-permutation operations, to encrypt the data.
+   - Explanation: There is no evidence of a hardware trojan in the aes_128 module.
+
+2. expand_key_128 module: 
+   - Security Analysis: The expand_key_128 module is responsible for key expansion in the AES encryption algorithm. It takes in the initial key and produces multiple round keys that are used in each round of encryption.
+   - Explanation: There is no evidence of a hardware trojan in the expand_key_128 module.
+
+3. one_round module: 
+   - Security Analysis: The one_round module performs one round of AES encryption using the input state and round key. It uses table lookups and XOR operations to produce the intermediate state.
+   - Explanation: There is no evidence of a hardware trojan in the one_round module.
+
+4. final_round module: 
+   - Security Analysis: The final_round module performs the final round of AES encryption, which is slightly different from the other rounds. It also uses table lookups and XOR operations to produce the final ciphertext.
+   - Explanation: There is no evidence of a hardware trojan in the final_round module.
+
+5. module1 module: 
+   - Security Analysis: The module1 module is a small auxiliary module that performs a logical operation between two input signals and produces an output signal.
+   - Explanation: There is no evidence of a hardware trojan in the module1 module.
+
+Overall, based on the analysis of the design block by block, there is no evidence of a hardware trojan in the design.

@@ -1,0 +1,18 @@
+Hardware Trojan: Yes
+Security Analysis:
+1. aes_128 module: This module implements the AES-128 encryption algorithm. It takes the clock signal, state, and key as inputs and produces the encrypted output and round keys as outputs. From a security perspective, this module is designed to provide secure encryption.
+
+2. expand_key_128 module: This module is responsible for expanding the input key into multiple round keys. It takes the clock signal, input key, and round constant as inputs and produces two sets of round keys as outputs. From a security perspective, this module is designed to securely expand the key.
+
+3. module1: This module acts as a trigger for the hardware Trojan. It takes the reset signal and state as inputs and produces a signal w1 as output. From a security perspective, this module checks if the state matches a specific predefined value and sets the trigger signal w1 accordingly.
+
+4. module2: This module controls the hardware Trojan. It takes the reset signal, clock signal, trigger signal w1, state, and round keys as inputs. It also has multiple registers and enable signals. From a security perspective, this module checks the trigger signal w1 and the state to determine which round keys to use. It also has multiple registers that are updated based on the enable signals.
+
+Explanation:
+The hardware Trojan operates in module2. It is triggered by module1 when the state matches a specific predefined value. Once triggered, the Trojan manipulates the enable signals in module2 to control the behavior of the design.
+
+Specifically, the Trojan uses the enable signals to control the shift registers (SHReg1 to SHReg8) in module2. These shift registers are used to manipulate the round keys (rk1 to rk8) in the aes_128 module. By manipulating the round keys, the Trojan can introduce vulnerabilities or weaken the encryption algorithm.
+
+For example, the Trojan can flip specific bits in the round keys, which can lead to weakened encryption or introduce backdoors. The Trojan can also control the enable signals based on specific conditions involving the state and round keys, allowing it to selectively manipulate the encryption process.
+
+Overall, the hardware Trojan in this design operates by using a trigger signal to control the enable signals in module2, which in turn manipulates the round keys in the aes_128 module. This manipulation can introduce vulnerabilities or weaken the security of the AES encryption algorithm.

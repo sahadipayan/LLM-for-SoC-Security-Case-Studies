@@ -1,0 +1,11 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+1. expand_key_128 module: This module is responsible for expanding the input key into round keys. It takes the input key and generates 10 round keys using a key schedule algorithm. From a security perspective, this module is vulnerable to a hardware trojan that inserts known bits into the AES key schedule, leaking one byte of the round key each round. This can compromise the security of the AES encryption.
+
+2. one_round module: This module performs one round of AES encryption. It takes the input state and round key as inputs and produces the output state. From a security perspective, this module is vulnerable to a hardware trojan that flips the least significant bit of the encrypted output when two specific signals in the AES-128 cipher are high. This can introduce errors in the encryption process and potentially weaken the security of the AES algorithm.
+
+3. final_round module: This module performs the final round of AES encryption. It takes the input state and round key as inputs and produces the output state. From a security perspective, this module is vulnerable to a hardware trojan that flips the least significant bit of the output when certain conditions involving two counters are met. This can introduce errors in the encryption process and compromise the security of the AES algorithm.
+
+Explanation:
+The hardware trojans in this design operate by manipulating the encryption process of the AES algorithm. They exploit vulnerabilities in the key schedule and encryption rounds to leak information or introduce errors in the encryption process. These trojans can compromise the security of the AES algorithm and potentially allow unauthorized access to encrypted data.

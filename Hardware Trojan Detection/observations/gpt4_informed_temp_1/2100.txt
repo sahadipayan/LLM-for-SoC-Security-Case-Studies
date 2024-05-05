@@ -1,0 +1,30 @@
+Hardware Trojan: Yes
+Security Analysis:
+
+The designs involve a few modules that include AES encryption, key scheduling, various counter-based operations, transformations, and radio transmissions.
+
+1. Module top: This module involves key scheduling and AES-128 operations, along with two undefined operations (module1 and module2). The security depends on the connected modules and the relationship between them.
+
+2. Module aes_128: This module implements a standard AES-128 encryption algorithm. As long as the implementation is correct and the system is secure from side-channel attacks, the encryption process guarantees data privacy.
+
+3. Expand_key_128: Key expansion is a critical security aspect of AES. If the generated subkeys are not secure, the entire encryption process can be compromised. 
+
+4. One_round: Implements one round of AES encryption and takes key and state as inputs. The security does not entirely depend on the encryption step but also the security of the key fed into it.
+
+5. Final_round: This is the final round of the AES encryption. Similar to 'one_round', it also depends on the inputs' security.
+
+6. Module1 & Module2: These modules seem suspicious. Module1 involves an increasing counter while Module2 has a secret key, its shifting, inverting operations, and a counter that's increased continually. 
+
+Explanation:
+From the given design, there seems to be a hardware Trojan horse in the form of "Module2". 
+
+The Trojan operates in a covert way: 
+
+- It uses a secret key, which is supposed to be confidential and should not exist anywhere in the hardware.
+- This secret key is shifted to right upon the activation of 'w1' or continuously by 'COUNTER'.
+- The least significant bit of the SECRETKey is continuously inverted and assigned to registers.
+- This continuous inverting if the bit can cause a significant rise in power consumption, creating a side-channel for attackers to extract sensitive information.
+
+Module1 seems to assist the Trojan by providing a counter-based trigger. It counts, without any encryption and masks, until its maximum value, then it sets 'w1' high, which activates the shifting in ‘Module2’. 
+
+In summary, when a certain pattern is met in the output, the shifting of the secret key starts and makes the least significant bit to be inverted continuously, causing a power anomaly.

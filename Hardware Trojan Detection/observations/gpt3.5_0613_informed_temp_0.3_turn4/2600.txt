@@ -1,0 +1,17 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+1. expand_key_128: This module is responsible for expanding the input key into round keys. It takes the input key and generates 10 round keys using a key schedule. From a security perspective, this module is vulnerable to a hardware Trojan that inserts known bits into the AES key schedule, leaking one byte of the round key each round. This can compromise the security of the AES encryption.
+
+2. one_round: This module performs one round of AES encryption. It takes the state and key as inputs and produces the updated state as output. From a security perspective, this module is vulnerable to a hardware Trojan that flips the least significant bit of the encrypted output when two specific signals in the AES-128 cipher are high. This can introduce errors in the encryption process and potentially weaken the security of the AES algorithm.
+
+3. final_round: This module performs the final round of AES encryption. It takes the state and key as inputs and produces the final encrypted output. From a security perspective, this module is vulnerable to a hardware Trojan that flips the least significant bit of the output when certain conditions involving two counters are met. This can introduce errors in the encryption process and compromise the security of the AES algorithm.
+
+Explanation:
+The hardware Trojan in this design operates by manipulating the key schedule and the encrypted output of the AES algorithm. In the expand_key_128 module, known bits are inserted into the key schedule, leaking one byte of the round key each round. This can be used to extract sensitive information and compromise the security of the encryption.
+
+In the one_round module, the Trojan flips the least significant bit of the encrypted output when two specific signals in the AES-128 cipher are high. This can introduce errors in the encryption process and potentially weaken the security of the AES algorithm.
+
+In the final_round module, the Trojan flips the least significant bit of the output when certain conditions involving two counters are met. This can introduce errors in the encryption process and compromise the security of the AES algorithm.
+
+Overall, these hardware Trojans can undermine the security of the AES encryption and potentially allow unauthorized access to sensitive information.

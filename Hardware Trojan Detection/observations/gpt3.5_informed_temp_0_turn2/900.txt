@@ -1,0 +1,12 @@
+Hardware Trojan: Yes
+Security Analysis:
+- aes_128 module: The AES encryption module appears to be secure and does not contain any obvious vulnerabilities.
+- expand_key_128 module: The key expansion module also seems secure and does not exhibit any vulnerabilities.
+- one_round module: The one round AES module does not have any apparent security vulnerabilities.
+- final_round module: The final round AES module also appears to be secure and does not exhibit any vulnerabilities.
+- lfsr_counter module: The LFSR counter module does not have any security vulnerabilities.
+- module1 module: The module1 module does not have any security vulnerabilities.
+- module2 module: The module2 module does not have any security vulnerabilities.
+
+Explanation:
+There is no hardware Trojan

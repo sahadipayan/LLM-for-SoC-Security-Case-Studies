@@ -1,0 +1,14 @@
+Hardware Trojan: Yes
+Security Analysis:
+- aes_128 module: This module implements the AES-128 cipher. It takes in a clock signal, reset signal, state, and key inputs, and produces an encrypted output. The security of the AES algorithm is well-established and widely studied, and there are no known vulnerabilities or weaknesses in its design.
+
+- expand_key_128 module: This module is responsible for expanding the initial key into a series of round keys used in the AES encryption process. It takes in the clock signal, input key, and round constant as inputs, and produces two sets of round keys as outputs. The design of this module follows the standard AES key expansion algorithm, and there are no security concerns identified.
+
+- one_round module: This module performs one round of the AES encryption process. It takes in the clock signal, input state, key as inputs, and produces the updated state as the output. The module includes table lookups and XOR operations to perform the necessary transformations. The security of this module relies on the security of the AES algorithm itself, which is considered secure.
+
+- final_round module: This module performs the final round of the AES encryption process. It takes in the clock signal, input state, and key as inputs, and produces the final encrypted state as the output. Similar to the one_round module, the security of this module is dependent on the security of the AES algorithm.
+
+- module1 module: This module is a separate component from the AES algorithm. It takes in the clock signal, reset signal, and two input signals (r1 and r2), and produces an output signal (w2). The module contains a counter that increments on every clock cycle and resets on a reset signal. The output signal w2 is activated when the input signals r1 and r2 are both high and when the fourth bit of the counter is high. 
+
+Explanation:
+From the given design, there is a hardware Trojan present in the form of the module1 module. The Trojan operates by incrementing a counter on each clock cycle and checking if the input signals r1 and r2 are both high. If they are, it further checks if the fourth bit of the counter is high. If all these conditions are met, it activates the output signal w2. This behavior is unexpected and suspicious as it introduces additional logic that can potentially manipulate the system during normal operation. The purpose and intention of this particular hardware Trojan are not specified, but it could be used for malicious purposes such as leaking secret information or disrupting the functionality of the system.

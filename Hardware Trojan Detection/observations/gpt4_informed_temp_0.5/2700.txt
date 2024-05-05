@@ -1,0 +1,25 @@
+Security Analysis: 
+
+The AES design is divided into several modules, each performing a specific function in the encryption process. 
+
+1. aes_128: This is the main module that coordinates all the operations. It takes in the plaintext and key as inputs, and outputs the ciphertext. The security of this module depends on the proper functioning of all the sub-modules.
+
+2. expand_key_128: This module is responsible for expanding the input key into multiple round keys. If there is a flaw in this module, the round keys could be predictable, which would compromise the security of the entire encryption process.
+
+3. module1: This module seems to be a counter that increments with each clock cycle. It is unclear how this module is used in the encryption process, so further investigation is needed to assess its security implications.
+
+4. one_round: This module performs one round of the AES encryption process. It includes a table lookup operation, which could potentially be a target for side-channel attacks.
+
+5. final_round: This module performs the final round of the AES encryption process. Like the one_round module, it could potentially be a target for side-channel attacks.
+
+Hardware Trojan: Yes
+
+Explanation: 
+
+The hardware Trojan is located in the module1. This module contains two counters (counter and counter2) that increment with each clock cycle. The output of the module (w2) is the 4th bit of counter2. This output is then XORed with the least significant bit of the ciphertext in the aes_128 module. 
+
+This Trojan could potentially leak information about the encryption process. For example, an attacker could monitor the changes in the least significant bit of the ciphertext to gather information about the counter values. Over time, this could allow the attacker to reverse engineer the key or plaintext. 
+
+Furthermore, the Trojan could potentially disrupt the encryption process by causing the least significant bit of the ciphertext to flip at unpredictable intervals. This could result in incorrect decryption, leading to loss of data integrity. 
+
+This Trojan is subtle and could potentially go undetected during functional testing, as it does not affect the main functionality of the AES encryption process. However, it poses a significant security risk and should be removed.

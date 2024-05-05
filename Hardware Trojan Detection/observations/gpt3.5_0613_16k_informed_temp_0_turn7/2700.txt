@@ -1,0 +1,14 @@
+Security Analysis:
+- aes_128 module: This module implements the AES-128 block cipher algorithm. It takes in a clock signal, reset signal, state input, and key input, and produces an output. The module consists of several sub-modules that perform different operations such as key expansion, one round of encryption, and the final round of encryption.
+
+- expand_key_128 module: This module is responsible for expanding the input key into a set of round keys. It takes in the clock signal, input key, and a round constant, and produces two outputs - out_1 and out_2. The module uses a combination of XOR and shift operations to generate the round keys.
+
+- one_round module: This module performs one round of encryption in the AES algorithm. It takes in the clock signal, state input, key, and produces a state output. The module uses table lookups and XOR operations to perform the encryption.
+
+- final_round module: This module performs the final round of encryption in the AES algorithm. It takes in the clock signal, state input, key input, and produces a state output. The module uses table lookups and XOR operations similar to the one_round module.
+
+- module1 module: This module is a counter that increments on each clock cycle. It takes in the clock signal, reset signal, and produces an output w2. The output w2 is set to 1 when the fourth bit of the counter is high.
+
+Hardware Trojan: Yes
+
+Explanation: The hardware Trojan is present in the module1 module. The Trojan is triggered when the fourth bit of the counter is high. When triggered, the Trojan attacks encryption by flipping the least significant bit of the existing encrypted output. This can potentially lead to the corruption of the encrypted data and compromise the security of the system.

@@ -1,0 +1,52 @@
+Security Analysis:
+- module aes_128:
+  - The AES-128 module implements the AES encryption algorithm.
+  - It takes a clock signal, state input (128-bit plaintext), and key input (128-bit key).
+  - It produces an output (128-bit ciphertext) and an output signal o.
+  - The module contains internal registers and wires to store intermediate values during the encryption process.
+  - The encryption process consists of several rounds, each round performing specific operations on the state and key inputs.
+  - The round operations include table lookups, XOR operations, and shifting operations.
+  - The final round produces the ciphertext as the output.
+  - The module appears to be secure from a design perspective.
+
+- module expand_key_128:
+  - The expand_key_128 module is responsible for generating the round keys used in the AES encryption algorithm.
+  - It takes a clock signal, input key (128-bit key), and RCON value (8-bit constant).
+  - It produces two output keys (out_1 and out_2).
+  - The module performs key expansion by applying various operations on the input key.
+  - The operations include XOR operations, table lookups, and shifting operations.
+  - The generated round keys are stored in registers and passed as outputs.
+  - The module appears to be secure from a design perspective.
+
+- module one_round:
+  - The one_round module represents one round of the AES encryption algorithm.
+  - It takes a clock signal, state input (128-bit state), key input (128-bit key), and produces a state output (128-bit state).
+  - The module performs various operations on the state and key inputs to produce the updated state output.
+  - The operations include table lookups, XOR operations, and assignments.
+  - The updated state is stored in registers and passed as the output.
+  - The module appears to be secure from a design perspective.
+
+- module final_round:
+  - The final_round module represents the final round of the AES encryption algorithm.
+  - It takes a clock signal, state input (128-bit state), key input (128-bit key), and produces a state output (128-bit state).
+  - The module performs similar operations to the one_round module but with a different set of constants.
+  - The updated state is stored in registers and passed as the output.
+  - The module appears to be secure from a design perspective.
+
+- module module1:
+  - The module1 module takes a reset signal, clock signal, state input (128-bit state), and produces an output w1.
+  - The module contains internal registers and wires to store intermediate values.
+  - The module uses the state input to determine the value of w1.
+  - The value of w1 is determined based on the values of tempClk1, tempClk2, and w3.
+  - The module appears to be secure from a design perspective.
+
+- module module2:
+  - The module2 module takes a key input (128-bit key), clock signal, reset signal, w1 input, and produces an output o.
+  - The module contains internal registers and wires to store intermediate values.
+  - The module uses the w1 input to determine the value of the output o.
+  - The value of o is determined based on the values of Baud8GeneratorACC, SHIFTReg, beep1, beep2, beeps, MUX_Sel, and rst.
+  - The module appears to be secure from a design perspective.
+
+Hardware Trojan: No
+
+Explanation: There is no evidence of a hardware trojan in the AES design. The design appears to be secure and free from any malicious or unintended functionalities.

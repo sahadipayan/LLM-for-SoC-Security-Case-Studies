@@ -1,0 +1,11 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+1. expand_key_128 module: This module is responsible for expanding the input key into round keys. It takes the input key and generates 10 round keys using a key schedule algorithm. From a security perspective, this module is vulnerable to a hardware Trojan that can insert known bits into the AES key schedule, leaking one byte of the round key each round. This can be done by modifying the values of the rcon input, which is used to XOR with the first byte of the key in each round. By manipulating the rcon values, an attacker can leak information about the key.
+
+2. one_round module: This module performs one round of the AES encryption algorithm. It takes the input state and round key, and produces the output state. From a security perspective, this module is vulnerable to a hardware Trojan that can flip the least significant bit of the encrypted output when two specific signals in the AES-128 cipher are high. This can lead to a bit-flipping attack, where an attacker can modify the encrypted output by flipping a single bit, potentially compromising the security of the encryption.
+
+3. final_round module: This module performs the final round of the AES encryption algorithm. It takes the input state and round key, and produces the output state. From a security perspective, this module is vulnerable to a hardware Trojan that can flip the least significant bit of the output when certain conditions involving two counters are met. This can also lead to a bit-flipping attack, similar to the one in the one_round module.
+
+Explanation:
+The hardware Trojan in this design operates by manipulating the key schedule and the output of the encryption algorithm. By inserting known bits into the key schedule or flipping specific bits in the encrypted output, an attacker can weaken the security of the AES encryption. These Trojans can be activated based on specific input sequences or predefined conditions, allowing an attacker to control when and how the Trojans are triggered. The exact mechanism of how the Trojans are inserted into the design is not provided in the given information.

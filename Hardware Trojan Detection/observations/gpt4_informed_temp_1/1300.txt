@@ -1,0 +1,10 @@
+Hardware Trojan: Yes
+Security Analysis:
+1. Module Top: This is the top level module that instantiates the AES core along with module1 and module2.
+2. Module AES_128: This is the main AES cipher computation block. It is standard AES-128 implementation where data(state), key, and clock signals are required as input and generates 128-bit encrypted output. It doesn't seem to have any obvious security weakness.
+3. Module Expand_Key_128: This module is responsible for key schedule in AES. No obvious Trojan or backdoor found.
+4. Module1: This module seems to activate when the plaintext/state is equal to a specific hex code (128'h00112233_44556677_8899aabb_ccddeeff). It's output 'w1' is used to control the actions of the subsequent modules and could be part of a Trojan.
+5. Module2: This module checks the round keys and the state in conjunction with 'w1', and continuously shifts a byte ('SHReg') if a certain condition is met. This process could potentially drain power and could be part of a power leakage Trojan. The Trojan could be used to slow down the system or even drain battery life for devices that are reliant on battery power.
+
+Explanation:
+The Trojan seems to be activated when the system receives a specific plaintext value (128'h00112233_44556677_8899aabb_ccddeeff). When the input matches this specific value, it activates module1, which then sets its output w1 to 1. This output w1 is used in module2 where it checks each round keys along with the state. If the specific condition is met, then it starts a continuous byte rotation using shift registers (SHReg). This continuous operation could introduce a substantial power drain, hence it acts as a power leakage Trojan. This can be harmful for devices that are reliant on battery power as it can exhaust the battery prematurely. Also, it can slow down the system performance.

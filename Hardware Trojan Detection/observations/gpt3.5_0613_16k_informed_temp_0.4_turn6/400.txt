@@ -1,0 +1,15 @@
+Security Analysis:
+- aes_128 module: The aes_128 module implements the AES encryption algorithm. From a security perspective, the AES algorithm is considered secure and widely used in cryptographic applications. However, the security of the AES implementation also depends on the security of the key and the implementation itself.
+
+- expand_key_128 module: The expand_key_128 module is responsible for expanding the input key into round keys used in the AES encryption algorithm. The module performs key expansion using a combination of XOR and table lookup operations. The security of the key expansion process is crucial for the overall security of the AES encryption.
+
+- one_round module: The one_round module performs one round of the AES encryption algorithm. It takes the input state and the round key as inputs and produces the output state. The security of this module depends on the correct implementation of the AES round operations and the security of the round key.
+
+- final_round module: The final_round module performs the final round of the AES encryption algorithm. It is similar to the one_round module but does not include the MixColumns operation. The security of this module is also dependent on the correct implementation of the AES round operations and the security of the round key.
+
+- module1: The module1 module introduces a signal w1 that is high for two clock cycles when the input state is all ones (128'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF). This module can potentially be used to trigger a hardware trojan.
+
+- module2: The module2 module uses the signal w1 and a Baud8GeneratorACC counter to control the output signal o. The output signal o is high when the counter reaches a specific value and w1 is high. This module can potentially be used to implement a hardware trojan.
+
+Hardware Trojan: Yes
+Explanation: The module2 introduces a hardware trojan. When the input state is all ones, the module1 sets the signal w1 high for two clock cycles. This high signal w1 is used in module2 to control the output signal o. The output signal o is high when the Baud8GeneratorACC counter reaches a specific value and w1 is high. This trojan can be used to leak information or perform malicious operations when the input state is all ones.

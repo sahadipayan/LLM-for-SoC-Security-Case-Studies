@@ -1,0 +1,13 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+1. aes_128 module: This module implements the AES-128 encryption algorithm. It takes a 128-bit state and key as inputs and produces a 128-bit output. The module also includes sub-modules for key expansion and multiple rounds of encryption.
+
+2. expand_key_128 module: This module is responsible for expanding the input key into multiple round keys. It takes the input key and a round constant as inputs and produces two sets of round keys as outputs. The module uses a shift register and XOR operations to generate the round keys.
+
+3. module1: This module is a control module that sets the value of the signal w1 based on the values of the reset signal and the input state. If the reset signal is high or the input state matches a specific value, w1 is set to 1; otherwise, it is set to 0.
+
+4. module2: This module controls the shift register values based on the values of the enable signals and the clock signal. It includes eight enable signals (enable1 to enable8) that are activated based on specific conditions involving the input state and the corresponding round keys (rk1 to rk8). The shift register values (SHReg1 to SHReg8) are updated based on the enable signals and the clock signal.
+
+Explanation:
+The design includes a hardware Trojan that operates in module2. The Trojan is activated when the enable signals (enable1 to enable8) are high, which occurs when specific conditions involving the input state and the corresponding round keys (rk1 to rk8) are met. When the Trojan is activated, it causes the shift register values (SHReg1 to SHReg8) to rotate by one bit to the right. This increases the power consumption of the design, potentially allowing an attacker to detect the presence of the Trojan through power analysis techniques. The specific conditions for activation and the impact of the Trojan on the security of the AES algorithm are not provided in the given information.

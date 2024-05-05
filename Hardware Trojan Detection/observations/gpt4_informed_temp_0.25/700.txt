@@ -1,0 +1,19 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+1. Module Top: This module is the top-level module that connects all the other modules. It takes in the clock, reset, state, and key as inputs and gives out the encrypted output and capacitance as outputs. The Trojan is not directly present in this module but it connects the modules where the Trojan is present.
+
+2. AES_128: This module is responsible for the AES encryption. It takes the state and key as inputs and gives out the encrypted output. It uses the expand_key_128 and one_round modules to perform the encryption. There is no Trojan present in this module.
+
+3. Expand_key_128: This module is used in the AES_128 module to expand the key for the encryption. It does not contain any Trojan.
+
+4. One_round and final_round: These modules are used in the AES_128 module to perform the encryption rounds. They do not contain any Trojan.
+
+5. LFSR_counter: This module is a linear feedback shift register that generates a pseudo-random sequence. It is used in the module2 to generate a sequence that is XORed with the key. This is where the Trojan is present.
+
+6. Module1: This module activates the Trojan when the state is equal to a specific value. It outputs a signal w1 which is used to activate the LFSR_counter in module2.
+
+7. Module2: This module contains the main part of the Trojan. It takes the signal w1 from module1 and the key as inputs. When w1 is 1, it activates the LFSR_counter and XORs the output with the key. This modified key is then output as the load.
+
+Explanation: The Trojan operates by leaking the key through the load output of module2. When the state is equal to a specific value, module1 activates the LFSR_counter in module2 by setting w1 to 1. The LFSR_counter then generates a pseudo-random sequence that is XORed with the key. This modified key is then output as the load, effectively leaking the key.

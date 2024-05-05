@@ -1,0 +1,17 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+Overall, the design implements AES-128 encryption algorithm. The design uses multiple rounds of transformations performed on the input "state" which are influenced by the "key". Each round involves subbytes, shiftrows, and mixcolumns transformations, with a final round that involves only subbytes and shiftrows transformations. Usually, the input to these rounds would be passed through multiple stages of transformations which influence the original "state" input. 
+
+However, there appears to be a module which isn't part of standard AES design: "module1". Its function is handling the 's3' bit in the third round. In a genuine design this would not be required.
+
+1. AES module: Handles the state and key inputs and assigns values for output. This module acts as an instance of the whole AES encryption process and links other units/modules. This part seems secure and standard.
+
+2. Expand Key module: The purpose is to generate round keys from the initial key. This is necessary for each round of the AES encryption, except it doesn't seem to apply any form of masking, which can increase vulnerability to power analysis attacks. Therefore in terms of security, while functional, it might be lacking in robustness against certain side-channel attacks.
+
+3. One Round & Final Round modules: These modules performs the transformations necessary for each round of the AES encryption. The security of these modules comes into question with the introduction of module1. In a secure design, the state from one round would be passed untouched to the next round.
+
+4. Module1: This extra circuit created potentially behaves as a Hardware Trojan. It is manipulating the 's3' bit in the third round, and depending on the value of 'r1', it can increment a counter which appears to be interfering with the AES round operations.
+
+Explanation: 
+The Hardware Trojan is represented by the extra circuit - "module1". It is designed to exploit the 's3' state bit in the third round. The Trojan works by incrementing a counter every time the 'r1' (a subpart of 's3') is high or '1'. The output of this counter is then XOR'd with the final output bit (out[0]) of the AES encryption. The Trojan acts as a type of "binary leak" Hardware Trojan, it alters the encrypted output based on the internal state of the circuit, potentially leaking the key bits or plaintext. The condition for this leak is the 'r1' being high during the third round. This type of Trojan is difficult to detect but can cause severe compromise of encrypted data.

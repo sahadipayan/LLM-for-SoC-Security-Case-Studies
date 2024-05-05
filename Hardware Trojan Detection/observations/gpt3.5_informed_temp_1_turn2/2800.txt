@@ -1,0 +1,15 @@
+Hardware Trojan: Yes
+
+Security Analysis:
+- aes_128 module: This module is the main AES encryption module. It takes inputs of clock (clk), reset (rst), state, and key. It performs multiple rounds of AES encryption and generates the output (out). The state and key are XORed together to generate s0 and k0. The expand_key_128 and one_round modules are instantiated within this module to perform key expansion and encryption rounds, respectively. The final_round module is also instantiated to perform the final encryption round. Overall, the aes_128 module is crucial for the encryption process.
+
+- expand_key_128 module: This module is responsible for key expansion. It takes inputs of clock (clk), input key (in), and round constant (rcon). It generates two sets of key outputs (out_1 and out_2) for different purposes. The key expansion process involves XORing the input key with round constant, table lookups, and bitwise XOR operations between intermediate values. The expanded keys are then stored in registers for future rounds.
+
+- one_round module: This module performs one round of AES encryption. It takes inputs of clock (clk), previous state (state_in), current round key (key), and generates the updated state for the next round (state_out). The module utilizes table lookups and XOR operations with the round key to transform the state.
+
+- final_round module: This module is similar to the one_round module, but it is specifically designed for the final round of AES encryption. It takes inputs of clock (clk), previous state (state_in), key (key_in), and generates the final encrypted state (state_out).
+
+- module1 module: This module is a separate module not directly related to AES encryption. It takes inputs of clock (clk), reset (rst), and two specific signals (r1 and r2). It generates an output signal (w2) based on the counter values and the AND operation between signals r1 and r2.
+
+Explanation:
+Yes, there is a hardware trojan in the design. The hardware trojan operates in the module1 module. It activates when signals r1 and r2 are both high (logic level 1) and the most significant bit (MSB) of the 4-bit counter (counter[3]) is also high. When these conditions are met, the counter2 increments by 1. This trojan can potentially introduce malicious behavior and compromise the security of the system.

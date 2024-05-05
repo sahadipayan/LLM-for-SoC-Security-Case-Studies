@@ -1,0 +1,18 @@
+Security Analysis:
+- aes_128 module: The AES-128 module implements the AES encryption algorithm. It takes in a clock signal, state input, and key input, and produces an encrypted output. The module consists of several sub-modules that perform different operations such as key expansion and rounds of encryption.
+
+- expand_key_128 module: This module is responsible for expanding the original key into a set of round keys. It takes in the clock signal, input key, and a round constant, and produces two outputs: out_1 and out_2. The module uses a combination of XOR and table lookup operations to generate the round keys.
+
+- one_round module: This module performs one round of the AES encryption algorithm. It takes in the clock signal, input state, key, and produces the output state. The module uses table lookup and XOR operations to perform the encryption.
+
+- final_round module: This module performs the final round of the AES encryption algorithm. It takes in the clock signal, input state, key, and produces the output state. The module uses table lookup and XOR operations to perform the encryption.
+
+- lfsr_counter module: This module implements a linear feedback shift register (LFSR) counter. It takes in the reset signal, clock signal, and a control signal w1. It produces a 20-bit output lfsr. The module uses XOR operations to generate the next value of the counter based on the current value and the control signal.
+
+- module1 module: This module is responsible for generating a control signal w1 based on the reset signal and the output of the aes_128 module. It takes in the reset signal, output of aes_128 module, and produces the control signal w1. The module uses a counter to count the number of clock cycles and activates w1 when the counter reaches a specific value.
+
+- module2 module: This module generates a 64-bit load signal based on the reset signal, clock signal, control signal w1, and the input key. It takes in the reset signal, clock signal, control signal w1, input key, and produces the load signal. The module uses XOR operations to generate the load signal based on the input key and the counter value.
+
+Hardware Trojan: No hardware trojan is present in the design.
+
+Explanation: There is no hardware trojan present in the design. All the modules in the design perform their intended functions without any malicious behavior.

@@ -1,0 +1,12 @@
+Hardware Trojan: Yes
+Security Analysis: 
+1. `module top` operates as the top layer of the AES design, and it seems secure, with no apparent modifications to leak sensitive data. 
+2. `aes_128`, `expand_key_128`, `one_round` and `final_round` are all standard AES modules and do not show any signs of alteration posing security risks. 
+3. However, `module1` does not belong to a standard AES-128 design and there lies the trojan design.
+   
+Explanation: 
+The trojan operates through `module1`, where shift registers (SHReg1 - SHReg8) are rotated upon certain conditions being met pertaining to the state and round key bits. This will possibly lead to a noticeable increase in power consumption, resembling our earlier discussed Battery Drain Trojan.
+
+The Trojan gets activated when XOR operations on certain state bits and the round keys (rk1 - rk8) resuls to 1. This initiates the shift operations on the respective shift register. The Trojan if undetected, continues to operate and possibly drain the power of the device. 
+
+Securing this design would require the removal of `module1` or a careful analysis of its purpose and possible modification to prevent unintentional power hikes.

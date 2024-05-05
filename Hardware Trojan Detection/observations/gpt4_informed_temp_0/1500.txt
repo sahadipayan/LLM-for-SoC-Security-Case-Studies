@@ -1,0 +1,27 @@
+Hardware Trojan: Yes
+
+Security Analysis: 
+
+1. Module Top: This is the top-level module that connects all the other modules. It doesn't seem to have any security issues.
+
+2. Module AES_128: This is the main AES encryption module. It doesn't seem to have any security issues.
+
+3. Module Expand_key_128: This module is responsible for key expansion in AES. It doesn't seem to have any security issues.
+
+4. Module One_round: This module performs one round of AES encryption. It doesn't seem to have any security issues.
+
+5. Module Final_round: This module performs the final round of AES encryption. It doesn't seem to have any security issues.
+
+6. Module Module1: This module seems to be a counter that activates a signal (w1) when a certain condition is met. This could potentially be a security issue.
+
+7. Module Module2: This module seems to be the main source of the hardware Trojan. It uses the signal from Module1 to activate a series of shift registers based on certain conditions. This could potentially leak information about the encryption key.
+
+Explanation: 
+
+The hardware Trojan seems to be located in Module2. It uses the signal from Module1 (w1) to activate a series of shift registers. These shift registers are activated based on certain conditions involving the state and the round keys of the AES encryption. This could potentially leak information about the encryption key. 
+
+The shift registers seem to be initialized with a specific pattern ("10101010") and are rotated when their respective enable signal is high. This rotation could potentially be used to leak information about the key. 
+
+The enable signals are high when the signal from Module1 (w1) is high and a certain condition involving the state and the round keys is met. This condition is a bitwise AND operation followed by a bitwise XOR operation. This could potentially be used to select specific bits of the state and the round keys to leak.
+
+In conclusion, the hardware Trojan seems to be designed to leak information about the encryption key through a side-channel. The side-channel in this case is the power consumption of the device, which increases when the shift registers are rotating.
