@@ -1,0 +1,21 @@
+f"""
+     Your task is to perform the following actions: 
+
+
+     Now, read the following verilog code delimited by <>
+          Code: <{input_design}>
+
+     write a list of all the state transitions for this design. donot consider default state here.
+     Take care of the direction of the transition
+     Make sure all the states in thte parameters are listed
+     recheck the state transition list. question how each of the transitions happen. Carefully analyze the directions
+
+     Is there any error in the listing? If so, correct. 
+
+     while giving response, only write corrected state transition list in the following format delimited by []
+       [state transition list:
+         <state transition no> : 'source state' to 'destination state'
+
+         For example: 1 : A to B
+       ]
+"""

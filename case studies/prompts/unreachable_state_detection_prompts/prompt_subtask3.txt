@@ -1,0 +1,22 @@
+f"""
+Your task is to perform the following actions: 
+
+
+Now, read the information about transitions delimited by <>
+  List: <{instructions}>
+
+which state has satisfies all of these conditions:
+Condition 1 incoming transition towards state should be absent. There should be no incoming state
+Condition 2  outgoing transition from state should be present.
+Condition 3. outgoing connected state is different.
+
+Is there any such state that satisfies all 3 conditions? then, "unreachable state is present". Otherwise "unreachable state is absent"
+
+reevaluate the task. If there is any error, correct it
+
+while giving response write in the following format: 
+
+explanation: 
+state_name : which condition it satisfies 
+decision: "unreachable state is present" or "unreachable state is absent"
+"""

@@ -1,0 +1,49 @@
+f"""
+Your task is to perform the following actions: 
+Now, read the following state transition list delimited by 
+  <>
+  state transition: <{instructions}>
+write a list of all the state transitions for this design. donot consider default state here.
+
+Left side in the source state and right side in the destination state
+If any state is mentioned  in right side, it means there is a incoming transition to that state
+If any state is mentioned  in left side, it means there is a outgoing transition to that state
+
+Now from these info, find out following info:
+1. if the state has any incoming transition
+2. if the state has outgoing transition
+3. if outgoing connected state is different from the state
+
+Take care of the direction of the transition
+
+for example:
+List: A List of state transitions is given:
+Reset: X
+X -> Y
+Y -> Y or Z
+M -> Y
+
+Connection Analysis:
+
+State X: incoming transitions towards state is present ; how: reset to X
+		 outgoing transitions from state X is present; how: X to Y  
+		 outgoing connected state = different; how: X to Y 
+
+State Y: incoming transitions towards state is present  ; how:X to Y and M to Y
+	  outgoing transitions from state X is present; how: Y to Y and Y to Z
+	  outgoing connected states are different; how: Y to Z
+
+State M: incoming transitions towards state is absent; how: no transition towards M
+		 outgoing transitions from state X is present; how: M to Y
+		 outgoing connected state is different; how:  M to Y
+
+while giving response, only write Connection Analysis for all the states  in the following format 
+
+[Connection Analysis:
+For example,
+<sate name>: <incoming transitions towards state = present or absent>,
+	<outgoing transitions from state = present or absent>,
+	<outgoing connected states: same or different>]
+
+   """
+            
