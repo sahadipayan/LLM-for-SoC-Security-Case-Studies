@@ -1,0 +1,22 @@
+Hardware trojan can be inserted in different ways:
+CDMA-Based Leakage: The Trojan uses spread spectrum techniques to leak the AES key through a covert power side-channel. A pseudo-random number generator modulates the secret bits, which are then sent to a leakage circuit made of flip-flops.
+
+Leak via Key Schedule: The Trojan inserts known bits into the AES key schedule, leaking one byte of the round key each round. It uses a 16-bit shift register for this, which increases power consumption when activated.
+
+AM Radio Transmission 1: The Trojan modulates an unused chip pin to transmit key bits at 1560 KHz, which can be picked up by an AM radio. A beep scheme is used for the binary data, and the Trojan activates on a specific plaintext input.
+
+Battery Drain: This Trojan is meant for battery-powered devices like medical implants. It activates after a specific input sequence and drains the battery by continuously rotating a shift register, thus increasing power consumption.
+
+Leak via Current 1: The Trojan leaks the AES key through leakage current, using a shift register and inverters. The leakage occurs when the least significant bit of the shift register is '0'.
+
+AM Radio Transmission 2: Similar to point 3 but activates on a different predefined sequence of plaintext.
+
+Leak via Current 2: Identical to point 5, but activates on a different predefined sequence of plaintext.
+
+Bit Flipping 1: The Trojan flips the least significant bit of the encrypted output when two specific signals in the AES-128 cipher are high.
+
+Counter-Based Bit Flipping 1: A 4-bit counter increments with each encryption. The Trojan flips the least significant bit of the output when the fourth bit of the counter is high.
+
+Dual Counter-Based Bit Flipping: Two counters (one synchronous, one asynchronous) control the Trojan. It flips the least significant bit of the output when certain conditions involving the counters are met.
+
+Complex Trigger Bit Flipping: Similar to point 10, but the asynchronous counter only increments when additional predefined signals in the AES-128 module are active.

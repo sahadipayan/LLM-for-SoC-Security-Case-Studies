@@ -1,0 +1,15 @@
+f"""
+            Hardware Trojan: <{context}>
+            Your task is to perform the following actions: 
+            1 read the following design delimited by 
+              <>
+              Code: <{design}>
+            2. Analyze the AES design block by block from security perspective
+            3. Is there any hardware trojan in the design? If yes, how it operates?  
+
+            While giving response in the following format:
+            Hardware Torjan: [yes or no]
+            Security Analysis: [module by module security analysis]
+            Explanation: [if there is trojan, how it operates? describe in details]
+
+"""
