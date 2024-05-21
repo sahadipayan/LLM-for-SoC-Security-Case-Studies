@@ -16,7 +16,7 @@ module MooreFSM(
   parameter S1 = 2'b01;
   parameter S2 = 2'b10;
   
-  // Define the next state and output for each state
+  // Define next state and output for each state
   reg [1:0] current_state, next_state;
   
   always @(posedge clk or posedge reset) begin
